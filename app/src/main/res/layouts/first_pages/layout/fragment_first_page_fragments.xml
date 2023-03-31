@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".firstpages.FirstPageFragments">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <ImageView
+                   android:id="@+id/imageView"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:scaleType="fitXY"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:srcCompat="@mipmap/top_background" />
+
+               <TextView
+                   android:id="@+id/tv_custom_dialog_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="32dp"
+                   android:text="Light"
+                   android:textColor="@color/white"
+                   android:textSize="38sp"
+                   android:textStyle="bold"
+                   app:layout_constraintBottom_toBottomOf="@id/imageView"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="@font/aclonica"
+                   android:text="Brains"
+                   android:textColor="@color/color_primary_variant"
+                   android:textSize="38sp"
+                   android:textStyle="bold"
+                   app:layout_constraintStart_toEndOf="@id/tv_custom_dialog_title"
+                   app:layout_constraintTop_toTopOf="@id/tv_custom_dialog_title" />
+
+               <androidx.fragment.app.FragmentContainerView
+                   app:layout_constraintTop_toBottomOf="@id/tv_custom_dialog_title"
+                   android:id="@+id/fragmentContainerView"
+                   android:name="androidx.navigation.fragment.NavHostFragment"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   app:defaultNavHost="true"
+                   app:navGraph="@navigation/nav_between_first_pages" />
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

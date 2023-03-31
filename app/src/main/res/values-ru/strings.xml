@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start">Начать</string>
+    <string name="sign_in">Вход</string>
+    <string name="continue_in_armenian">Продолжить на армянском</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="mental_helps_welcome_page">Давай тренируем твой мозг</string>
+    <string name="email">Эл. почта</string>
+    <string name="password">Пароль</string>
+    <string name="forget_your_password_retry">Забыли пароль?</string>
+    <string name="i_am_a_new_user">Я новый пользователь</string>
+    <string name="name">Имя пользователя</string>
+    <string name="create_account">Создание \nАккаунта</string>
+    <string name="check_email">Проверьте электронную почту и подтвердите регистрацию</string>
+    <string name="reset_my_password">Сбросить пароль</string>
+    <string name="email_address_forgot">Эл. адрес</string>
+
+
+    <string name="let_s_count_together">Давай посчитаем вместе!</string>
+    <string name="how_is_your_memory">Потренируем твоя память?</string>
+
+    <string name="speed">Скорость</string>
+    <string name="quantity">Количество карт</string>
+    <string name="digits">Спицы</string>
+
+    <string name="flash_anzan">Флеш анзан</string>
+    <string name="flash_cards">Флеш карты</string>
+
+    <string name="game_1">Игра 1</string>
+    <string name="game_2">Игра 2</string>
+
+    <string name="lets_go">Поехали!</string>
+    <string name="answer">Ответ</string>
+
+    <string name="your_answer_is_right">Правильно!</string>
+    <string name="your_answer_is_wrong">Постарайся еще!</string>
+    <string name="next">Следующий</string>
+    <string name="finish">Закончить</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <string name="do_you_really_want_to_exit">Ты действительно хочешь выйти?</string>
+
+
+    <string name="time">Время</string>
+    <string name="all">Все</string>
+    <string name="minus">Минус</string>
+    <string name="plus">Плюс</string>
+
+    <string name="topic">Тема</string>
+    <string name="subtopic">Подтема</string>
+    <string name="direct_count">Прямой счёт</string>
+    <string name="junior_comrades">Младшие товарищи</string>
+    <string name="senior_comrades">Старшие товарищи</string>
+    <string name="mix_formulas">Микс формулы</string>
+
+    <string name="first_topic_name">Прямой счёт</string>
+    <string name="confirm">Подверждать</string>
+
+    <string name="complexity">Сложность</string>
+    <string name="figures">Фигуры</string>
+    <string name="variety_of_figures">Разновидность фигур</string>
+    <string name="install_manually">Установить вручную</string>
+    <string name="number_of_following_figures">Количество последующих фигур: </string>
+
+
+
+    <string-array name="string_complexity_array">
+        <item>Легкий</item>
+        <item>Средний</item>
+        <item>Сложный</item>
+    </string-array>
+
+    <string-array name="string_figures_array">
+        <item>Геометрические фигуры</item>
+        <item>Фрукты</item>
+        <item>Животные</item>
+    </string-array>
+
+
+
+    <string-array name="string_list_speeds">
+        <item>0.1 сек</item>
+        <item>0.3 сек</item>
+        <item>0.5 сек</item>
+        <item>0.7 сек</item>
+        <item>1 сек</item>
+        <item>1.3 сек</item>
+        <item>1.7 сек</item>
+        <item>2 сек</item>
+        <item>2.2 сек</item>
+        <item>2.5 сек</item>
+        <item>3 сек</item>
+        <item>3.2 сек</item>
+        <item>3.5 сек</item>
+        <item>4 сек</item>
+        <item>4.5 сек</item>
+        <item>5 сек</item>
+    </string-array>
+
+    <string-array name="string_list_mental_topics">
+        <item>Прямой счёт</item>
+        <item>Младшие товарищи</item>
+        <item>Старшие товарищи</item>
+        <item>Микс формулы</item>
+    </string-array>
+
+    <string-array name="string_list_mental_subtopics_direct_count">
+        <item>Прямой счёт</item>
+    </string-array>
+
+
+</resources>

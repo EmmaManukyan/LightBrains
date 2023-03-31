@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start">Սկսել</string>
+    <string name="sign_in">Մուտք</string>
+    <string name="continue_in_armenian">Շարունակել հայերեն</string>
+    <string name="welcome">Բարի գալուստ!</string>
+    <string name="mental_helps_welcome_page">Արի մարզենք ուղեղդ</string>
+    <string name="email">Էլ․ փոստ</string>
+    <string name="password">Գաղտաբառ</string>
+    <string name="forget_your_password_retry">Մոռացե՞լ եք գաղտնաբառը</string>
+    <string name="i_am_a_new_user">Ես նոր օգտատեր եմ</string>
+    <string name="name">Օգտանուն</string>
+    <string name="create_account">Գրանցում</string>
+    <string name="check_email">Ստուգեք ձեր էլ․ փոստը և հաստատեք գրանցումը</string>
+    <string name="reset_my_password">Վերականգնել գաղտնաբառը</string>
+    <string name="email_address_forgot">Էլ․ փոստ</string>
+
+
+    <string name="let_s_count_together">Արի հաշվենք միասին</string>
+    <string name="how_is_your_memory">Մարզե՞նք \nհիշողությունդ</string>
+
+    <string name="speed">Արագություն</string>
+    <string name="digits">Թվանշաններ</string>
+    <string name="quantity">Քարտերի քանակ</string>
+
+    <string name="flash_anzan">Ֆլեշ անզան</string>
+    <string name="flash_cards">Ֆլեշ քարտեր</string>
+
+
+    <string name="game_1">Խաղ 1</string>
+    <string name="game_2">Խաղ 2</string>
+
+    <string name="lets_go">Գնացինք!</string>
+    <string name="answer">Պատասխան</string>
+
+    <string name="your_answer_is_right">Ճիշտ է!</string>
+    <string name="your_answer_is_wrong">Սխալ է։ Կրկին փորձիր!</string>
+    <string name="next">Հաջորդը</string>
+    <string name="finish">Ավարտել</string>
+    <string name="yes">Այո</string>
+    <string name="no">Ոչ</string>
+    <string name="do_you_really_want_to_exit">Դուք իսկապես ուզում եք դու՞րս գալ</string>
+
+
+    <string name="time">Ժամանակ</string>
+    <string name="all">Ամբողջը</string>
+    <string name="minus">Հանած</string>
+    <string name="plus">Գումարած</string>
+
+    <string name="topic">Թեմա</string>
+    <string name="subtopic">Ենթաթեմա</string>
+    <string name="direct_count">Ուղիղ հաշիվ</string>
+    <string name="junior_comrades">Փոքր ընկերներ</string>
+    <string name="senior_comrades">Մեծ ընկերներ</string>
+    <string name="mix_formulas">Միքս բանաձևեր</string>
+
+    <string name="first_topic_name">Ուղիղ հաշիվ</string>
+    <string name="confirm">Հաստատել</string>
+    <string name="complexity">Բարդություն</string>
+
+
+    <string name="figures">Պատկերներ</string>
+    <string name="variety_of_figures">Պատկերների բազմազանություն</string>
+    <string name="install_manually">Սահմանլ ձեռքով</string>
+    <string name="number_of_following_figures">Հաջորդող պատկերների քանակ: </string>
+
+
+
+
+
+    <string-array name="string_complexity_array">
+        <item>Հեշտ</item>
+        <item>Միջին</item>
+        <item>Բարդ</item>
+    </string-array>
+
+    <string-array name="string_figures_array">
+        <item>Երկրաչափական պատկերներ</item>
+        <item>Մրգեր և բանջարեղեններ</item>
+        <item>Կենդանիներ</item>
+    </string-array>
+
+
+
+    <string-array name="string_list_speeds">
+        <item>0.1 վրկ</item>
+        <item>0.3 վրկ</item>
+        <item>0.5 վրկ</item>
+        <item>0.7 վրկ</item>
+        <item>1 վրկ</item>
+        <item>1.3 վրկ</item>
+        <item>1.7 վրկ</item>
+        <item>2 վրկ</item>
+        <item>2.2 վրկ</item>
+        <item>2.5 վրկ</item>
+        <item>3 վրկ</item>
+        <item>3.2 վրկ</item>
+        <item>3.5 վրկ</item>
+        <item>4 վրկ</item>
+        <item>4.5 վրկ</item>
+        <item>5 վրկ</item>
+    </string-array>
+
+    <string-array name="string_list_mental_topics">
+        <item>Ուղիղ հաշիվ</item>
+        <item>Փոքր ընկերներ</item>
+        <item>Մեծ ընկերներ</item>
+        <item>Միքս բանաձևեր</item>
+    </string-array>
+
+    <string-array name="string_list_mental_subtopics_direct_count">
+        <item>Ուղիղ հաշիվ</item>
+    </string-array>
+
+
+
+
+</resources>

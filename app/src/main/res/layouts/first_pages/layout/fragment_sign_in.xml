@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="32dp"
+    android:paddingBottom="16dp"
+    tools:context=".firstpages.SignInFragment">
+
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        style="@style/MyStyleForTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tv_lay_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_round_attach_email_24"
+        style="@style/MyStyleForTextInputLayout"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_mail"
+            style="@style/MyStyleForEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textWebEmailAddress" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tv_lay_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_round_lock_24"
+        style="@style/MyStyleForTextInputLayout"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_password"
+            style="@style/MyStyleForEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textWebPassword"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/background_btn3_log_in"
+        android:fontFamily="@font/my_font"
+        android:padding="8dp"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        android:textColor="@color/color_secondary_variant"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/forget_your_password_retry"
+        android:textAlignment="center"
+        android:textColor="@color/selector_txt"
+        android:textSize="16sp"
+
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_new_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/background_btn4_transparent"
+        android:padding="8dp"
+        android:text="@string/i_am_a_new_user"
+        android:textAllCaps="false"
+        style="@style/Theme.MyTheme"
+        android:textColor="@color/color_secondary_variant"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

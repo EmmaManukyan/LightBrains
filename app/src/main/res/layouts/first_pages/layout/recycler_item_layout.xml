@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="32dp"
+    android:elevation="8dp"
+    android:padding="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="false">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:padding="8dp"
+        android:id="@+id/const_lay_recycler">
+
+        <ImageView
+            android:id="@+id/img_label_recycler_item"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/flash_cards_img"/>
+
+        <TextView
+            android:id="@+id/tv_title_name_recycler_item"
+            style="@style/MyStyleForTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Flash anzan"
+            android:textSize="24sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@id/img_label_recycler_item"
+            app:layout_constraintTop_toTopOf="@id/img_label_recycler_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/img_label_recycler_item"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

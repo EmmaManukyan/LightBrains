@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homepage.HomeActivity">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/my_guide_line_for_title_image_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_profile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="-16dp"
+        android:padding="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_temp"
+        app:layout_constraintBottom_toBottomOf="@id/my_guide_line_for_title_image_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/SpecificCornerRoundedImage"
+        app:strokeColor="@color/color_secondary_variant"
+        app:strokeWidth="2dp" />
+
+
+    <TextView
+        android:id="@+id/tv_profile_name"
+        style="@style/MyStyleForTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:gravity="start"
+        android:text="Manukyan Emma"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_profile"
+        app:layout_constraintEnd_toStartOf="@id/img_profile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.88"
+      />
+
+
+    <RelativeLayout
+
+        android:id="@+id/fr_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/my_bottom_nav"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
+        app:layout_constraintVertical_bias="0">
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/id"
+        layout="@layout/title_light_brains_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/my_guide_line_for_title_image_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/my_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_primary_variant"
+        app:itemIconTint="@color/item_selector"
+        app:itemTextColor="@color/item_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/my_menu" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

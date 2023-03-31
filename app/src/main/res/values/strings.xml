@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name" translatable="false">LightBrains</string>
+    <string name="start">Start</string>
+    <string name="sign_in">Sign in</string>
+    <string name="continue_in_armenian">Continue in Armenian</string>
+    <string name="welcome">Welcome!</string>
+    <string name="mental_helps_welcome_page">Let\'s train your brain</string>
+    <string name="email">Mail</string>
+    <string name="password">Password</string>
+    <string name="forget_your_password_retry">Forgot password?</string>
+    <string name="i_am_a_new_user">I am a new user</string>
+    <string name="name">Name</string>
+    <string name="create_account">Create \nAccount</string>
+    <string name="check_email">Check your email and verify your sign up</string>
+    <string name="reset_my_password">Reset my password</string>
+    <string name="email_address_forgot">Email address</string>
+    <string name="let_s_count_together">Let\'s count together</string>
+    <string name="how_is_your_memory">How is your memory?</string>
+    <string name="speed">Speed</string>
+    <string name="digits">Digits</string>
+    <string name="quantity">Count</string>
+
+
+    <string name="flash_anzan">Flash anzan</string>
+    <string name="flash_cards">Flash cards</string>
+
+    <string name="game_1">Game 1</string>
+    <string name="game_2">Game 2</string>
+
+
+    <string name="lets_go">Let\'s go</string>
+    <string name="answer">Answer</string>
+    <string name="your_answer_is_right">Your answer is right</string>
+    <string name="your_answer_is_wrong">Your answer is wrong</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="do_you_really_want_to_exit">Do you really want to exit?</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_topic_name">Direct count</string>
+
+
+    <string name="time">Time</string>
+    <string name="all">All</string>
+    <string name="minus">Minus</string>
+    <string name="plus">Plus</string>
+
+    <string name="topic">Topic</string>
+    <string name="subtopic">Subtopic</string>
+    <string name="direct_count">Direct count</string>
+    <string name="junior_comrades">Junior comrades</string>
+    <string name="senior_comrades">Senior comrades</string>
+    <string name="mix_formulas">Mix formulas</string>
+    <string name="confirm">Confirm</string>
+    <string name="complexity">Complexity</string>
+
+    <string name="figures">Figures</string>
+    <string name="variety_of_figures">Variety of figures</string>
+    <string name="install_manually">Install manually</string>
+    <string name="number_of_following_figures">Number of following figures: </string>
+
+
+    <string-array name="string_complexity_array">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
+    <string-array name="string_figures_array">
+        <item>Geometric figures</item>
+        <item>Fruits</item>
+        <item>Animals</item>
+    </string-array>
+
+
+    <string-array name="string_list_speeds">
+        <item>0.1 sec</item>
+        <item>0.3 sec</item>
+        <item>0.5 sec</item>
+        <item>0.7 sec</item>
+        <item>1 sec</item>
+        <item>1.3 sec</item>
+        <item>1.7 sec</item>
+        <item>2 sec</item>
+        <item>2.2 sec</item>
+        <item>2.5 sec</item>
+        <item>3 sec</item>
+        <item>3.2 sec</item>
+        <item>3.5 sec</item>
+        <item>4 sec</item>
+        <item>4.5 sec</item>
+        <item>5 sec</item>
+    </string-array>
+
+    <string-array name="string_list_mental_topics">
+        <item>Direct count</item>
+        <item>Junior comrades</item>
+        <item>Senior comrades</item>
+        <item>Mix formulas</item>
+    </string-array>
+
+    <string-array name="string_list_digits">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+
+    <string-array name="string_list_mental_subtopics_direct_count">
+        <item>Direct count</item>
+
+    </string-array>
+
+    <string-array name="string_list_mental_subtopics_junior_comrades">
+        <item>+4</item>
+        <item>-4</item>
+        <item>+3</item>
+        <item>-3</item>
+        <item>+2</item>
+        <item>-2</item>
+        <item>+1</item>
+        <item>-1</item>
+        <item>@string/all</item>
+
+    </string-array>
+
+    <string-array name="string_list_mental_subtopics_senior_comrades">
+
+        <item>+9</item>
+        <item>+8</item>
+        <item>+7</item>
+        <item>+6</item>
+        <item>+5</item>
+        <item>+4</item>
+        <item>+3</item>
+        <item>+2</item>
+        <item>+1</item>
+
+        <item>-9</item>
+        <item>-8</item>
+        <item>-7</item>
+        <item>-6</item>
+        <item>-5</item>
+        <item>-4</item>
+        <item>-3</item>
+        <item>-2</item>
+        <item>-1</item>
+
+        <item>@string/all</item>
+        <item>@string/minus</item>
+        <item>@string/plus</item>
+    </string-array>
+
+    <string-array name="string_list_mental_subtopics_mix_formulas">
+        <item>+6</item>
+        <item>-6</item>
+        <item>+7</item>
+        <item>-7</item>
+        <item>+8</item>
+        <item>-8</item>
+        <item>+9</item>
+        <item>-9</item>
+        <item>@string/all</item>
+
+    </string-array>
+
+
+</resources>

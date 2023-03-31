@@ -1,0 +1,107 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.LightBrains" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.MyTheme" parent="Theme.AppCompat.Light">
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/purple_500</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/color_primary_variant</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/color_secondary_variant</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+             colorControlHighlight, and colorSwitchThumbNormal. -->
+
+    </style>
+
+    <style name="MyStyleForEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:textColorHint">@color/purple_500</item>
+    </style>
+
+
+    <style name="MyStyleForTextInputLayout" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxStrokeColor">@color/color_secondary_variant</item>
+        <item name="startIconTint">@color/purple_500</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="MyStyleForTextInputLayoutToShowResults" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
+
+        <item name="boxBackgroundMode">outline</item>
+        <item name="android:focusedByDefault">true</item>
+        <item name="boxStrokeWidth">3dp</item>
+        <item name="boxStrokeWidthFocused">3dp</item>
+
+
+
+    </style>
+
+    <style name="MyStyleForTitleTextView" parent="Widget.AppCompat.TextView">
+
+        <item name="fontFamily">@font/my_font</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginTop">70dp</item>
+        <item name="android:textColor">@color/color_secondary_variant</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+
+    <style name="MyStyleForBottomSheetDialog1" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+
+    <style name="MyStyleForBottomSheetDialog2" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+
+
+    <style name="SpecificCornerRoundedImage">
+        <item name="cornerSizeTopRight">40dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+
+        <item name="cornerSizeBottomLeft">40dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+
+        <item name="strokeWidth">3dp</item>
+        <item name="strokeColor">@color/color_secondary_variant</item>
+
+    </style>
+
+
+
+
+
+</resources>

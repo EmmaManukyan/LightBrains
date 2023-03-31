@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_flash_cards"
+    app:startDestination="@id/fleshAnzanSettingsFragment">
+
+    <fragment
+        android:id="@+id/fleshAnzanSettingsFragment"
+        android:name="com.example.lightbrains.part_first_mental.flashanzan.FleshCardSettingsFragment"
+        android:label="fragment_flash_anzan_settings"
+        tools:layout="@layout/fragment_flash_cards_settings" >
+        <action
+            android:id="@+id/action_fleshAnzanSettingsFragment_to_showFlashCardsFragment"
+            app:destination="@id/showFlashCardsFragment"
+            app:popUpTo="@id/showFlashCardsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/showFlashCardsFragment"
+        android:name="com.example.lightbrains.part_first_mental.flashanzan.ShowFlashCardsFragment"
+        android:label="fragment_show_flash_cards"
+        tools:layout="@layout/fragment_show_flash_cards" >
+        <action
+            android:id="@+id/action_showFlashCardsFragment_to_fleshAnzanSettingsFragment"
+            app:destination="@id/fleshAnzanSettingsFragment"
+            app:popUpTo="@id/fleshAnzanSettingsFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_showFlashCardsFragment_to_showResultsFragment"
+            app:destination="@id/showResultsFragment"
+            app:enterAnim="@anim/bottom_animation"
+            app:popUpTo="@id/showFlashCardsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/showResultsFragment"
+        android:name="com.example.lightbrains.common.ShowResultsFragment"
+        android:label="fragment_show_results"
+        tools:layout="@layout/fragment_show_results" >
+        <action
+            android:id="@+id/action_showResultsFragment_to_fleshAnzanSettingsFragment"
+            app:destination="@id/fleshAnzanSettingsFragment" />
+    </fragment>
+</navigation>

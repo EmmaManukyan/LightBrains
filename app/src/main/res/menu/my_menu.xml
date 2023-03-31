@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_round_home_24"
+        android:title="Home"
+        />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_round_person_24"
+        android:title="Profile" />
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_round_settings_24"
+        android:title="Settings"
+        android:iconTint="@color/color_secondary"
+        />
+
+    <item
+        android:id="@+id/leader_board"
+        android:icon="@drawable/baseline_leaderboard_24"
+        android:title="Leaderboard"
+        android:iconTint="@color/color_secondary"
+        />
+</menu>

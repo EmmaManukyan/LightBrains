@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".part_first_mental.flashanzan.FleshCardSettingsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="32dp">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_lay_speed"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/speed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:boxStrokeColor="@color/blue_dark"
+                app:hintTextColor="@color/blue_dark"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_tv_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="@string/speed" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_lay_digits"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:hint="@string/digits"
+                app:layout_constraintStart_toStartOf="parent"
+                app:boxStrokeColor="@color/blue_dark"
+                app:hintTextColor="@color/blue_dark"
+                app:layout_constraintTop_toBottomOf="@id/tv_lay_speed">
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_tv_digits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="@string/digits"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/tv_lay_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_lay_digits">
+
+                <Button
+                    android:id="@+id/btn_minus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:textSize="24sp"
+                    android:backgroundTint="@color/blue_dark"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="@string/quantity"
+                    app:hintTextColor="@color/blue_dark"
+                    app:boxStrokeColor="@color/blue_dark"
+                    android:focusedByDefault="true"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/auto_tv_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:editable="false"
+                        android:enabled="true"
+                        android:inputType="none"
+                        android:text="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_plus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="+"
+                    android:textSize="24sp"
+                    android:backgroundTint="@color/blue_dark"/>
+
+
+            </LinearLayout>
+
+
+
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_start"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="32dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/background_btn_letsgo_blue"
+                android:padding="16dp"
+                android:paddingStart="0dp"
+                android:scaleType="fitStart"
+                android:src="@drawable/lets_start_flash_cards"
+                app:layout_constraintTop_toBottomOf="@id/tv_lay_count" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/lets_go"
+                android:textAllCaps="false"
+                android:textColor="@color/color_secondary_variant"
+                android:textSize="28sp"
+                android:fontFamily="@font/my_font"
+                app:layout_constraintBottom_toBottomOf="@id/btn_start"
+                app:layout_constraintEnd_toEndOf="@id/btn_start"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_start" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>

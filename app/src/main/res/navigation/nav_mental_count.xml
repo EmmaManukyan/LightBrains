@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_mental_count"
+    app:startDestination="@id/mentalCountingSettingsFragment">
+
+    <fragment
+        android:id="@+id/mentalCountingSettingsFragment"
+        android:name="com.example.lightbrains.part_first_mental.mental_counting.MentalCountingSettingsFragment"
+        android:label="fragment_mental_counting_settings"
+        tools:layout="@layout/fragment_mental_counting_settings" >
+        <action
+            android:id="@+id/action_mentalCountingSettingsFragment_to_showMentalCountFragment"
+            app:destination="@id/showMentalCountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showMentalCountFragment"
+        android:name="com.example.lightbrains.part_first_mental.mental_counting.ShowMentalCountFragment"
+        android:label="fragment_show_mental_count"
+        tools:layout="@layout/fragment_show_mental_count" />
+</navigation>

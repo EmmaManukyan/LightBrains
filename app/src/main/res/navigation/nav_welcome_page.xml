@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/welcomeFragment">
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.lightbrains.firstpages.WelcomeFragment"
+        android:label="WelcomeFragment" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_firstPageFragments"
+            app:destination="@id/firstPageFragments"
+            app:enterAnim="@anim/enter_anim_from_right"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/firstPageFragments"
+        android:name="com.example.lightbrains.firstpages.FirstPageFragments"
+        android:label="fragment_first_page_fragments"
+        tools:layout="@layout/fragment_first_page_fragments" />
+</navigation>

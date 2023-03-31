@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_attention_game"
+    app:startDestination="@id/attentionGameSettingsFragment">
+
+    <fragment
+        android:id="@+id/attentionGameSettingsFragment"
+        android:name="com.example.lightbrains.part_second.attention_game.AttentionGameSettingsFragment"
+        android:label="fragment_attention_game_settings"
+        tools:layout="@layout/fragment_attention_game_settings" >
+        <action
+            android:id="@+id/action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment"
+            app:destination="@id/attentionGameShowFiguresFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attentionGameShowFiguresFragment"
+        android:name="com.example.lightbrains.part_second.attention_game.AttentionGameShowFiguresFragment"
+        android:label="fragment_attention_game_show_figures"
+        tools:layout="@layout/fragment_attention_game_show_figures" />
+</navigation>
