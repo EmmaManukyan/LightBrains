@@ -21,7 +21,9 @@
 
     <string name="speed">Արագություն</string>
     <string name="digits">Թվանշաններ</string>
-    <string name="quantity">Քարտերի քանակ</string>
+    <string name="quantity">Օրինակների քանակ</string>
+    <string name="number_of_rows">Շարքերի քանակ։ </string>
+
 
     <string name="flash_anzan">Ֆլեշ անզան</string>
     <string name="flash_cards">Ֆլեշ քարտեր</string>
@@ -36,6 +38,8 @@
     <string name="your_answer_is_right">Ճիշտ է!</string>
     <string name="your_answer_is_wrong">Սխալ է։ Կրկին փորձիր!</string>
     <string name="next">Հաջորդը</string>
+    <string name="restart">Վերսկսել</string>
+    <string name="stop">Դադարեցնել</string>
     <string name="finish">Ավարտել</string>
     <string name="yes">Այո</string>
     <string name="no">Ոչ</string>
@@ -63,6 +67,14 @@
     <string name="variety_of_figures">Պատկերների բազմազանություն</string>
     <string name="install_manually">Սահմանլ ձեռքով</string>
     <string name="number_of_following_figures">Հաջորդող պատկերների քանակ: </string>
+    <string name="str_continue">Շարունակել</string>
+    <string name="great">Ընտիր է</string>
+    <string name="minutes">րոպե</string>
+    <string name="scores">միավոր</string>
+
+
+
+
 
 
 

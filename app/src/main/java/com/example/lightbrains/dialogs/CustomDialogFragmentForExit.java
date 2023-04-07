@@ -17,6 +17,14 @@ import com.example.lightbrains.R;
 public class CustomDialogFragmentForExit extends DialogFragment {
 
 
+    //0->flashCards
+    //1->mentalCount
+    private int DIALOG_POSITION_CODE;
+
+    public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
+        this.DIALOG_POSITION_CODE = DIALOG_POSITION_CODE;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -25,11 +33,25 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                 setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        NavHostFragment navHostFragment =
-                                (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
-                        assert navHostFragment != null;
-                        NavController navController = navHostFragment.getNavController();
-                        navController.navigate(R.id.action_showFlashCardsFragment_to_fleshAnzanSettingsFragment);
+                        NavHostFragment navHostFragment;
+                        NavController navController;
+                        switch (DIALOG_POSITION_CODE){
+                            case 0:
+                                navHostFragment =
+                                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
+                                assert navHostFragment != null;
+                                navController = navHostFragment.getNavController();
+                                navController.navigate(R.id.action_showFlashCardsFragment_to_fleshAnzanSettingsFragment);
+                                break;
+                            case 1:
+                                navHostFragment =
+                                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_mental_counting);
+                                assert navHostFragment != null;
+                                navController = navHostFragment.getNavController();
+                                navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
+                                break;
+                        }
+
                         dismiss();
                     }
                 }).

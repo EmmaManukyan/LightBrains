@@ -16,9 +16,14 @@
     <string name="email_address_forgot">Email address</string>
     <string name="let_s_count_together">Let\'s count together</string>
     <string name="how_is_your_memory">How is your memory?</string>
+
+
+
     <string name="speed">Speed</string>
     <string name="digits">Digits</string>
-    <string name="quantity">Count</string>
+    <string name="quantity">Count of examples</string>
+    <string name="number_of_rows">Number of rows:</string>
+
 
 
     <string name="flash_anzan">Flash anzan</string>
@@ -33,6 +38,8 @@
     <string name="your_answer_is_right">Your answer is right</string>
     <string name="your_answer_is_wrong">Your answer is wrong</string>
     <string name="next">Next</string>
+    <string name="restart">Restart</string>
+    <string name="stop">Stop</string>
     <string name="finish">Finish</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -60,6 +67,10 @@
     <string name="variety_of_figures">Variety of figures</string>
     <string name="install_manually">Install manually</string>
     <string name="number_of_following_figures">Number of following figures: </string>
+    <string name="str_continue">Continue</string>
+    <string name="great">Great</string>
+    <string name="minutes">Minutes</string>
+    <string name="scores">Scores</string>
 
 
     <string-array name="string_complexity_array">

@@ -18,5 +18,26 @@
         android:id="@+id/showMentalCountFragment"
         android:name="com.example.lightbrains.part_first_mental.mental_counting.ShowMentalCountFragment"
         android:label="fragment_show_mental_count"
-        tools:layout="@layout/fragment_show_mental_count" />
+        tools:layout="@layout/fragment_show_mental_count" >
+        <action
+            android:id="@+id/action_showMentalCountFragment_to_showResultsFragment2"
+            app:destination="@id/showResultsFragment2"
+            app:enterAnim="@anim/bottom_animation"
+            app:popUpTo="@id/showResultsFragment2"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_showMentalCountFragment_to_mentalCountingSettingsFragment"
+            app:destination="@id/mentalCountingSettingsFragment"
+            app:popUpTo="@id/mentalCountingSettingsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/showResultsFragment2"
+        android:name="com.example.lightbrains.common.ShowResultsFragment"
+        android:label="fragment_show_results"
+        tools:layout="@layout/fragment_show_results" >
+        <action
+            android:id="@+id/action_showResultsFragment2_to_mentalCountingSettingsFragment"
+            app:destination="@id/mentalCountingSettingsFragment" />
+    </fragment>
 </navigation>

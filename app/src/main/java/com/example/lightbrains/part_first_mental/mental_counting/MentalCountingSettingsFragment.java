@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
@@ -40,16 +39,19 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
 
     private int speed = -1;
     private int digit = -1;
-    private int count = 1;
+    private int countOfRows = 2;
+
+    private int countOfExamples = 1;
 
     private int topicLevel = 0;
+    private int subtopicLevel = 0;
 
     private int speedPosition = -1;
     private int digitPosition = -1;
     private int topicPosition = 0;
 
     private int[] spinPositions;
-    private final String[] constantsArr = {Constants.SPEED_MENTAL, Constants.DIGIT_MENTAL, Constants.TOPIC_LEVEL_MENTAL, Constants.COUNT_MENTAL};
+    private final String[] constantsArr = {Constants.SPEED_MENTAL, Constants.DIGIT_MENTAL, Constants.TOPIC_LEVEL_MENTAL, Constants.COUNT_OF_EXAMPLES_MENTAL};
 
 
     @Override
@@ -68,6 +70,7 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
         init(view);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initDopDownMenus() {
 
         Constants.createSharedPreferences(getActivity());
@@ -94,8 +97,15 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             speed = (int) (Float.parseFloat(s) * 1000);
             topicLevel = topicPosition;
             digit = Integer.parseInt(digitsArrayStrings[digitPosition]);
-            count = Integer.parseInt(binding.autoTvCount.getText().toString());
-            binding.autoTvCount.setText(Integer.toString(sharedPreferences.getInt(Constants.COUNT_MENTAL, 1)));
+            binding.autoTvCount.setText(Integer.toString(sharedPreferences.getInt(Constants.COUNT_OF_ROWS_MENTAL, 2)));
+            countOfRows = Integer.parseInt(binding.autoTvCount.getText().toString());
+            countOfExamples = sharedPreferences.getInt(Constants.COUNT_OF_EXAMPLES_MENTAL,5);
+            binding.sliderExampleCount.setValue(countOfExamples);
+            binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ countOfExamples);
+
+        }else{
+            binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ 5);
+
         }
 
         setSubTopicsSpinnerItem(topicLevel);
@@ -144,6 +154,15 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             setSubTopicsSpinnerItem(topicLevel);
         });
 
+        binding.autoTvSubTopic.setOnItemClickListener((adapterView, view, i, l) -> {
+            subtopicLevel = i;
+        });
+
+        binding.sliderExampleCount.addOnChangeListener((slider, value, fromUser) -> {
+            countOfExamples = (int) value;
+            binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ countOfExamples);
+        });
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -152,30 +171,35 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
         int temp;
 
         if (binding.btnStart.equals(view)) {
-            if (speed != -1 && digit != -1 && count != -1) {
+            if (speed != -1 && digit != -1 && countOfRows != -1) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.SPEED_MENTAL, speed);
                 bundle.putInt(Constants.DIGIT_MENTAL, digit);
-                bundle.putInt(Constants.COUNT_MENTAL, count);
+                bundle.putInt(Constants.COUNT_OF_ROWS_MENTAL, countOfRows);
                 bundle.putInt(Constants.TOPIC_LEVEL_MENTAL, topicLevel);
+                bundle.putInt(Constants.SUBTOPIC_LEVEL_MENTAL, subtopicLevel);
+                bundle.putInt(Constants.COUNT_OF_EXAMPLES_MENTAL, countOfExamples);
 
                 Constants.myEditShared.putInt(Constants.SPEED_MENTAL, speedPosition);
                 Constants.myEditShared.putInt(Constants.DIGIT_MENTAL, digitPosition);
-                Constants.myEditShared.putInt(Constants.COUNT_MENTAL, count);
+                Constants.myEditShared.putInt(Constants.COUNT_OF_ROWS_MENTAL, countOfRows);
                 Constants.myEditShared.putInt(Constants.TOPIC_LEVEL_MENTAL, topicLevel);
+                Constants.myEditShared.putInt(Constants.COUNT_OF_EXAMPLES_MENTAL, countOfExamples);
                 Constants.myEditShared.commit();
                 Navigation.findNavController(view).navigate(R.id.action_mentalCountingSettingsFragment_to_showMentalCountFragment, bundle);
             }
         } else if (binding.btnPlus.equals(view)) {
             temp = Integer.parseInt(binding.autoTvCount.getText().toString());
-            temp++;
-            count = temp;
-            binding.autoTvCount.setText(Integer.toString(temp));
+            if (temp <= 50) {
+                temp++;
+                countOfRows = temp;
+                binding.autoTvCount.setText(Integer.toString(temp));
+            }
         } else if (binding.btnMinus.equals(view)) {
             temp = Integer.parseInt(binding.autoTvCount.getText().toString());
-            if (temp - 1 > 0) {
+            if (temp - 1 > 1) {
                 temp--;
-                count = temp;
+                countOfRows = temp;
                 binding.autoTvCount.setText(Integer.toString(temp));
             }
         }

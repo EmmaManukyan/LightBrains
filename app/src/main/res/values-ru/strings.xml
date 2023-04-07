@@ -20,8 +20,10 @@
     <string name="how_is_your_memory">Потренируем твоя память?</string>
 
     <string name="speed">Скорость</string>
-    <string name="quantity">Количество карт</string>
+    <string name="quantity">Количество примеров</string>
     <string name="digits">Спицы</string>
+    <string name="number_of_rows">Количество рядов: </string>
+
 
     <string name="flash_anzan">Флеш анзан</string>
     <string name="flash_cards">Флеш карты</string>
@@ -35,6 +37,9 @@
     <string name="your_answer_is_right">Правильно!</string>
     <string name="your_answer_is_wrong">Постарайся еще!</string>
     <string name="next">Следующий</string>
+    <string name="restart">Перезапустить</string>
+    <string name="stop">Стоп</string>
+
     <string name="finish">Закончить</string>
 
     <string name="yes">Да</string>
@@ -63,6 +68,10 @@
     <string name="variety_of_figures">Разновидность фигур</string>
     <string name="install_manually">Установить вручную</string>
     <string name="number_of_following_figures">Количество последующих фигур: </string>
+    <string name="str_continue">Продолжать</string>
+    <string name="great">Отлично</string>
+    <string name="minutes"> минуты</string>
+    <string name="scores"> баллов</string>
 
 
 
@@ -77,7 +86,6 @@
         <item>Фрукты</item>
         <item>Животные</item>
     </string-array>
-
 
 
     <string-array name="string_list_speeds">

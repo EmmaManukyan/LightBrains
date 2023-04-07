@@ -1,5 +1,8 @@
 package com.example.lightbrains.part_first_mental.flashanzan;
 
+import static com.example.lightbrains.common.Constants.animations;
+import static com.example.lightbrains.common.Constants.rightAnswersRes;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -9,11 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -27,7 +30,6 @@ import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentShowFlashCardsBinding;
 import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
 import com.example.lightbrains.interfaces.BackPressedListener;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,8 +40,6 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     FragmentShowFlashCardsBinding binding;
     private ArrayList<Integer> myImageResources;
     private ArrayList<ImageView> myImages;
-    private ArrayList<Techniques> animations;
-    private int[] rightAnswersRes;
     private int count;
     private ShowFleshCardsThread thread;
 
@@ -47,13 +47,15 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
     private Bundle bundle;
 
-
     private String result = "";
 
     private boolean running = false;
-    boolean isFirstTime = true;
+    private boolean isFirstTime = true;
 
     private int countNumbers;
+
+    private long startTime = 0;
+    private long endTime = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,28 +80,31 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
         thread = new ShowFleshCardsThread(count, time, digits);
         thread.start();
-        binding.btnStartFlashCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!running) {
-                    if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
-                        if (countNumbers > 0) {
-                            running = true;
-                            binding.imgSmile.setVisibility(View.GONE);
-                            binding.tvWithSmile.setVisibility(View.GONE);
-                            unVisible();
-                            isFirstTime = false;
+        binding.btnStartFlashCards.setOnClickListener(v -> {
+            if (binding.btnStartFlashCards.getText().toString().equals(getResources().getString(R.string.start))) {
+                startTime = System.currentTimeMillis();
+            } else if (binding.btnStartFlashCards.getText().toString().equals(getResources().getString(R.string.finish))) {
+                endTime =System.currentTimeMillis();
+            }
+            if (!running) {
+                if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
+                    if (countNumbers > 0) {
+                        running = true;
+                        binding.imgSmile.setVisibility(View.GONE);
+                        binding.tvWithSmile.setVisibility(View.GONE);
+                        unVisible();
+                        isFirstTime = false;
 
-                        } else {
-                            bundle.putInt(Constants.SCORES,scores);
-                            bundle.putInt(Constants.COUNT_FLASH_CARDS,count);
-                            Navigation.findNavController(view).navigate(R.id.action_showFlashCardsFragment_to_showResultsFragment,bundle);
-                        }
-
+                    } else {
+                        bundle.putInt(Constants.SCORES, scores);
+                        bundle.putInt(Constants.COUNT_FLASH_CARDS, count);
+                        bundle.putLong(Constants.FIGURES_SHOW_TIME,endTime-startTime);
+                        Navigation.findNavController(view).navigate(R.id.action_showFlashCardsFragment_to_showResultsFragment, bundle);
                     }
-                } else {
-                    running = false;
+
                 }
+            } else {
+                running = false;
             }
         });
     }
@@ -128,16 +133,6 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
 
         binding.edtAnswer.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        animations = new ArrayList<>();
-        animations.add(Techniques.RollIn);
-        animations.add(Techniques.Wave);
-        animations.add(Techniques.ZoomIn);
-        animations.add(Techniques.SlideInUp);
-        animations.add(Techniques.Pulse);
-        animations.add(Techniques.FlipInX);
-
-        rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_laughing_smile};
 
 
         binding.edtAnswer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -198,7 +193,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     }
 
 
-    public void myFuncOnUI(int digits) {
+    private void myFuncOnUI(int digits) {
         result = "";
         int random;
         if (digits == 2) {
@@ -228,6 +223,9 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                 tempImgView.setImageResource(myImageResources.get(random));
             }
 
+        }
+        while (result.charAt(0) == '0') {
+            result = result.substring(0, 0) + "" + result.substring(1);
         }
         Toast.makeText(getContext(), "" + result, Toast.LENGTH_SHORT).show();
 
@@ -274,7 +272,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                         public void run() {
                             binding.tvAnswerLayout.setVisibility(View.VISIBLE);
                             binding.edtAnswer.setText("");
-                            setEdtAnswerFocused(binding.edtAnswer);
+                            Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
                             unVisible();
 
                             binding.btnStartFlashCards.setVisibility(View.VISIBLE);
@@ -331,7 +329,6 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     }
 
     private void answerIsRight() {
-//        Toast.makeText(getContext(), "Answer is right", Toast.LENGTH_SHORT).show();
         scores++;
         binding.imgSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setVisibility(View.VISIBLE);
@@ -341,7 +338,6 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
         binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_right));
         binding.tvWithSmile.setTextSize(40);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_right));
-//        Toast.makeText(getContext(), "" + r, Toast.LENGTH_SHORT).show();
         r = random.nextInt(animations.size());
         YoYo.with(animations.get(r)).duration(1000).playOn(binding.imgSmile);
         YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.tvWithSmile);
@@ -355,35 +351,9 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
         }
     }
 
-    private void showTheKeyboardNow(TextInputEditText edtAnswer) {
-        if (edtAnswer.isFocused()) {
-            edtAnswer.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(edtAnswer, InputMethodManager.SHOW_IMPLICIT);
-        }
-    }
-
-
-    private void setEdtAnswerFocused(TextInputEditText edtAnswer) {
-        edtAnswer.requestFocus();
-        if (edtAnswer.hasWindowFocus()) {
-            // No need to wait for the window to get focus.
-            showTheKeyboardNow(edtAnswer);
-        } else {
-            edtAnswer.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
-                @Override
-                public void onWindowFocusChanged(boolean hasFocus) {
-                    if (hasFocus) {
-                        showTheKeyboardNow(edtAnswer);
-                        edtAnswer.getViewTreeObserver().removeOnWindowFocusChangeListener(this);
-                    }
-                }
-            });
-        }
-    }
 
     private void showDialog() {
-        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit();
+        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(0);
         customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), "exit dialog");
 
     }

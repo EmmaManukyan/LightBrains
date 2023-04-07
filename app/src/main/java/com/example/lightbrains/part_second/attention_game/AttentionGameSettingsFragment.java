@@ -27,7 +27,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     private int figuresType = -1;
     private int figuresLevel = -1;
 
-    private int figuresCount = 0;
+    private int figuresCount = 3;
     private int figuresGroupCount = 0;
     private float showTime = 0.3f;
 
@@ -150,7 +150,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         binding.includedLayout.autoTvFigures.setAdapter(arrayAdapter);
 
         String[] figureTypeCountArrayStrings = new String[3];
-        figureTypeCountArrayStrings[0] = complexityArrayStrings[0] + " (3)";
+        figureTypeCountArrayStrings[0] = complexityArrayStrings[0] + " (2)";
         figureTypeCountArrayStrings[1] = complexityArrayStrings[1] + " (5)";
         figureTypeCountArrayStrings[2] = complexityArrayStrings[2] + " (8)";
         arrayAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, figureTypeCountArrayStrings);

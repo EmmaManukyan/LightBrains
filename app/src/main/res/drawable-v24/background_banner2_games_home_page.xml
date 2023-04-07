@@ -4,7 +4,7 @@
         android:state_pressed="false" android:state_focused="false">
         <shape android:shape="rectangle">
             <stroke android:width="1dp" android:color="@color/color_primary_variant"/>
-            <corners android:radius="18sp"/>
+            <corners android:radius="16dp"/>
             <gradient android:angle="0" android:startColor="#fcd0d1" android:endColor="#F8AEAF"/>
         </shape>
     </item>
@@ -12,7 +12,7 @@
     <item
         android:state_pressed="true" android:state_focused="false">
         <shape android:shape="rectangle">
-            <corners android:radius="18sp"/>
+            <corners android:radius="16dp"/>
             <gradient android:angle="0" android:startColor="#F8AEAF" android:centerColor="#fcd0d1" android:endColor="#F8AEAF"/>
         </shape>
     </item>

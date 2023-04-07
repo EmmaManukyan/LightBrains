@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:text="Mental count"
+        android:text="@string/flash_anzan"
         android:textColor="@color/pink_dark"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/my_guide_line_for_title_image_home"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.8" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView3"
+        android:id="@+id/fragmentContainerView_mental_counting"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
