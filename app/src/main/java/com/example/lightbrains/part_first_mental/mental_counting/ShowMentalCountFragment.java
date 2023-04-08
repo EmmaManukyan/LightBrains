@@ -69,6 +69,10 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
     private long startTime = 0;
     private long endTime = 0;
 
+    private int colorCheck = 0;
+
+    private int[] colors = {R.color.color_secondary_variant,R.color.pink_dark};
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,6 +145,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
             for (final int[] i = {0}; i[0] < countOfExamples; i[0]++) {
                 numbersArrayToShow = levelClass.createArrayToCount(digit, countOfRows, subtopicLevel);
                 if (runningThread) {
+                    Log.d("TAG",Arrays.toString(numbersArrayToShow));
                     try {
                         Thread.sleep(500);
                         uiThreadIsRunning = true;
@@ -152,7 +157,11 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                                     binding.btnStart.setText(getResources().getString(R.string.stop));
                                     binding.tvNumber.setVisibility(View.VISIBLE);
                                     binding.tvNumber.setTextSize(150 - 15 * digit);
+                                    binding.tvNumber.setTextColor(getResources().getColor(colors[colorCheck]));
+                                    colorCheck = ++colorCheck%2;
+
                                     binding.tvNumber.setText(numbersArrayToShow[finalJ] + "");
+
                                 });
                                 try {
                                     Thread.sleep(speed);
