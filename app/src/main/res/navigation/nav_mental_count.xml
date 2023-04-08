@@ -23,12 +23,12 @@
             android:id="@+id/action_showMentalCountFragment_to_showResultsFragment2"
             app:destination="@id/showResultsFragment2"
             app:enterAnim="@anim/bottom_animation"
-            app:popUpTo="@id/showResultsFragment2"
+            app:popUpTo="@id/showMentalCountFragment"
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_showMentalCountFragment_to_mentalCountingSettingsFragment"
             app:destination="@id/mentalCountingSettingsFragment"
-            app:popUpTo="@id/mentalCountingSettingsFragment"
+            app:popUpTo="@id/showMentalCountFragment"
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment

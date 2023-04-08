@@ -17,7 +17,7 @@
 
 
     <string name="let_s_count_together">Давай посчитаем вместе!</string>
-    <string name="how_is_your_memory">Потренируем твоя память?</string>
+    <string name="how_is_your_memory">Потренируем твою память?</string>
 
     <string name="speed">Скорость</string>
     <string name="quantity">Количество примеров</string>
@@ -70,8 +70,8 @@
     <string name="number_of_following_figures">Количество последующих фигур: </string>
     <string name="str_continue">Продолжать</string>
     <string name="great">Отлично</string>
-    <string name="minutes"> минуты</string>
-    <string name="scores"> баллов</string>
+    <string name="minutes">минут</string>
+    <string name="scores">баллов</string>
 
 
 

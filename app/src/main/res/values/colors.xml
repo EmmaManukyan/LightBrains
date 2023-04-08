@@ -34,5 +34,7 @@
 
     <color name="is_right">#00E676</color>
     <color name="is_wrong">#FF1744</color>
+    <color name="yellow_scores">#FFEA00</color>
+
 
 </resources>

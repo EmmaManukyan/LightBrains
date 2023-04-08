@@ -14,10 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.databinding.FragmentShowResultsBinding;
 import com.example.lightbrains.homepage.HomeActivity;
 import com.example.lightbrains.homepage.HomeFragment;
+import com.example.lightbrains.interfaces.BackPressedListener;
 
 
 public class ShowResultsFragment extends Fragment {
@@ -75,27 +78,18 @@ public class ShowResultsFragment extends Fragment {
                         throw new RuntimeException(e);
                     }
                 }
-
-                for (int i = 0; i < scores*10; i++) {
-                    int finalI = i;
-                    getActivity().runOnUiThread(() -> {
-                        binding.edtTime.setVisibility(View.VISIBLE);
-                        binding.edtScores.setVisibility(View.VISIBLE);
-                        binding.edtTime.setText(""+(float)(finalI)+" "+getResources().getString(R.string.minutes));
-                        binding.edtScores.setText(""+(float)(finalI)+" "+getResources().getString(R.string.scores));
-                        if (finalI==scores*10-1){
-                           binding.edtTime.setText(""+time +" "+getResources().getString(R.string.minutes));
-                           binding.edtScores.setText(""+scores +" "+getResources().getString(R.string.scores));
-                        }
-                    });
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.tvLayTime.setVisibility(View.VISIBLE);
+                        binding.tvLayScores.setVisibility(View.VISIBLE);
+                        binding.edtTime.setText(""+time+" "+getResources().getString(R.string.minutes));
+                        binding.edtScores.setText(""+scores+" "+getResources().getString(R.string.scores));
+                        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);
+                        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayScores);
                     }
+                });
 
-
-                }
             }
         }.start();
     }

@@ -66,6 +66,9 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
     private int[] numbersArrayToShow;
     private String result;
 
+    private long startTime = 0;
+    private long endTime = 0;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +85,11 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
 
 
         binding.btnStart.setOnClickListener(v -> {
+            if (binding.btnStart.getText().toString().equals(getResources().getString(R.string.start))) {
+                startTime = System.currentTimeMillis();
+            } else if (binding.btnStart.getText().toString().equals(getResources().getString(R.string.finish))) {
+                endTime =System.currentTimeMillis();
+            }
             if (!runningThread) {
                 if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
                     if (countNumbers > 0) {
@@ -94,6 +102,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                     } else {
                         bundle.putInt(Constants.SCORES, scores);
                         bundle.putInt(Constants.COUNT_FLASH_CARDS, countOfExamples);
+                        bundle.putLong(Constants.FIGURES_SHOW_TIME,endTime-startTime);
                         Navigation.findNavController(view).navigate(R.id.action_showMentalCountFragment_to_showResultsFragment2, bundle);
                     }
 
