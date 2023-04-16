@@ -20,7 +20,7 @@
             android:paddingStart="16dp"
             android:paddingTop="18dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="32dp">
 
             <androidx.appcompat.widget.AppCompatCheckedTextView
                 android:id="@+id/checkbox_info"

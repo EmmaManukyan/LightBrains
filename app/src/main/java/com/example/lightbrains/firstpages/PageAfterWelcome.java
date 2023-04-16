@@ -14,72 +14,80 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.databinding.FragmentPageAfterWelcomeBinding;
 
 public class PageAfterWelcome extends Fragment {
 
-    private Button btnStart;
-    private Switch btnSwitch;
     private Animation animBottom;
+    private FragmentPageAfterWelcomeBinding binding;
     private int CHECKED_LANGUAGE = 0;
-
+    private String[] languageArrayStrings;
+    private ArrayAdapter adapter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_page_after_welcome, container, false);
-        init(view);
+        binding = FragmentPageAfterWelcomeBinding.inflate(inflater, container, false);
+        init();
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        binding.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_pageAfterWelcome_to_signInFragment);
             }
         });
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         CHECKED_LANGUAGE = sharedPreferences.getInt(Constants.CHECKED_LANGUAGE, 0);
+
+
         if (CHECKED_LANGUAGE == 1) {
-            btnSwitch.setChecked(true);
+            binding.autoTvLanguages.setText(languageArrayStrings[CHECKED_LANGUAGE]);
         }
-        btnSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (btnSwitch.isChecked()) {
-                    CHECKED_LANGUAGE = 1;
-                    Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
-                    getActivity().finish();
-                    startActivity(getActivity().getIntent());
-                } else {
-                    CHECKED_LANGUAGE = 0;
-                    Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
-                    getActivity().finish();
-                    startActivity(getActivity().getIntent());
-                }
-                Constants.myEditShared.commit();
-            }
+
+        binding.autoTvLanguages.setText(languageArrayStrings[CHECKED_LANGUAGE]);
+
+
+        binding.autoTvLanguages.setOnItemClickListener((adapterView, view1, position, l) -> {
+            CHECKED_LANGUAGE = position;
+            Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
+            getActivity().finish();
+            startActivity(getActivity().getIntent());
+            Constants.myEditShared.commit();
         });
     }
 
-    private void init(View view) {
-        btnStart = view.findViewById(R.id.btn_start);
-        btnSwitch = view.findViewById(R.id.language_switch);
-        btnStart.setAnimation(animBottom);
-
-
+    private void init() {
+        binding.btnStart.setAnimation(animBottom);
         Constants.createSharedPreferences(getActivity());
-
         animBottom = AnimationUtils.loadAnimation(getContext(), R.anim.enter_anim_from_right);
+        languageArrayStrings = getResources().getStringArray(R.array.string_languages_array);
+        setLanguages();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setLanguages();
+    }
+
+    private void setLanguages() {
+        adapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, languageArrayStrings);
+        binding.autoTvLanguages.setAdapter(adapter);
+    }
 }

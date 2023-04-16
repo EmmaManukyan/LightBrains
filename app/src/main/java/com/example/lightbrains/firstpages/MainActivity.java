@@ -14,7 +14,7 @@ import com.example.lightbrains.common.Constants;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String[] languageLogs = {"ru","hy"};
+    private static final String[] languageLogs = {"ru","hy","en"};
 
 
     @Override

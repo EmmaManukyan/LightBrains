@@ -82,7 +82,6 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
             String s = speedArrayStrings[speedPosition];
             if (s.contains(" ")) {
                 s = s.substring(0, s.indexOf(" "));
-                System.out.println(s);
             }
             speed = (int) (Float.parseFloat(s) * 1000);
             binding.autoTvCount.setText(Integer.toString(sharedPreferences.getInt(Constants.COUNT_FLASH_CARDS, 1)));

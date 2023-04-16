@@ -75,6 +75,10 @@
     <string name="are_you_ready">Вы готовы?</string>
     <string name="string_att_game_info">  Подсчитай количество фигур, появляющихся на экране, а затем запиши их в соответствующем месте.</string>
     <string name="rules">Правила</string>
+    <string name="are_you_attentive">Ты внимательный?</string>
+    <string name="language">Язык</string>
+
+
 
 
     <string-array name="string_complexity_array">

@@ -4,8 +4,8 @@
     <string name="sign_in">Sign in</string>
     <string name="continue_in_armenian">Continue in Armenian</string>
     <string name="welcome">Welcome!</string>
-    <string name="mental_helps_welcome_page">Let\'s train your brain</string>
-    <string name="email">Mail</string>
+    <string name="mental_helps_welcome_page">Let\'s train your brain!</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forget_your_password_retry">Forgot password?</string>
     <string name="i_am_a_new_user">I am a new user</string>
@@ -14,7 +14,7 @@
     <string name="check_email">Check your email and verify your sign up</string>
     <string name="reset_my_password">Reset my password</string>
     <string name="email_address_forgot">Email address</string>
-    <string name="let_s_count_together">Let\'s count together</string>
+    <string name="let_s_count_together">Let\'s count together!</string>
     <string name="how_is_your_memory">How is your memory?</string>
 
 
@@ -31,10 +31,10 @@
     <string name="game_2">Game 2</string>
 
 
-    <string name="lets_go">Let\'s go</string>
+    <string name="lets_go">Let\'s go!</string>
     <string name="answer">Answer</string>
-    <string name="your_answer_is_right">Your answer is right</string>
-    <string name="your_answer_is_wrong">Your answer is wrong</string>
+    <string name="your_answer_is_right">Right</string>
+    <string name="your_answer_is_wrong">Answer is wrong</string>
     <string name="next">Next</string>
     <string name="restart">Restart</string>
     <string name="stop">Stop</string>
@@ -72,7 +72,15 @@
     <string name="are_you_ready">Are you ready?</string>
     <string name="string_att_game_info">Count number of figures appearing on the screen and then write them in appropriate place.</string>
     <string name="rules">Rules</string>
+    <string name="are_you_attentive">Are you attentive?</string>
+    <string name="language">Language</string>
 
+
+    <string-array name="string_languages_array">
+        <item>Русский</item>
+        <item>Հայերեն</item>
+        <item>English</item>
+    </string-array>
 
     <string-array name="string_complexity_array">
         <item>Easy</item>
