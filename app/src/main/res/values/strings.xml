@@ -18,12 +18,10 @@
     <string name="how_is_your_memory">How is your memory?</string>
 
 
-
     <string name="speed">Speed</string>
     <string name="digits">Digits</string>
     <string name="quantity">Count of examples</string>
     <string name="number_of_rows">Number of rows:</string>
-
 
 
     <string name="flash_anzan">Flash anzan</string>
@@ -71,6 +69,9 @@
     <string name="great">Great</string>
     <string name="minutes">Minutes</string>
     <string name="scores">Scores</string>
+    <string name="are_you_ready">Are you ready?</string>
+    <string name="string_att_game_info">Count number of figures appearing on the screen and then write them in appropriate place.</string>
+    <string name="rules">Rules</string>
 
 
     <string-array name="string_complexity_array">

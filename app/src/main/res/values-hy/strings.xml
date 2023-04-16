@@ -71,13 +71,9 @@
     <string name="great">Ընտիր է</string>
     <string name="minutes">րոպե</string>
     <string name="scores">միավոր</string>
-
-
-
-
-
-
-
+    <string name="are_you_ready">Դու պատրաստ ես?</string>
+    <string name="string_att_game_info">Մտապահի\'ր էկրանին հայտնվող պատկերներից յուրաքանչյուրի քանակը, իսկ վերջում գրիր համապատասխան տեղերում։</string>
+    <string name="rules">Կանոններ</string>
 
 
     <string-array name="string_complexity_array">

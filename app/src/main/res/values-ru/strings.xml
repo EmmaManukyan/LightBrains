@@ -72,7 +72,9 @@
     <string name="great">Отлично</string>
     <string name="minutes">минут</string>
     <string name="scores">баллов</string>
-
+    <string name="are_you_ready">Вы готовы?</string>
+    <string name="string_att_game_info">  Подсчитай количество фигур, появляющихся на экране, а затем запиши их в соответствующем месте.</string>
+    <string name="rules">Правила</string>
 
 
     <string-array name="string_complexity_array">

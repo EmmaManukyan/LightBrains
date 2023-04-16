@@ -16,6 +16,8 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameSettingsBinding;
@@ -50,6 +52,22 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+
+
+
+        binding.checkboxInfo.setOnClickListener(view1 -> {
+            if (!binding.checkboxInfo.isChecked()){
+                binding.checkboxInfo.setChecked(true);
+                binding.tvInfo.setVisibility(View.VISIBLE);
+                YoYo.with(Techniques.BounceInDown).duration(500).playOn(binding.tvInfo);
+                Toast.makeText(getContext(), ""+true, Toast.LENGTH_SHORT).show();
+            }else {
+                binding.checkboxInfo.setChecked(false);
+                binding.tvInfo.setVisibility(View.GONE);
+                Toast.makeText(getContext(), ""+false, Toast.LENGTH_SHORT).show();
+
+            }
+        });
         binding.btnLetsGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,6 +180,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     public void onResume() {
         super.onResume();
         if (binding.checkBoxDefineMyslf.isChecked()) {
+            setAdaptersToViews();
             defineManually();
         } else {
             setAdaptersToViews();

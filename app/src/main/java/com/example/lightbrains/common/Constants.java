@@ -38,6 +38,7 @@ public class Constants {
     public static final String CHECKED_LANGUAGE = "CheckedL";
 
     public static final String DIALOG_TAG = "customDialog";
+    public static final String HASHMAP_BUNDLE = "HashMap";
 
     public static final String FIGURES_TYPE = "FigureType";
     public static final String FIGURES_LEVEL = "FiguresLevel";

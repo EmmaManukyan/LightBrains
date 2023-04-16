@@ -18,5 +18,14 @@
         android:id="@+id/attentionGameShowFiguresFragment"
         android:name="com.example.lightbrains.part_second.attention_game.AttentionGameShowFiguresFragment"
         android:label="fragment_attention_game_show_figures"
-        tools:layout="@layout/fragment_attention_game_show_figures" />
+        tools:layout="@layout/fragment_attention_game_show_figures" >
+        <action
+            android:id="@+id/action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment"
+            app:destination="@id/attentionGameWriteAnswersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attentionGameWriteAnswersFragment"
+        android:name="com.example.lightbrains.part_second.attention_game.AttentionGameWriteAnswersFragment"
+        android:label="fragment_attention_game_write_answers"
+        tools:layout="@layout/fragment_attention_game_write_answers" />
 </navigation>

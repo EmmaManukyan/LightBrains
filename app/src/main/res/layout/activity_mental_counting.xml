@@ -15,11 +15,12 @@
 
     <include
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/my_guide_line_for_title_image_home"
         layout="@layout/title_light_brains_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView

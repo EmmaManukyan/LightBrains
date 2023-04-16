@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="32dp"
-    android:paddingBottom="16dp"
-    tools:context=".firstpages.SignInFragment">
+    android:paddingBottom="32dp"
+    tools:context=".firstpages.SignInFragment"
+    >
 
 
     <TextView

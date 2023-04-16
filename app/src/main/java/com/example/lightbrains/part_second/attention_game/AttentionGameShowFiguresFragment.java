@@ -1,12 +1,11 @@
 package com.example.lightbrains.part_second.attention_game;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +15,12 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameShowFiguresBinding;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 public class AttentionGameShowFiguresFragment extends Fragment {
 
@@ -40,7 +40,8 @@ public class AttentionGameShowFiguresFragment extends Fragment {
 
     private boolean runningThread = false;
 
-    private boolean runningRows = false;
+    private HashMap<Integer,Integer> showedMap;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,18 +58,24 @@ public class AttentionGameShowFiguresFragment extends Fragment {
         if (!threadToShowFigures.isAlive()) {
             threadToShowFigures.start();
         }
-        binding.btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.btnStart.setOnClickListener(view1 -> {
 
-                if (!runningThread){
+            if (!binding.btnStart.getText().equals(getResources().getString(R.string.finish))){
+                if (!runningThread) {
                     runningThread = true;
-                }else{
+                    binding.btnStart.setText(getResources().getString(R.string.stop));
+                } else {
                     runningThread = false;
+                    binding.btnStart.setText(getResources().getString(R.string.restart));
                 }
+            }else{
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.HASHMAP_BUNDLE,showedMap);
+                bundle.putInt(Constants.FIGURES_TYPE,figuresType);
+                Log.d("TAG","firs showedMap "+showedMap.toString());
+                Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment,bundle);
             }
         });
-        YoYo.with(Techniques.FadeIn).duration(showTime).playOn(binding.imgFigure);
     }
 
     private void init() {
@@ -79,6 +86,7 @@ public class AttentionGameShowFiguresFragment extends Fragment {
 
     private void getArgs() {
         Bundle bundle = getArguments();
+        assert bundle != null;
         complexityLevel = bundle.getInt(Constants.FIGURES_COMPLEXITY_LEVEL);
         figuresType = bundle.getInt(Constants.FIGURES_TYPE);
         figuresLevel = bundle.getInt(Constants.FIGURES_LEVEL);
@@ -87,20 +95,28 @@ public class AttentionGameShowFiguresFragment extends Fragment {
         showTime = (int) (bundle.getFloat(Constants.FIGURES_SHOW_TIME) * 1000);
         Toast.makeText(getContext(), "" + showTime, Toast.LENGTH_SHORT).show();
 
+
+        if (complexityLevel == 0) {
+            figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
+            figuresLevel = 3;
+            showTime = 800;
+            figuresCount = 8;
+        } else if (complexityLevel == 1) {
+            figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
+            figuresLevel = 5;
+            showTime = 800;
+            figuresCount = 10;
+
+        } else if (complexityLevel == 2) {
+            figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
+            figuresLevel = 10;
+            showTime = 400;
+            figuresCount = 10;
+        }
         Log.d("TAG", "compLevel: " + complexityLevel);
         Log.d("TAG", "figType: " + figuresType);
         Log.d("TAG", "figLevel: " + figuresLevel);
         Log.d("TAG", "figCount: " + figuresCount);
-
-        if (complexityLevel == 0) {
-
-        } else if (complexityLevel == 1) {
-
-        } else if (complexityLevel == 2) {
-
-        }
-
-
 
 
     }
@@ -113,18 +129,46 @@ public class AttentionGameShowFiguresFragment extends Fragment {
             this.showThisMap = showThisMap;
         }
 
-        private boolean funcOnUi(){
-            for (int j = 0; j < 10; j++) {
-                if (runningThread){
+
+        private int getIndexOfArrToShow(HashMap<Integer, Integer> m) {
+            Set<Integer> defaultKeys = m.keySet();
+            Integer[] keys = defaultKeys.toArray(new Integer[defaultKeys.size()]);
+
+            int figIndex = 0;
+            int key;
+            figIndex = Constants.getRandomInRange(0, keys.length - 1);
+            while (m.get(keys[figIndex]) < 1) {
+                figIndex = Constants.getRandomInRange(0, keys.length - 1);
+            }
+            key = keys[figIndex];
+            return key;
+        }
+
+        private boolean funcOnUi(HashMap<Integer, Integer> showThisMap) {
+            for (int j = 0; j < figuresCount; j++) {
+                if (runningThread) {
                     int finalI = j;
-                    getActivity().runOnUiThread(() ->
-                            binding.btnStart.setText(finalI + ""));
+                    getActivity().runOnUiThread(() -> {
+                        //binding.btnStart.setText(finalI + "");
+                        int key = getIndexOfArrToShow(showThisMap);
+                        int temp = showThisMap.get(key)-1;
+                        showThisMap.put(key, temp);
+                        Log.d("TAG",showThisMap.toString());
+                        binding.imgFigure.setImageResource(FigureListCreator.figureTypes[figuresType][key]);
+                        YoYo.with(Techniques.FadeIn).duration(showTime).playOn(binding.imgFigure);
+                        if (finalI == FigureListCreator.figureTypes[1].length) {
+                            binding.btnStart.setText(getResources().getString(R.string.finish));
+                        }
+
+                    });
+
+
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -133,19 +177,31 @@ public class AttentionGameShowFiguresFragment extends Fragment {
 
         @Override
         public void run() {
-            for (int i = 0; i < figuresGroupCount; i++) {
-                if (runningThread){
+            while (true) {
+                if (runningThread) {
                     showThisMap = FigureListCreator.createMapOfFigures(figuresType, figuresLevel, figuresCount);
-                    if (!funcOnUi()){
-                        i--;
-                    }
-                }else{
-                    i--;
-                    continue;
-                }
+                    showedMap = (HashMap<Integer, Integer>) showThisMap.clone();
+                    Log.d("TAG","showed map============================"+showedMap.toString());
 
-                Log.d("TAG","Thread name: "+i);
+                    if (funcOnUi(showThisMap)) {
+                        runningThread = false;
+                        //Toast.makeText(getContext(), "prc", Toast.LENGTH_SHORT).show();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                binding.btnStart.setText(getResources().getString(R.string.finish));
+                            }
+                        });
+                    }
+                }
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        runningThread = false;
+        threadToShowFigures.interrupt();
     }
 }
