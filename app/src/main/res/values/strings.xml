@@ -74,6 +74,7 @@
     <string name="rules">Rules</string>
     <string name="are_you_attentive">Are you attentive?</string>
     <string name="language">Language</string>
+    <string name="log_out">Log out</string>
 
 
     <string-array name="string_languages_array">

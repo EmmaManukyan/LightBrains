@@ -43,7 +43,7 @@
     <string name="finish">Ավարտել</string>
     <string name="yes">Այո</string>
     <string name="no">Ոչ</string>
-    <string name="do_you_really_want_to_exit">Դուք իսկապես ուզում եք դու՞րս գալ</string>
+    <string name="do_you_really_want_to_exit">Դուք իսկապե՞ս ուզում եք դուրս գալ</string>
 
 
     <string name="time">Ժամանակ</string>
@@ -76,6 +76,8 @@
     <string name="rules">Կանոններ</string>
     <string name="are_you_attentive">Ուշադի՞ր ես</string>
     <string name="language">Լեզու</string>
+    <string name="log_out">Դուրս գալ</string>
+
 
 
 

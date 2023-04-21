@@ -46,6 +46,7 @@ public class Constants {
     public static final String FIGURES_COUNT = "FiguresCount";
     public static final String FIGURES_GROUP_COUNT = "FiguresGroupCount";
     public static final String FIGURES_COMPLEXITY_LEVEL = "ComplexityLevel";
+    public static final String DIALOG_TAG_EXIT = "exit dialog";
 
 
     public static SharedPreferences sharedPreferences = null;

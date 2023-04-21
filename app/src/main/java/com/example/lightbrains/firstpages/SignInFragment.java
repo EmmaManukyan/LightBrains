@@ -47,6 +47,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                  Constants.myEditShared.commit();
                  Intent intent = new Intent(getActivity(), HomeActivity.class);
                  startActivity(intent);
+                 //getActivity().finish();
              }
         } else if (binding.tvForgotPassword.equals(view)) {
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_forgotFragment);

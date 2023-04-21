@@ -3,6 +3,7 @@ package com.example.lightbrains.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -13,12 +14,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.lightbrains.R;
+import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.firstpages.MainActivity;
 
 public class CustomDialogFragmentForExit extends DialogFragment {
 
 
     //0->flashCards
     //1->mentalCount
+    //2->appLogout
     private int DIALOG_POSITION_CODE;
 
     public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
@@ -28,6 +32,8 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Constants.createSharedPreferences(getActivity());
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(getResources().getString(R.string.do_you_really_want_to_exit)).
                 setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -49,6 +55,12 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                 assert navHostFragment != null;
                                 navController = navHostFragment.getNavController();
                                 navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
+                                break;
+                            case 2:
+                                Constants.myEditShared.putBoolean(Constants.IS_LOGIN, false);
+                                Constants.myEditShared.commit();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
                                 break;
                         }
 

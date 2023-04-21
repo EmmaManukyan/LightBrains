@@ -354,8 +354,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
     private void showDialog() {
         CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(0);
-        customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), "exit dialog");
-
+        customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 
     public static BackPressedListener backpressedlistener;

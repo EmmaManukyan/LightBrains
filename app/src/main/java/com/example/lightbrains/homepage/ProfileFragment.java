@@ -2,6 +2,7 @@ package com.example.lightbrains.homepage;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import androidx.fragment.app.Fragment;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentProfileBinding;
+import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
 import com.example.lightbrains.dialogs.CustomDialogToWritePasswordFragment;
+import com.example.lightbrains.firstpages.MainActivity;
 
 import java.util.Objects;
 
@@ -38,10 +41,13 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setViewParams();
 
-
         binding.imgEditProfile.setOnClickListener(view1 -> {
             CustomDialogToWritePasswordFragment dialog = new CustomDialogToWritePasswordFragment(this);
             dialog.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
+        });
+
+        binding.btnLogOut.setOnClickListener(view12 -> {
+            showDialog();
         });
 
 
@@ -88,6 +94,11 @@ public class ProfileFragment extends Fragment {
         binding.tvLayPassword.setEnabled(false);
         binding.imgEditProfile.setClickable(true);
         binding.btnConfirm.setVisibility(View.GONE);
+    }
+
+    private void showDialog() {
+        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(2);
+        customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 
 
