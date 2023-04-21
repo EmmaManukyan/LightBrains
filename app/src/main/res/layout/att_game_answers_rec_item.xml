@@ -7,6 +7,7 @@
     android:orientation="horizontal"
     android:paddingBottom="8dp"
     android:paddingTop="8dp"
+    android:paddingEnd="8dp"
     >
 
 
@@ -22,11 +23,14 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/answer"
+        android:hint="@string/quantity_of_figure"
         android:visibility="visible"
         android:layout_weight="7"
         android:layout_marginStart="16dp"
         android:layout_gravity="center_vertical"
+        app:boxStrokeColor="@color/green_dark"
+        android:textColorHint="@color/green_dark"
+        app:hintTextColor="@color/green_dark"
         >
 
 
@@ -37,7 +41,23 @@
             android:layout_gravity="center"
             android:enabled="true"
             android:inputType="number"
-            android:gravity="center_horizontal" />
+            android:textColor="@color/black"
+            android:drawableTint="@color/green_dark"
+            android:gravity="center_horizontal"
+            android:textCursorDrawable="@color/green_dark"
+            android:maxLength="5"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/img_is_right_or_wrong"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/img_smile_heart"
+        android:visibility="gone"/>
 </LinearLayout>

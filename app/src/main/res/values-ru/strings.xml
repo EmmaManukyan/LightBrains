@@ -78,7 +78,9 @@
     <string name="are_you_attentive">Ты внимательный?</string>
     <string name="language">Язык</string>
     <string name="log_out">Выход</string>
-
+    <string name="did_you_remember">Не забыли ли вы?</string>
+    <string name="check">Проверить</string>
+    <string name="quantity_of_figure">Количество фигурки</string>
 
 
 

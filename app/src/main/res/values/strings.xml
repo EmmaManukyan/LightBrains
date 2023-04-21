@@ -75,6 +75,9 @@
     <string name="are_you_attentive">Are you attentive?</string>
     <string name="language">Language</string>
     <string name="log_out">Log out</string>
+    <string name="did_you_remember">Did you remember?</string>
+    <string name="check">Check</string>
+    <string name="quantity_of_figure">Quantity of а figure</string>
 
 
     <string-array name="string_languages_array">

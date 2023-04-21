@@ -21,7 +21,14 @@
         tools:layout="@layout/fragment_attention_game_show_figures" >
         <action
             android:id="@+id/action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment"
-            app:destination="@id/attentionGameWriteAnswersFragment" />
+            app:destination="@id/attentionGameWriteAnswersFragment"
+            app:popUpTo="@id/attentionGameShowFiguresFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_attentionGameShowFiguresFragment_to_attentionGameSettingsFragment"
+            app:destination="@id/attentionGameSettingsFragment"
+            app:popUpTo="@id/attentionGameShowFiguresFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/attentionGameWriteAnswersFragment"

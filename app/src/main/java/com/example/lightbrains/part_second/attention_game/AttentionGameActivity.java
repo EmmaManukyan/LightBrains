@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.lightbrains.R;
+import com.example.lightbrains.part_first_mental.flashanzan.ShowFlashCardsFragment;
 
 public class AttentionGameActivity extends AppCompatActivity {
 
@@ -12,5 +13,14 @@ public class AttentionGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_game);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (AttentionGameShowFiguresFragment.backpressedlistener!=null){
+            AttentionGameShowFiguresFragment.backpressedlistener.onBackPressed();
+        }else{
+            super.onBackPressed();
+        }
     }
 }

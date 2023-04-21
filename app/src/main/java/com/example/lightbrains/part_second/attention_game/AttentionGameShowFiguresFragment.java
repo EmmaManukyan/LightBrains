@@ -18,11 +18,13 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameShowFiguresBinding;
+import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
+import com.example.lightbrains.interfaces.BackPressedListener;
 
 import java.util.HashMap;
 import java.util.Set;
 
-public class AttentionGameShowFiguresFragment extends Fragment {
+public class AttentionGameShowFiguresFragment extends Fragment implements BackPressedListener {
 
 //    Bundle bundle;
 
@@ -40,7 +42,7 @@ public class AttentionGameShowFiguresFragment extends Fragment {
 
     private boolean runningThread = false;
 
-    private HashMap<Integer,Integer> showedMap;
+    private HashMap<Integer, Integer> showedMap;
 
 
     @Override
@@ -60,7 +62,7 @@ public class AttentionGameShowFiguresFragment extends Fragment {
         }
         binding.btnStart.setOnClickListener(view1 -> {
 
-            if (!binding.btnStart.getText().equals(getResources().getString(R.string.finish))){
+            if (!binding.btnStart.getText().equals(getResources().getString(R.string.finish))) {
                 if (!runningThread) {
                     runningThread = true;
                     binding.btnStart.setText(getResources().getString(R.string.stop));
@@ -68,12 +70,12 @@ public class AttentionGameShowFiguresFragment extends Fragment {
                     runningThread = false;
                     binding.btnStart.setText(getResources().getString(R.string.restart));
                 }
-            }else{
+            } else {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.HASHMAP_BUNDLE,showedMap);
-                bundle.putInt(Constants.FIGURES_TYPE,figuresType);
-                Log.d("TAG","firs showedMap "+showedMap.toString());
-                Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment,bundle);
+                bundle.putSerializable(Constants.HASHMAP_BUNDLE, showedMap);
+                bundle.putInt(Constants.FIGURES_TYPE, figuresType);
+                Log.d("TAG", "firs showedMap " + showedMap.toString());
+                Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment, bundle);
             }
         });
     }
@@ -99,8 +101,8 @@ public class AttentionGameShowFiguresFragment extends Fragment {
         if (complexityLevel == 0) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
             figuresLevel = 3;
-            showTime = 800;
-            figuresCount = 8;
+            showTime = 900;
+            figuresCount = 7;
         } else if (complexityLevel == 1) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
             figuresLevel = 5;
@@ -110,13 +112,14 @@ public class AttentionGameShowFiguresFragment extends Fragment {
         } else if (complexityLevel == 2) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
             figuresLevel = 10;
-            showTime = 400;
-            figuresCount = 10;
+            showTime = 700;
+            figuresCount = 14;
         }
         Log.d("TAG", "compLevel: " + complexityLevel);
         Log.d("TAG", "figType: " + figuresType);
         Log.d("TAG", "figLevel: " + figuresLevel);
         Log.d("TAG", "figCount: " + figuresCount);
+        Log.d("TAG", "time: " + showTime);
 
 
     }
@@ -149,11 +152,10 @@ public class AttentionGameShowFiguresFragment extends Fragment {
                 if (runningThread) {
                     int finalI = j;
                     getActivity().runOnUiThread(() -> {
-                        //binding.btnStart.setText(finalI + "");
                         int key = getIndexOfArrToShow(showThisMap);
-                        int temp = showThisMap.get(key)-1;
+                        int temp = showThisMap.get(key) - 1;
                         showThisMap.put(key, temp);
-                        Log.d("TAG",showThisMap.toString());
+                        Log.d("TAG", showThisMap.toString());
                         binding.imgFigure.setImageResource(FigureListCreator.figureTypes[figuresType][key]);
                         YoYo.with(Techniques.FadeIn).duration(showTime).playOn(binding.imgFigure);
                         if (finalI == FigureListCreator.figureTypes[1].length) {
@@ -164,7 +166,7 @@ public class AttentionGameShowFiguresFragment extends Fragment {
 
 
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(showTime);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -181,17 +183,11 @@ public class AttentionGameShowFiguresFragment extends Fragment {
                 if (runningThread) {
                     showThisMap = FigureListCreator.createMapOfFigures(figuresType, figuresLevel, figuresCount);
                     showedMap = (HashMap<Integer, Integer>) showThisMap.clone();
-                    Log.d("TAG","showed map============================"+showedMap.toString());
+                    //Log.d("TAG", "showed map============================" + showedMap.toString());
 
                     if (funcOnUi(showThisMap)) {
                         runningThread = false;
-                        //Toast.makeText(getContext(), "prc", Toast.LENGTH_SHORT).show();
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                binding.btnStart.setText(getResources().getString(R.string.finish));
-                            }
-                        });
+                        getActivity().runOnUiThread(() -> binding.btnStart.setText(getResources().getString(R.string.finish)));
                     }
                 }
             }
@@ -202,6 +198,35 @@ public class AttentionGameShowFiguresFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         runningThread = false;
-        threadToShowFigures.interrupt();
+        if (threadToShowFigures != null) {
+            threadToShowFigures.interrupt();
+        }
+    }
+
+
+    public static BackPressedListener backpressedlistener;
+
+    @Override
+    public void onPause() {
+        backpressedlistener = null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener = this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        runningThread = false;
+        binding.btnStart.setText(getResources().getString(R.string.restart));
+        showDialog();
+    }
+
+    private void showDialog() {
+        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(3);
+        customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 }

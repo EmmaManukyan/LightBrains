@@ -23,9 +23,9 @@ public class FigureListCreator {
 
 
     public static HashMap<Integer, Integer> createMapOfFigures(int figureType, int figureLevel, int figuresCount) {
-        if (figureLevel<3 && figureType!=0){
+        if (figureLevel<3){
             figureLevel = figureLevel * 3 + 2;
-        }else if (figureType==0){
+        }else if (figureType==0 && figureLevel>8){
             figureLevel = 8;
         }
 
@@ -42,7 +42,7 @@ public class FigureListCreator {
             for (int i = 0; i < Math.min(figureLevel - 1, figCount - 1); i++) {
                 while (resultMap.containsKey(tempKey)) {
                     tempKey = Constants.getRandomInRange(0, figureTypes[figureType].length - 1);
-                    Log.d("TAG", "key is " + tempKey);
+                   // Log.d("TAG", "key is " + tempKey);
                 }
                 tempValueCount = figuresCount - i >= 1 ? Constants.getRandomInRange(1, figuresCount - i) : 0;
                 if (i + 1 == Math.min(figureLevel - 1, figCount - 1)) {

@@ -23,6 +23,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     //0->flashCards
     //1->mentalCount
     //2->appLogout
+    //3->att_game
     private int DIALOG_POSITION_CODE;
 
     public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
@@ -61,6 +62,14 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                 Constants.myEditShared.commit();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
+                                break;
+
+                            case 3:
+                                navHostFragment =
+                                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
+                                assert navHostFragment != null;
+                                navController = navHostFragment.getNavController();
+                                navController.navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameSettingsFragment);
                                 break;
                         }
 

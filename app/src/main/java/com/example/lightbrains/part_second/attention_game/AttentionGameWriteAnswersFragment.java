@@ -41,10 +41,25 @@ public class AttentionGameWriteAnswersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        showedMap = (HashMap<Integer, Integer>) bundle.getSerializable(Constants.HASHMAP_BUNDLE);
+        showedMap= new HashMap<>();
+        HashMap<Integer,Integer> tempShowedMap = (HashMap<Integer, Integer>) bundle.getSerializable(Constants.HASHMAP_BUNDLE);
+        for (Integer key : tempShowedMap.keySet()) {
+            if (tempShowedMap.get(key)!=0){
+                showedMap.put(key,tempShowedMap.get(key));
+            }
+        }
         figureType = bundle.getInt(Constants.FIGURES_TYPE);
         Log.d("TAG", "jjjjjjjjjjjjjjjjjjjjjjj             " + showedMap.toString());
         init();
+
+        binding.btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //adapter.getHolder().getEdtAnswer().setText("1255");
+                adapter.isChecking = true;
+                adapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
