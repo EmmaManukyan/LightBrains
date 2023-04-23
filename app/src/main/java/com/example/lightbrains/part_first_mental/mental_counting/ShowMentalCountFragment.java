@@ -3,6 +3,7 @@ package com.example.lightbrains.part_first_mental.mental_counting;
 import static com.example.lightbrains.common.Constants.animations;
 import static com.example.lightbrains.common.Constants.rightAnswersRes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -32,6 +33,7 @@ import com.example.lightbrains.interfaces.BackPressedListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -139,6 +141,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
             this.levelClass = levelClass;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void run() {
 
@@ -153,7 +156,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                         for (int j = 0; j < countOfRows; j++) {
                             if (runningThread) {
                                 int finalJ = j;
-                                getActivity().runOnUiThread(() -> {
+                                requireActivity().runOnUiThread(() -> {
                                     binding.btnStart.setText(getResources().getString(R.string.stop));
                                     binding.tvNumber.setVisibility(View.VISIBLE);
                                     binding.tvNumber.setTextSize(150 - 15 * digit);
@@ -239,10 +242,10 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
 
         binding.edtAnswer.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(requireActivity().getCurrentFocus().getWindowToken(), 0);
 
-                if (!TextUtils.isEmpty(binding.edtAnswer.getText().toString())) {
+                if (!TextUtils.isEmpty(Objects.requireNonNull(binding.edtAnswer.getText()).toString())) {
                     if (binding.edtAnswer.getText().toString().equals(result)) {
                         answerIsRight();
                         //Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
@@ -289,9 +292,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
 
     private void answerIsWrong(String wrogAnsw, String result) {
         binding.tvWithSmile.setVisibility(View.VISIBLE);
-        binding.imgSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
-        binding.imgSmile.setImageResource(R.drawable.img_smile_eye_smile);
 
         binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n" + wrogAnsw + " ≠ " + result+"\n\n");
 
@@ -332,7 +333,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
     private void showDialog() {
         pauseShowing();
         CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(1);
-        customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), "exit dialog");
+        customDialogFragmentForExit.show(requireActivity().getSupportFragmentManager(), "exit dialog");
 
     }
 

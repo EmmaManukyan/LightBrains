@@ -94,7 +94,8 @@
         android:src="@drawable/img_heart_eyes_smile"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/btn_start_flash_cards"
-        app:layout_constraintTop_toBottomOf="@id/tv_with_smile" />
+        app:layout_constraintTop_toBottomOf="@id/tv_with_smile"
+        android:padding="16dp"/>
 
 
     <androidx.appcompat.widget.AppCompatButton

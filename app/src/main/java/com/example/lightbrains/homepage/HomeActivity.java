@@ -20,7 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class HomeActivity extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
     ActivityHomeBinding binding;
 
     private boolean IS_IN_PROFILE_PAGE = false;
@@ -34,12 +33,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        bottomNavigationView = findViewById(R.id.my_bottom_nav);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
-        bottomNavigationView.setSelectedItemId(R.id.menu_home);
+        binding.myBottomNav.setSelectedItemId(R.id.menu_home);
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        binding.myBottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -58,10 +55,10 @@ public class HomeActivity extends AppCompatActivity {
                         IS_IN_PROFILE_PAGE = false;
                         fragment = new SettingsFragment();
                         break;
-                    case R.id.leader_board:
+                    /*case R.id.leader_board:
                         fragment = new LeaderBoardFragment();
                         IS_IN_PROFILE_PAGE = false;
-                        break;
+                        break;*/
                 }
                 if (fragment != null) {
                     loadFragment(fragment);

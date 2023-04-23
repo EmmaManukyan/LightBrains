@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Results" />
 
     <ScrollView
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Scores"
+                android:hint="@string/scores"
                 android:visibility="invisible"
                 app:boxStrokeErrorColor="@color/color_secondary_variant"
                 app:errorIconDrawable="@drawable/baseline_scores_24"

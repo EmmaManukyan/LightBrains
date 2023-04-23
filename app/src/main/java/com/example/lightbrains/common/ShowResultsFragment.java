@@ -22,6 +22,8 @@ import com.example.lightbrains.homepage.HomeActivity;
 import com.example.lightbrains.homepage.HomeFragment;
 import com.example.lightbrains.interfaces.BackPressedListener;
 
+import java.util.Objects;
+
 
 public class ShowResultsFragment extends Fragment {
     private FragmentShowResultsBinding binding;
@@ -37,12 +39,13 @@ public class ShowResultsFragment extends Fragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        scores = getArguments().getInt(Constants.SCORES);
-        int count = getArguments().getInt(Constants.COUNT_FLASH_CARDS);
-        time = (float) getArguments().getLong(Constants.FIGURES_SHOW_TIME)/60000;
+        scores = requireArguments().getInt(Constants.SCORES);
+        int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
+        time = (float) requireArguments().getLong(Constants.FIGURES_SHOW_TIME)/60000;
         time = (float) (Math.round(time * 100.0) / 100.0);
         Log.d("TAG",time+"");
 
@@ -56,41 +59,36 @@ public class ShowResultsFragment extends Fragment {
         binding.btnMainPage.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
+            requireActivity().finish();
         });
         binding.edtTime.setText(""+time +" "+getResources().getString(R.string.minutes));
-        binding.edtScores.setText(""+scores +" "+getResources().getString(R.string.scores));
+        binding.edtScores.setText(""+scores +" "+getResources().getString(R.string.scores).toLowerCase());
     }
 
+    @SuppressLint("SetTextI18n")
     private void progressBarAnimation(int progress) {
-        new Thread() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void run() {
-                for (int i = 0; i <= progress; i += 1) {
-                    int finalI = i;
-                    getActivity().runOnUiThread(() -> {
-                        binding.myProgressbarResult.setProgress(finalI);
-                        binding.tvResultPercent.setText(finalI + "%");
-                    });
-                    try {
-                        Thread.sleep(18);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        binding.tvLayTime.setVisibility(View.VISIBLE);
-                        binding.tvLayScores.setVisibility(View.VISIBLE);
-                        binding.edtTime.setText(""+time+" "+getResources().getString(R.string.minutes));
-                        binding.edtScores.setText(""+scores+" "+getResources().getString(R.string.scores));
-                        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);
-                        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayScores);
-                    }
+        new Thread(() -> {
+            for (int i = 0; i <= progress; i += 1) {
+                int finalI = i;
+                requireActivity().runOnUiThread(() -> {
+                    binding.myProgressbarResult.setProgress(finalI);
+                    binding.tvResultPercent.setText(finalI + "%");
                 });
-
+                try {
+                    Thread.sleep(18);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        }.start();
+            requireActivity().runOnUiThread(() -> {
+                binding.tvLayTime.setVisibility(View.VISIBLE);
+                binding.tvLayScores.setVisibility(View.VISIBLE);
+                binding.edtTime.setText(""+time+" "+getResources().getString(R.string.minutes));
+                binding.edtScores.setText(""+scores+" "+getResources().getString(R.string.scores).toLowerCase());
+                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);
+                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayScores);
+            });
+
+        }).start();
     }
 }

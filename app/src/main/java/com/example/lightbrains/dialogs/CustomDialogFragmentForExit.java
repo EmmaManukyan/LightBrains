@@ -17,6 +17,8 @@ import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.firstpages.MainActivity;
 
+import java.util.Objects;
+
 public class CustomDialogFragmentForExit extends DialogFragment {
 
 
@@ -24,7 +26,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     //1->mentalCount
     //2->appLogout
     //3->att_game
-    private int DIALOG_POSITION_CODE;
+    private final int DIALOG_POSITION_CODE;
 
     public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
         this.DIALOG_POSITION_CODE = DIALOG_POSITION_CODE;
@@ -45,14 +47,14 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                         switch (DIALOG_POSITION_CODE){
                             case 0:
                                 navHostFragment =
-                                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
+                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
                                 assert navHostFragment != null;
                                 navController = navHostFragment.getNavController();
                                 navController.navigate(R.id.action_showFlashCardsFragment_to_fleshAnzanSettingsFragment);
                                 break;
                             case 1:
                                 navHostFragment =
-                                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_mental_counting);
+                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_mental_counting);
                                 assert navHostFragment != null;
                                 navController = navHostFragment.getNavController();
                                 navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
@@ -62,11 +64,12 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                 Constants.myEditShared.commit();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
+                                requireActivity().finish();
                                 break;
 
                             case 3:
                                 navHostFragment =
-                                        (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
+                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
                                 assert navHostFragment != null;
                                 navController = navHostFragment.getNavController();
                                 navController.navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameSettingsFragment);

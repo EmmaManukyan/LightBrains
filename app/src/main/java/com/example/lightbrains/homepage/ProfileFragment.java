@@ -43,11 +43,16 @@ public class ProfileFragment extends Fragment {
 
         binding.imgEditProfile.setOnClickListener(view1 -> {
             CustomDialogToWritePasswordFragment dialog = new CustomDialogToWritePasswordFragment(this);
-            dialog.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
+            dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
         });
 
         binding.btnLogOut.setOnClickListener(view12 -> {
             showDialog();
+        });
+
+        binding.btnConfirm.setOnClickListener(view13 -> {
+            disEnableViews();
+            Toast.makeText(getContext(), "Confirmed!", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -63,7 +68,6 @@ public class ProfileFragment extends Fragment {
     public void checkPassword(String password) {
         if (Objects.equals(password, "Emma")) {
             enableViews();
-            Toast.makeText(getContext(), "Exav", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "Password is wrong", Toast.LENGTH_SHORT).show();
         }
@@ -98,7 +102,7 @@ public class ProfileFragment extends Fragment {
 
     private void showDialog() {
         CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(2);
-        customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
+        customDialogFragmentForExit.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 
 

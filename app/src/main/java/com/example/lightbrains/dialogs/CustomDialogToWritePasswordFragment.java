@@ -17,6 +17,8 @@ import com.example.lightbrains.R;
 import com.example.lightbrains.databinding.FragmentCustomDialogToWritePasswordBinding;
 import com.example.lightbrains.homepage.ProfileFragment;
 
+import java.util.Objects;
+
 
 public class CustomDialogToWritePasswordFragment extends DialogFragment {
 
@@ -29,7 +31,7 @@ public class CustomDialogToWritePasswordFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCustomDialogToWritePasswordBinding.inflate(inflater, container, false);
@@ -48,7 +50,7 @@ public class CustomDialogToWritePasswordFragment extends DialogFragment {
         binding.btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragment.checkPassword(binding.edtPassword.getText().toString());
+                fragment.checkPassword(Objects.requireNonNull(binding.edtPassword.getText()).toString());
                 dismiss();
             }
         });
