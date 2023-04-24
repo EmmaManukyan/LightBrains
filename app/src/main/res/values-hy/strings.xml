@@ -30,6 +30,7 @@
 
 
     <string name="game_1">Խաղ 1</string>
+    <string name="attention_game">Ուշադրության խաղ</string>
     <string name="game_2">Խաղ 2</string>
 
     <string name="lets_go">Գնացինք!</string>
@@ -65,16 +66,16 @@
 
     <string name="figures">Պատկերներ</string>
     <string name="variety_of_figures">Պատկերների բազմազանություն</string>
-    <string name="install_manually">Սահմանլ ձեռքով</string>
+    <string name="install_manually">Սահմանել ձեռքով</string>
     <string name="number_of_following_figures">Հաջորդող պատկերների քանակ: </string>
     <string name="str_continue">Շարունակել</string>
     <string name="great">Ընտիր է</string>
     <string name="minutes">րոպե</string>
-    <string name="scores">միավոր</string>
-    <string name="are_you_ready">Դու պատրա՞ստ ես</string>
-    <string name="string_att_game_info">Մտապահի\'ր էկրանին հայտնվող պատկերներից յուրաքանչյուրի քանակը, իսկ վերջում գրիր համապատասխան տեղերում։</string>
+    <string name="scores">Միավոր</string>
+    <string name="are_you_ready">Պատրա՞ստ ես</string>
+    <string name="string_att_game_info">Մտապահի\'ր էկրանին հայտնվող պատկերներից յուրաքանչյուրի քանակը, իսկ վերջում գրիր համապատասխան դաշտում։</string>
     <string name="rules">Կանոններ</string>
-    <string name="are_you_attentive">Ուշադի՞ր ես</string>
+    <string name="are_you_attentive">Ուշադի՞ր ես արդյոք</string>
     <string name="language">Լեզու</string>
     <string name="log_out">Դուրս գալ</string>
     <string name="did_you_remember">Արդյոք հիշեցի՞ր</string>

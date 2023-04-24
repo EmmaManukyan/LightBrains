@@ -48,6 +48,10 @@ public class Constants {
     public static final String FIGURES_COMPLEXITY_LEVEL = "ComplexityLevel";
     public static final String DIALOG_TAG_EXIT = "exit dialog";
 
+    public static final String FIGURES_SHOW_START_TIME = "FiguresShowStartTime";
+    public static final String FIGURES_SHOW_FINISH_TIME = "FiguresShowFinishTime";
+
+
 
     public static SharedPreferences sharedPreferences = null;
     public static SharedPreferences.Editor myEditShared = null;

@@ -9,7 +9,7 @@
     <string name="password">Password</string>
     <string name="forget_your_password_retry">Forgot password?</string>
     <string name="i_am_a_new_user">I am a new user</string>
-    <string name="name">Name</string>
+    <string name="name">Username</string>
     <string name="create_account">Create \nAccount</string>
     <string name="check_email">Check your email and verify your sign up</string>
     <string name="reset_my_password">Reset my password</string>
@@ -28,6 +28,7 @@
     <string name="flash_cards">Flash cards</string>
 
     <string name="game_1">Game 1</string>
+    <string name="attention_game">Attention game</string>
     <string name="game_2">Game 2</string>
 
 

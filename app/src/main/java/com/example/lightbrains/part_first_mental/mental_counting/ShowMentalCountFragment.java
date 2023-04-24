@@ -197,16 +197,13 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                 }
 
                 if (uiThreadIsRunning) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            unVisible();
-                            binding.tvAnswerLayout.setVisibility(View.VISIBLE);
-                            binding.edtAnswer.setText("");
-                            Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
-                            binding.btnStart.setVisibility(View.VISIBLE);
-                            binding.btnStart.setEnabled(false);
-                        }
+                    requireActivity().runOnUiThread(() -> {
+                        unVisible();
+                        binding.tvAnswerLayout.setVisibility(View.VISIBLE);
+                        binding.edtAnswer.setText("");
+                        Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
+                        binding.btnStart.setVisibility(View.VISIBLE);
+                        binding.btnStart.setEnabled(false);
                     });
                 }
             }

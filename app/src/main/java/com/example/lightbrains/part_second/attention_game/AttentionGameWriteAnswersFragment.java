@@ -1,5 +1,6 @@
 package com.example.lightbrains.part_second.attention_game;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
@@ -29,6 +32,10 @@ public class AttentionGameWriteAnswersFragment extends Fragment {
     private HashMap<Integer, Integer> showedMap;
     private int figureType;
 
+    private int figuresGroupCount;
+
+    private boolean answersAreChecked = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,27 +44,49 @@ public class AttentionGameWriteAnswersFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        showedMap= new HashMap<>();
-        HashMap<Integer,Integer> tempShowedMap = (HashMap<Integer, Integer>) bundle.getSerializable(Constants.HASHMAP_BUNDLE);
+        figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
+        showedMap = new HashMap<>();
+        HashMap<Integer, Integer> tempShowedMap = (HashMap<Integer, Integer>) bundle.getSerializable(Constants.HASHMAP_BUNDLE);
         for (Integer key : tempShowedMap.keySet()) {
-            if (tempShowedMap.get(key)!=0){
-                showedMap.put(key,tempShowedMap.get(key));
+            if (tempShowedMap.get(key) != 0) {
+                showedMap.put(key, tempShowedMap.get(key));
             }
         }
         figureType = bundle.getInt(Constants.FIGURES_TYPE);
         Log.d("TAG", "jjjjjjjjjjjjjjjjjjjjjjj             " + showedMap.toString());
         init();
 
-        binding.btnCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //adapter.getHolder().getEdtAnswer().setText("1255");
+        binding.btnCheck.setOnClickListener(view1 -> {
+            if (!answersAreChecked) {
+                closeKeyboard();
                 adapter.isChecking = true;
+                answersAreChecked = true;
                 adapter.notifyDataSetChanged();
+                if (figuresGroupCount!=0) {
+                    binding.btnCheck.setText(getResources().getString(R.string.next));
+                }else{
+                    binding.btnCheck.setText(getResources().getString(R.string.finish));
+                }
+            } else if (figuresGroupCount==0) {
+                Bundle bundleToNavigate = new Bundle();
+                bundleToNavigate.putInt(Constants.SCORES,10);
+                bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS,10);
+                bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME,System.currentTimeMillis()-bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
+                Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_showResultsFragment3,bundleToNavigate);
+            } else {
+                Bundle bundleToNavigate = new Bundle();
+                bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
+                bundle.putInt(Constants.FIGURES_TYPE,bundle.getInt(Constants.FIGURES_TYPE));
+                bundle.putInt(Constants.FIGURES_LEVEL,bundle.getInt(Constants.FIGURES_LEVEL));
+                bundle.putFloat(Constants.FIGURES_SHOW_TIME,bundle.getFloat(Constants.FIGURES_SHOW_TIME));
+                bundle.putInt(Constants.FIGURES_COUNT,bundle.getInt(Constants.FIGURES_COUNT));
+                bundleToNavigate.putLong(Constants.FIGURES_SHOW_START_TIME,bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
+                Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameShowFiguresFragment,bundleToNavigate);
             }
         });
 
@@ -67,5 +96,30 @@ public class AttentionGameWriteAnswersFragment extends Fragment {
         binding.myRec.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AttentionGameRecyclerAdapter(showedMap, getContext(), figureType);
         binding.myRec.setAdapter(adapter);
+    }
+
+
+    private void closeKeyboard()
+    {
+        // this will give us the view
+        // which is currently focus
+        // in this layout
+        View view = requireActivity().getCurrentFocus();
+
+        // if nothing is currently
+        // focus then this will protect
+        // the app from crash
+        if (view != null) {
+
+            // now assign the system
+            // service to InputMethodManager
+            InputMethodManager manager
+                    = (InputMethodManager)
+                    requireActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+            manager
+                    .hideSoftInputFromWindow(
+                            view.getWindowToken(), 0);
+        }
     }
 }

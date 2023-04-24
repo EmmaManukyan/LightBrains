@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.adapters.RecyclerAdapterFlashCards;
+import com.example.lightbrains.databinding.BottomSheetLayoutBinding;
 import com.example.lightbrains.part_first_mental.flashanzan.FLashActivity;
 import com.example.lightbrains.part_first_mental.flashanzan.RecyclerViewItem;
 import com.example.lightbrains.part_first_mental.mental_counting.MentalCountingActivity;
@@ -28,12 +30,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
     private ConstraintLayout viewMental;
     private ConstraintLayout viewMemoryGames;
-    private List<Activity> activities;
+    private String[] titles;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,74 +49,61 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init(view);
-        viewMental.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openBottomSheet(0);
-            }
-        });
+        viewMental.setOnClickListener(view12 -> openBottomSheet(0));
 
 
-        viewMemoryGames.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                openBottomSheet(1);
-            }
-        });
+        viewMemoryGames.setOnClickListener(view1 -> openBottomSheet(1));
     }
 
     private void init(View view) {
         viewMental = view.findViewById(R.id.view_mental);
         viewMemoryGames = view.findViewById(R.id.view_memory_games);
 
+        titles = new String[]{getResources().getString(R.string.let_s_count_together),getResources().getString(R.string.how_is_your_memory)};
     }
 
     private void openBottomSheet(int viewOrder) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.MyStyleForBottomSheetDialog1);
-
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.MyStyleForBottomSheetDialog1);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
-
         bottomSheetDialog.show();
 
-        List<RecyclerViewItem> list = new ArrayList<RecyclerViewItem>();
+
+        TextView tvTitle = bottomSheetDialog.findViewById(R.id.tv_bottom_sheet_title);
+
+        tvTitle.setText(titles[viewOrder]);
+
+        List<RecyclerViewItem> list;
         list = getData(viewOrder);
         RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.my_recycler_in_bottom_sheet);
-        recyclerView.setLayoutManager(
+        Objects.requireNonNull(recyclerView).setLayoutManager(
                 new LinearLayoutManager(getContext()));
-        RecyclerAdapterFlashCards adapter = new RecyclerAdapterFlashCards(list, getContext(), new RecyclerAdapterFlashCards.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerViewItem item, int position) {
-                Intent intent = null;
-                if (viewOrder == 0) {
-                    switch (position) {
-                        case 0:
-                            intent = new Intent(getActivity(), MentalCountingActivity.class);
-                            break;
-                        case 1:
-                            intent = new Intent(getActivity(), FLashActivity.class);
-                            break;
-                    }
-                } else {
-                    switch (position) {
-                        case 0:
-                            intent = new Intent(getActivity(), AttentionGameActivity.class);
-                            break;
-                        case 1:
-                            intent = new Intent(getActivity(), FLashActivity.class);
-                            break;
-                    }
+        RecyclerAdapterFlashCards adapter = new RecyclerAdapterFlashCards(list, getContext(), (item, position) -> {
+            Intent intent = null;
+            if (viewOrder == 0) {
+                switch (position) {
+                    case 0:
+                        intent = new Intent(getActivity(), MentalCountingActivity.class);
+                        break;
+                    case 1:
+                        intent = new Intent(getActivity(), FLashActivity.class);
+                        break;
                 }
-                bottomSheetDialog.dismiss();
-                Toast.makeText(getContext(), "" + item.getTitleName(), Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+            } else {
+                switch (position) {
+                    case 0:
+                        intent = new Intent(getActivity(), AttentionGameActivity.class);
+                        break;
+                    case 1:
+                        intent = new Intent(getActivity(), FLashActivity.class);
+                        break;
+                }
             }
+            bottomSheetDialog.dismiss();
+            Toast.makeText(getContext(), "" + item.getTitleName(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         });
 
         recyclerView.setAdapter(adapter);
-
-
-
     }
 
 
@@ -123,7 +113,7 @@ public class HomeFragment extends Fragment {
             list.add(new RecyclerViewItem(R.drawable.img_for_mental, getActivity().getResources().getString(flash_anzan), R.color.pink));
             list.add(new RecyclerViewItem(R.drawable.flash_cards_img, getActivity().getResources().getString(R.string.flash_cards), R.color.blue));
         } else if (viewOrder == 1) {
-            list.add(new RecyclerViewItem(R.drawable.img_for_mental, getActivity().getResources().getString(R.string.game_1), R.color.green));
+            list.add(new RecyclerViewItem(R.drawable.att_game_icon, getActivity().getResources().getString(R.string.attention_game), R.color.green));
             list.add(new RecyclerViewItem(R.drawable.flash_cards_img, getActivity().getResources().getString(R.string.game_2), R.color.yellow));
         }
         return list;

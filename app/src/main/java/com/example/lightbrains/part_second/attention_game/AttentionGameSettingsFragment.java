@@ -1,27 +1,22 @@
 package com.example.lightbrains.part_second.attention_game;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.SeekBar;
-import android.widget.Toast;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameSettingsBinding;
-import com.google.android.material.slider.Slider;
 
 public class AttentionGameSettingsFragment extends Fragment implements View.OnClickListener {
 
@@ -45,6 +40,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAttentionGameSettingsBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
@@ -60,42 +56,37 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
                 binding.checkboxInfo.setChecked(true);
                 binding.tvInfo.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.BounceInDown).duration(500).playOn(binding.tvInfo);
-                Toast.makeText(getContext(), ""+true, Toast.LENGTH_SHORT).show();
             }else {
                 binding.checkboxInfo.setChecked(false);
                 binding.tvInfo.setVisibility(View.GONE);
-                Toast.makeText(getContext(), ""+false, Toast.LENGTH_SHORT).show();
-
             }
         });
-        binding.btnLetsGo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (binding.checkBoxDefineMyslf.isChecked()){
-                    if (figuresType !=-1 && figuresLevel!=-1) {
-                        putBundlesWithoutComplexity();
-                        Navigation.findNavController(view).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment,bundle);
+        binding.btnLetsGo.setOnClickListener(view12 -> {
+            if (binding.checkBoxDefineMyslf.isChecked()){
+                if (figuresType !=-1 && figuresLevel!=-1) {
+                    putBundlesWithoutComplexity();
+                    Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment,bundle);
 
-                    }else{
-                        Toast.makeText(getContext(), "Select fields", Toast.LENGTH_SHORT).show();;
-                    }
                 }else{
-                    putBundlesWithComplexity();
-                    Navigation.findNavController(view).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment,bundle);
+                    Toast.makeText(getContext(), "Select fields", Toast.LENGTH_SHORT).show();;
                 }
+            }else{
+                putBundlesWithComplexity();
+                bundle.putLong(Constants.FIGURES_SHOW_START_TIME,System.currentTimeMillis());
+                Constants.myEditShared.putInt(Constants.FIGURES_COMPLEXITY_LEVEL, complexityLevel);
+                Constants.myEditShared.putInt(Constants.FIGURES_GROUP_COUNT, figuresGroupCount);
+                Constants.myEditShared.commit();
+                Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment,bundle);
             }
         });
 
 
-        binding.checkBoxDefineMyslf.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    defineManually();
-                } else {
-                    binding.includedLayoutContainer.setVisibility(View.GONE);
-                    binding.tvLayComplexity.setEnabled(true);
-                }
+        binding.checkBoxDefineMyslf.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                defineManually();
+            } else {
+                binding.includedLayoutContainer.setVisibility(View.GONE);
+                binding.tvLayComplexity.setEnabled(true);
             }
         });
     }
@@ -125,13 +116,11 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         binding.btnPlus.setOnClickListener(this);
         binding.btnMinus.setOnClickListener(this);
         setAdaptersToViews();
-        binding.autoTvComplexity.setText(complexityArrayStrings[complexityLevel]);
         binding.includedLayout.tvTime.append(" 0.3");
         binding.includedLayout.tvFigureCount.append(" 3");
 
         binding.autoTvComplexity.setOnItemClickListener((adapterView, view, i, l) -> {
             complexityLevel = i;
-            Toast.makeText(getContext(), ""+complexityLevel, Toast.LENGTH_SHORT).show();
         });
 
 
@@ -141,22 +130,16 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
 
         binding.includedLayout.autoTvFiguresLevel.setOnItemClickListener((adapterView, view, i, l) -> figuresLevel = i);
 
-        binding.includedLayout.sliderTime.addOnChangeListener(new Slider.OnChangeListener() {
-            @Override
-            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
-                float time = (float) value/10;
-                showTime = time;
-                binding.includedLayout.tvTime.setText(getResources().getString(R.string.time) + ": " + time);
-            }
+        binding.includedLayout.sliderTime.addOnChangeListener((slider, value, fromUser) -> {
+            float time = (float) value/10;
+            showTime = time;
+            binding.includedLayout.tvTime.setText(getResources().getString(R.string.time) + ": " + time);
         });
 
 
-        binding.includedLayout.sliderFigureCount.addOnChangeListener(new Slider.OnChangeListener() {
-            @Override
-            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
-                figuresCount = (int) value;
-                binding.includedLayout.tvFigureCount.setText(getResources().getString(R.string.number_of_following_figures)+" "+figuresCount);
-            }
+        binding.includedLayout.sliderFigureCount.addOnChangeListener((slider, value, fromUser) -> {
+            figuresCount = (int) value;
+            binding.includedLayout.tvFigureCount.setText(getResources().getString(R.string.number_of_following_figures)+" "+figuresCount);
         });
     }
 
@@ -188,8 +171,13 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     }
 
     private void setAdaptersToViews() {
+        Constants.createSharedPreferences(getActivity());
         complexityArrayStrings = getResources().getStringArray(R.array.string_complexity_array);
         arrayAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, complexityArrayStrings);
+        complexityLevel = Constants.sharedPreferences.getInt(Constants.FIGURES_COMPLEXITY_LEVEL,0);
+        figuresGroupCount = Constants.sharedPreferences.getInt(Constants.FIGURES_GROUP_COUNT,1);
+        binding.autoTvCountOfFigureGroups.setText(""+figuresGroupCount);
+        binding.autoTvComplexity.setText(complexityArrayStrings[complexityLevel]);
         binding.autoTvComplexity.setAdapter(arrayAdapter);
     }
 

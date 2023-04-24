@@ -44,6 +44,8 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
     private HashMap<Integer, Integer> showedMap;
 
+    private long startTime;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +77,13 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
                 bundle.putSerializable(Constants.HASHMAP_BUNDLE, showedMap);
                 bundle.putInt(Constants.FIGURES_TYPE, figuresType);
                 Log.d("TAG", "firs showedMap " + showedMap.toString());
+                figuresCount--;
+                bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
+                bundle.putInt(Constants.FIGURES_TYPE,figuresType);
+                bundle.putInt(Constants.FIGURES_LEVEL,figuresLevel);
+                bundle.putFloat(Constants.FIGURES_SHOW_TIME,showTime);
+                bundle.putInt(Constants.FIGURES_COUNT,figuresCount);
+                bundle.putLong(Constants.FIGURES_SHOW_START_TIME,startTime);
                 Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment, bundle);
             }
         });
@@ -94,6 +103,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
         figuresLevel = bundle.getInt(Constants.FIGURES_LEVEL);
         figuresCount = bundle.getInt(Constants.FIGURES_COUNT);
         figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
+        startTime = bundle.getLong(Constants.FIGURES_SHOW_START_TIME);
         showTime = (int) (bundle.getFloat(Constants.FIGURES_SHOW_TIME) * 1000);
         Toast.makeText(getContext(), "" + showTime, Toast.LENGTH_SHORT).show();
 
@@ -187,7 +197,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
                     if (funcOnUi(showThisMap)) {
                         runningThread = false;
-                        getActivity().runOnUiThread(() -> binding.btnStart.setText(getResources().getString(R.string.finish)));
+                        requireActivity().runOnUiThread(() -> binding.btnStart.setText(getResources().getString(R.string.finish)));
                     }
                 }
             }

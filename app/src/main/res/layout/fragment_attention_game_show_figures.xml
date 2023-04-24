@@ -7,6 +7,20 @@
     android:padding="16dp"
     tools:context=".part_second.attention_game.AttentionGameShowFiguresFragment">
 
+    <TextView
+        android:id="@+id/tv_are_you_ready"
+        style="@style/MyStyleForTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/are_you_ready"
+        android:textSize="40sp"
+        android:textStyle="normal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/img_figure"
         android:layout_width="0dp"

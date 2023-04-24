@@ -76,12 +76,10 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
                 if (!holder.edtAnswer.getText().toString().equals("")){
                     if (Integer.parseInt(holder.edtAnswer.getText().toString())==showedMap.get(keys[position])){
                         answersMap.put(keys[position], true);
-                        holder.imgIsRight.setImageResource(R.drawable.img_heart_eyes_smile);
+                        holder.imgIsRight.setImageResource(R.drawable.right);
                     }else{
                         answersMap.put(keys[position], false);
-                        holder.imgIsRight.setImageResource(R.drawable.img_sad_smile);
-
-
+                        holder.imgIsRight.setImageResource(R.drawable.wrong);
                     }
                 }
                 Log.d("TAG",holder.edtAnswer.getText()+"  "+"position: "+answersMap.get(keys[position]));
@@ -98,10 +96,10 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
 
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgFigure;
-        private ImageView imgIsRight;
-        private EditText edtAnswer;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imgFigure;
+        private final ImageView imgIsRight;
+        private final EditText edtAnswer;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -109,14 +107,6 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
             imgFigure = itemView.findViewById(R.id.img_att_game_figure);
             imgIsRight = itemView.findViewById(R.id.img_is_right_or_wrong);
             edtAnswer = itemView.findViewById(R.id.edt_att_game_answer);
-        }
-
-        public ImageView getImgFigure() {
-            return imgFigure;
-        }
-
-        public EditText getEdtAnswer() {
-            return edtAnswer;
         }
     }
 

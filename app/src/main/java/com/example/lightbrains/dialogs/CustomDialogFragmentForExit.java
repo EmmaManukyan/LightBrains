@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.firstpages.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -60,6 +61,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                 navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
                                 break;
                             case 2:
+                                FirebaseAuth.getInstance().signOut();
                                 Constants.myEditShared.putBoolean(Constants.IS_LOGIN, false);
                                 Constants.myEditShared.commit();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);

@@ -29,6 +29,7 @@
     <string name="flash_cards">Флеш карты</string>
 
     <string name="game_1">Игра 1</string>
+    <string name="attention_game">Игра на внимание</string>
     <string name="game_2">Игра 2</string>
 
     <string name="lets_go">Поехали!</string>
@@ -71,7 +72,7 @@
     <string name="str_continue">Продолжать</string>
     <string name="great">Отлично</string>
     <string name="minutes">минут</string>
-    <string name="scores">баллов</string>
+    <string name="scores">Баллов</string>
     <string name="are_you_ready">Вы готовы?</string>
     <string name="string_att_game_info">  Подсчитай количество фигур, появляющихся на экране, а затем запиши их в соответствующем месте.</string>
     <string name="rules">Правила</string>

@@ -52,7 +52,6 @@
                 android:text="@string/string_att_game_info"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                android:textStyle="italic"
                 android:visibility="gone" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -71,6 +70,7 @@
                     android:id="@+id/auto_tv_complexity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/complexity"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,6 +98,7 @@
                     android:layout_weight="2"
                     android:hint="@string/quantity"
                     android:textColorHint="@color/green_dark"
+                    app:hintTextColor="@color/green_dark"
                     app:boxStrokeColor="@color/green_dark">
 
                     <com.google.android.material.textfield.TextInputEditText

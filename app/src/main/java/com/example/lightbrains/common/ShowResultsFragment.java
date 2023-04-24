@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,8 +84,14 @@ public class ShowResultsFragment extends Fragment {
             requireActivity().runOnUiThread(() -> {
                 binding.tvLayTime.setVisibility(View.VISIBLE);
                 binding.tvLayScores.setVisibility(View.VISIBLE);
-                binding.edtTime.setText(""+time+" "+getResources().getString(R.string.minutes));
-                binding.edtScores.setText(""+scores+" "+getResources().getString(R.string.scores).toLowerCase());
+                String html = "<font color=" + getResources().getColor(R.color.color_primary_variant)
+                        + ">"+time +"</font><font color="
+                        + getResources().getColor(R.color.color_secondary_variant) + "> "+getResources().getString(R.string.minutes)+"</font>";
+                binding.edtTime.setText(Html.fromHtml(html));
+                html = "<font color=" + getResources().getColor(R.color.color_secondary_variant)
+                        + ">"+scores +"</font><font color="
+                        + getResources().getColor(R.color.color_primary_variant) + "> "+getResources().getString(R.string.scores).toLowerCase()+"</font>";
+                binding.edtScores.setText(Html.fromHtml(html));
                 YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);
                 YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayScores);
             });

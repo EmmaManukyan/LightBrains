@@ -12,7 +12,10 @@
         tools:layout="@layout/fragment_attention_game_settings" >
         <action
             android:id="@+id/action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment"
-            app:destination="@id/attentionGameShowFiguresFragment" />
+            app:destination="@id/attentionGameShowFiguresFragment"
+            app:popUpTo="@id/attentionGameSettingsFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
     <fragment
         android:id="@+id/attentionGameShowFiguresFragment"
@@ -34,5 +37,23 @@
         android:id="@+id/attentionGameWriteAnswersFragment"
         android:name="com.example.lightbrains.part_second.attention_game.AttentionGameWriteAnswersFragment"
         android:label="fragment_attention_game_write_answers"
-        tools:layout="@layout/fragment_attention_game_write_answers" />
+        tools:layout="@layout/fragment_attention_game_write_answers" >
+        <action
+            android:id="@+id/action_attentionGameWriteAnswersFragment_to_attentionGameShowFiguresFragment"
+            app:destination="@id/attentionGameShowFiguresFragment"
+            app:popUpTo="@id/attentionGameWriteAnswersFragment"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_attentionGameWriteAnswersFragment_to_showResultsFragment3"
+            app:destination="@id/showResultsFragment3"
+            app:popUpTo="@id/attentionGameWriteAnswersFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/showResultsFragment3"
+        android:name="com.example.lightbrains.common.ShowResultsFragment"
+        android:label="fragment_show_results"
+        tools:layout="@layout/fragment_show_results" />
 </navigation>

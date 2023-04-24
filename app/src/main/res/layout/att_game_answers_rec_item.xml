@@ -58,6 +58,6 @@
         tools:srcCompat="@tools:sample/avatars"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
-        android:src="@drawable/img_smile_heart"
+        android:src="@drawable/wrong"
         android:visibility="gone"/>
 </LinearLayout>

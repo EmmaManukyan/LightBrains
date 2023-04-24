@@ -12,16 +12,27 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentSignUpBinding;
 import com.example.lightbrains.dialogs.CustomDialogForSignUpFragment;
+import com.example.lightbrains.firebase_classes.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 
 public class SignUpFragment extends Fragment {
     FragmentSignUpBinding binding;
     private String passwordError = "";
+
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,10 +41,20 @@ public class SignUpFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Toast.makeText(getContext(), "User already exists", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
 
         binding.includedLayout.tvLayPassword.setError(null);
         binding.includedLayout.edtPassword.addTextChangedListener(new TextWatcher() {
@@ -53,7 +74,7 @@ public class SignUpFragment extends Fragment {
                     passwordError = "Password can't contain space";
                     binding.includedLayout.tvLayPassword.setError(passwordError);
                 }
-                if (password.length()>10){
+                if (password.length() > 10) {
                     binding.includedLayout.tvLayPassword.setHelperText("");
                     passwordError = "Password's max length is 10";
                     binding.includedLayout.tvLayPassword.setError(passwordError);
@@ -67,28 +88,48 @@ public class SignUpFragment extends Fragment {
         });
 
 
-        binding.imgBtnSignup.setOnClickListener(new View.OnClickListener() {
+        binding.imgBtnSignup.setOnClickListener(view1 -> {
+            //showCustomDialog();
+            binding.includedLayout.tvLayName.setError("");
+            binding.includedLayout.tvLayMail.setError("");
+            binding.includedLayout.tvLayPassword.setError("");
+            String password = Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString();
+            if (Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString().equals("")) {
+                binding.includedLayout.tvLayName.setError("Enter name");
+            } else if (Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString().equals("")) {
+                binding.includedLayout.tvLayMail.setError("Enter mail");
+            } else if (password.equals("") || password.length() > 10 || password.length() < 8 || password.contains(" ")) {
+                binding.includedLayout.tvLayPassword.setHelperText("");
+                binding.includedLayout.tvLayPassword.setError(passwordError);
+            } else {
+                String email = binding.includedLayout.edtMail.getText().toString();
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                sendEmailVerification(view1);
+                            } else {
+                                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+            }
+        });
+    }
+
+    private void sendEmailVerification(View view) {
+        FirebaseUser curUser = mAuth.getCurrentUser();
+        assert curUser != null;
+        curUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onClick(View view) {
-                //showCustomDialog();
-                binding.includedLayout.tvLayName.setError("");
-                binding.includedLayout.tvLayMail.setError("");
-                binding.includedLayout.tvLayPassword.setError("");
-                String password = binding.includedLayout.edtPassword.getText().toString();
-                if (binding.includedLayout.edtName.getText().toString().equals("")) {
-                    binding.includedLayout.tvLayName.setError("Enter name");
-                } else if (binding.includedLayout.edtMail.getText().toString().equals("")) {
-                    binding.includedLayout.tvLayMail.setError("Enter mail");
-                } else if (password.equals("") || password.length()>10 || password.length()<8 || password.contains(" ")) {
-                    binding.includedLayout.tvLayPassword.setHelperText("");
-                    binding.includedLayout.tvLayPassword.setError(passwordError);
-                }
-                else {
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
                     CustomDialogForSignUpFragment dialog = new CustomDialogForSignUpFragment(0);
                     dialog.setCancelable(false);
-                    dialog.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
+                    dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
                     Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_signInFragment);
-
+                } else {
+                    Toast.makeText(getContext(), "Email verification hasn't been send", Toast.LENGTH_SHORT).show();
                 }
             }
         });
