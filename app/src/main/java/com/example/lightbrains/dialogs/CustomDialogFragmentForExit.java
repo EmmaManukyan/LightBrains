@@ -27,6 +27,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     //1->mentalCount
     //2->appLogout
     //3->att_game
+    //4->att_game_write_answers
     private final int DIALOG_POSITION_CODE;
 
     public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
@@ -75,6 +76,13 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                 assert navHostFragment != null;
                                 navController = navHostFragment.getNavController();
                                 navController.navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameSettingsFragment);
+                                break;
+                            case 4:
+                                navHostFragment =
+                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
+                                assert navHostFragment != null;
+                                navController = navHostFragment.getNavController();
+                                navController.navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameSettingsFragment);
                                 break;
                         }
 

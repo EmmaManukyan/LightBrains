@@ -21,11 +21,13 @@ import android.view.inputmethod.InputMethodManager;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameWriteAnswersBinding;
+import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
+import com.example.lightbrains.interfaces.BackPressedListener;
 
 import java.util.HashMap;
 
 
-public class AttentionGameWriteAnswersFragment extends Fragment {
+public class AttentionGameWriteAnswersFragment extends Fragment implements BackPressedListener{
     private FragmentAttentionGameWriteAnswersBinding binding;
     private RecyclerView.LayoutManager lm;
     private AttentionGameRecyclerAdapter adapter;
@@ -121,5 +123,29 @@ public class AttentionGameWriteAnswersFragment extends Fragment {
                     .hideSoftInputFromWindow(
                             view.getWindowToken(), 0);
         }
+    }
+
+    public static BackPressedListener backpressedlistener;
+
+    @Override
+    public void onPause() {
+        backpressedlistener = null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener = this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDialog();
+    }
+
+    private void showDialog() {
+        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(4);
+        customDialogFragmentForExit.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 }

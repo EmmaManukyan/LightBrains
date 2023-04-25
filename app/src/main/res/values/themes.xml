@@ -100,6 +100,12 @@
 
     </style>
 
+    <style name="MyStyleForProgressDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <item name="colorAccent">@color/color_primary_variant</item>
+    <item name="android:textColorPrimary">@color/purple_500</item>
+    <item name="android:background">@color/white</item>
+    </style>
+
 
 
 

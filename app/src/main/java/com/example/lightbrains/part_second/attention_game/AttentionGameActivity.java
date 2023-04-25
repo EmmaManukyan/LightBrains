@@ -19,7 +19,10 @@ public class AttentionGameActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (AttentionGameShowFiguresFragment.backpressedlistener!=null){
             AttentionGameShowFiguresFragment.backpressedlistener.onBackPressed();
-        }else{
+        } else if (AttentionGameWriteAnswersFragment.backpressedlistener!=null) {
+            AttentionGameWriteAnswersFragment.backpressedlistener.onBackPressed();
+
+        } else{
             super.onBackPressed();
         }
     }

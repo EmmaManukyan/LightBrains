@@ -1,7 +1,11 @@
 package com.example.lightbrains.firstpages;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentSignInBinding;
+import com.example.lightbrains.firebase_classes.ConnectionReceiver;
 import com.example.lightbrains.homepage.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-public class SignInFragment extends Fragment implements View.OnClickListener {
+public class SignInFragment extends Fragment implements View.OnClickListener,ConnectionReceiver.ReceiverListener {
 
     private FragmentSignInBinding binding;
     private FirebaseAuth mAuth;
@@ -54,14 +59,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             } else if (Objects.requireNonNull(binding.edtPassword.getText()).toString().equals("")) {
                 binding.tvLayPassword.setHelperText("");
                 binding.tvLayPassword.setError("Enter password");
+            }else if(!checkConnection()){
+                Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
             } else {
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
+                showProgressDialog();
 
-                progressDialog.setMessage("Please wait...");
-                progressDialog.setTitle("Registration");
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -100,7 +104,41 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance();
 
-        progressDialog = new ProgressDialog(getContext());
+        progressDialog = new ProgressDialog(getContext(),R.style.MyStyleForProgressDialog);
 
+    }
+
+    private boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+        Toast.makeText(getContext(), "Connected", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showProgressDialog(){
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setTitle("Registration");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
     }
 }

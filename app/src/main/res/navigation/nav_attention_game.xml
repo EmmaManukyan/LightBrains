@@ -50,6 +50,11 @@
             app:popUpTo="@id/attentionGameWriteAnswersFragment"
             app:popUpToInclusive="true"
             />
+        <action
+            android:id="@+id/action_attentionGameWriteAnswersFragment_to_attentionGameSettingsFragment"
+            app:destination="@id/attentionGameSettingsFragment"
+            app:popUpTo="@id/attentionGameWriteAnswersFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/showResultsFragment3"

@@ -90,9 +90,9 @@ public class SignUpFragment extends Fragment {
 
         binding.imgBtnSignup.setOnClickListener(view1 -> {
             //showCustomDialog();
-            binding.includedLayout.tvLayName.setError("");
-            binding.includedLayout.tvLayMail.setError("");
-            binding.includedLayout.tvLayPassword.setError("");
+            binding.includedLayout.tvLayName.setErrorEnabled(false);
+            binding.includedLayout.tvLayMail.setErrorEnabled(false);
+            binding.includedLayout.tvLayPassword.setErrorEnabled(false);
             String password = Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayName.setError("Enter name");

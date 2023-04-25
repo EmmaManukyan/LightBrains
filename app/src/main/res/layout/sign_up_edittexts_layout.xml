@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -10,12 +10,12 @@
         style="@style/MyStyleForTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:boxBackgroundMode="outline"
         app:endIconMode="clear_text"
         app:endIconTint="@color/purple_500"
-        app:startIconDrawable="@drawable/ic_round_person_24"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        app:startIconDrawable="@drawable/ic_round_person_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_name"
@@ -23,8 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            android:inputType="textPersonName"
-            />
+            android:inputType="textPersonName" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -35,12 +34,12 @@
         style="@style/MyStyleForTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:boxBackgroundMode="outline"
         app:endIconMode="clear_text"
         app:endIconTint="@color/purple_500"
-        app:startIconDrawable="@drawable/ic_round_attach_email_24"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        app:startIconDrawable="@drawable/ic_round_attach_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_mail"
@@ -58,6 +57,8 @@
         style="@style/MyStyleForTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:boxBackgroundMode="outline"
         app:counterEnabled="true"
         app:counterMaxLength="10"
@@ -66,9 +67,7 @@
         app:helperText="Enter strong password"
         app:helperTextEnabled="true"
         app:helperTextTextColor="@color/green_dark"
-        app:startIconDrawable="@drawable/ic_round_lock_24"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        app:startIconDrawable="@drawable/ic_round_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_password"
