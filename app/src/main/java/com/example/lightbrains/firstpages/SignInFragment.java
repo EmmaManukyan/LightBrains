@@ -1,5 +1,7 @@
 package com.example.lightbrains.firstpages;
 
+import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignInBinding;
 import com.example.lightbrains.firebase_classes.ConnectionReceiver;
 import com.example.lightbrains.homepage.HomeActivity;
@@ -35,7 +38,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener,Con
     private FragmentSignInBinding binding;
     private FirebaseAuth mAuth;
 
-    private ProgressDialog progressDialog;
 
 
     @Override
@@ -52,8 +54,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener,Con
         if (binding.btnNewUser.equals(view)) {
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_signUpFragment);
         } else if (binding.btnSignIn.equals(view)) {
-            binding.tvLayMail.setError("");
-            binding.tvLayPassword.setError("");
+            binding.tvLayMail.setErrorEnabled(false);
+            binding.tvLayPassword.setErrorEnabled(false);
             if (Objects.requireNonNull(binding.edtMail.getText()).toString().equals("")) {
                 binding.tvLayMail.setError("Enter mail");
             } else if (Objects.requireNonNull(binding.edtPassword.getText()).toString().equals("")) {
@@ -64,7 +66,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener,Con
             } else {
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
-                showProgressDialog();
+                progressDialog = new ProgressDialog(getContext(),R.style.MyStyleForProgressDialog);
+                ConstantsForFireBase.showProgressDialog(progressDialog);
 
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -76,6 +79,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,Con
                                 Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
                                 Constants.myEditShared.commit();
                                 Intent intent = new Intent(getActivity(), HomeActivity.class);
+                                intent.putExtra(ConstantsForFireBase.USER_KEY,user.getUid());
                                 startActivity(intent);
                                 requireActivity().finish();
                             }else{
@@ -103,9 +107,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener,Con
         binding.tvForgotPassword.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-
-        progressDialog = new ProgressDialog(getContext(),R.style.MyStyleForProgressDialog);
-
     }
 
     private boolean checkConnection() {
@@ -135,10 +136,4 @@ public class SignInFragment extends Fragment implements View.OnClickListener,Con
         Toast.makeText(getContext(), "Connected", Toast.LENGTH_SHORT).show();
     }
 
-    private void showProgressDialog(){
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setTitle("Registration");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-    }
 }

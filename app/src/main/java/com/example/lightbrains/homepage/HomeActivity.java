@@ -7,31 +7,51 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.lightbrains.R;
+import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.ActivityHomeBinding;
+import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.homepage.HomeFragment;
 import com.example.lightbrains.homepage.LeaderBoardFragment;
 import com.example.lightbrains.homepage.ProfileFragment;
 import com.example.lightbrains.homepage.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
-    ActivityHomeBinding binding;
-
+    private ActivityHomeBinding binding;
     private boolean IS_IN_PROFILE_PAGE = false;
+    private DatabaseReference myDataBase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
+
+        myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        Constants.createSharedPreferences(HomeActivity.this);
+        if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME,null)==null){
+            Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
+            getDataFromDB();
+        }else{
+            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+            binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME,null));
+        }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
         binding.myBottomNav.setSelectedItemId(R.id.menu_home);
@@ -75,16 +95,39 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-
     private void setPageParams() {
         if (!IS_IN_PROFILE_PAGE) {
             binding.imgProfile.setVisibility(View.VISIBLE);
             binding.tvProfileName.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             binding.imgProfile.setVisibility(View.GONE);
             binding.tvProfileName.setVisibility(View.GONE);
         }
+
+    }
+
+    private void getDataFromDB() {
+        Log.d("taguhi","Mtanq");
+
+        ValueEventListener vListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("taguhi","hhhhhhhhhhhhhhhhhhhhhhhh"+ snapshot.getChildren());
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    assert user != null;
+                    binding.tvProfileName.setText(user.getUserName());
+                    Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
+                    Constants.myEditShared.commit();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        myDataBase.addValueEventListener(vListener);
 
     }
 }

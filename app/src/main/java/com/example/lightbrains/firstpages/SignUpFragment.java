@@ -1,5 +1,13 @@
 package com.example.lightbrains.firstpages;
 
+import static com.example.lightbrains.common.ConstantsForFireBase.USER_KEY;
+import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,23 +24,29 @@ import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignUpBinding;
 import com.example.lightbrains.dialogs.CustomDialogForSignUpFragment;
+import com.example.lightbrains.firebase_classes.ConnectionReceiver;
 import com.example.lightbrains.firebase_classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
 
-public class SignUpFragment extends Fragment {
-    FragmentSignUpBinding binding;
+public class SignUpFragment extends Fragment implements ConnectionReceiver.ReceiverListener{
+    private FragmentSignUpBinding binding;
     private String passwordError = "";
-
     private FirebaseAuth mAuth;
+
+    private DatabaseReference myDataBase;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +68,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
+        init();
 
         binding.includedLayout.tvLayPassword.setError(null);
         binding.includedLayout.edtPassword.addTextChangedListener(new TextWatcher() {
@@ -89,7 +103,6 @@ public class SignUpFragment extends Fragment {
 
 
         binding.imgBtnSignup.setOnClickListener(view1 -> {
-            //showCustomDialog();
             binding.includedLayout.tvLayName.setErrorEnabled(false);
             binding.includedLayout.tvLayMail.setErrorEnabled(false);
             binding.includedLayout.tvLayPassword.setErrorEnabled(false);
@@ -101,14 +114,24 @@ public class SignUpFragment extends Fragment {
             } else if (password.equals("") || password.length() > 10 || password.length() < 8 || password.contains(" ")) {
                 binding.includedLayout.tvLayPassword.setHelperText("");
                 binding.includedLayout.tvLayPassword.setError(passwordError);
+            } else if(!checkConnection()){
+                Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();
+                progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
+                ConstantsForFireBase.showProgressDialog(progressDialog);
+
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                sendEmailVerification(view1);
+                                FirebaseUser curUser = mAuth.getCurrentUser();
+                                assert curUser != null;
+                                saveUser(curUser.getUid());
+                                sendEmailVerification(view,curUser);
+                                progressDialog.dismiss();
                             } else {
                                 Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                             }
                         });
 
@@ -117,21 +140,58 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    private void sendEmailVerification(View view) {
-        FirebaseUser curUser = mAuth.getCurrentUser();
-        assert curUser != null;
-        curUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    CustomDialogForSignUpFragment dialog = new CustomDialogForSignUpFragment(0);
-                    dialog.setCancelable(false);
-                    dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
-                    Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_signInFragment);
-                } else {
-                    Toast.makeText(getContext(), "Email verification hasn't been send", Toast.LENGTH_SHORT).show();
-                }
+    private void sendEmailVerification(View view, FirebaseUser curUser) {
+        curUser.sendEmailVerification().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                CustomDialogForSignUpFragment dialog = new CustomDialogForSignUpFragment(0);
+                dialog.setCancelable(false);
+                dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
+                Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_signInFragment);
+            } else {
+                Toast.makeText(getContext(), "Email verification hasn't been send", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void init() {
+        mAuth = FirebaseAuth.getInstance();
+        myDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
+
+    }
+
+    private void saveUser(String Uid) {
+        String id = myDataBase.getKey();
+        String userName = Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString();
+        String email = Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString();
+        User newUser = new User(id,userName,email,0);
+        myDataBase.child(Uid).setValue(newUser);
+
+    }
+
+    private boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+
     }
 }

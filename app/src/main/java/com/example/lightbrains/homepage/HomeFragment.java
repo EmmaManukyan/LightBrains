@@ -21,12 +21,19 @@ import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.adapters.RecyclerAdapterFlashCards;
+import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.BottomSheetLayoutBinding;
+import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.part_first_mental.flashanzan.FLashActivity;
 import com.example.lightbrains.part_first_mental.flashanzan.RecyclerViewItem;
 import com.example.lightbrains.part_first_mental.mental_counting.MentalCountingActivity;
 import com.example.lightbrains.part_second.attention_game.AttentionGameActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +44,7 @@ public class HomeFragment extends Fragment {
     private ConstraintLayout viewMental;
     private ConstraintLayout viewMemoryGames;
     private String[] titles;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,11 +63,14 @@ public class HomeFragment extends Fragment {
         viewMemoryGames.setOnClickListener(view1 -> openBottomSheet(1));
     }
 
+
+
     private void init(View view) {
         viewMental = view.findViewById(R.id.view_mental);
         viewMemoryGames = view.findViewById(R.id.view_memory_games);
 
-        titles = new String[]{getResources().getString(R.string.let_s_count_together),getResources().getString(R.string.how_is_your_memory)};
+        titles = new String[]{getResources().getString(R.string.let_s_count_together), getResources().getString(R.string.how_is_your_memory)};
+
     }
 
     private void openBottomSheet(int viewOrder) {
@@ -118,6 +129,5 @@ public class HomeFragment extends Fragment {
         }
         return list;
     }
-
 
 }

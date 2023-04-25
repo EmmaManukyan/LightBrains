@@ -63,7 +63,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                 break;
                             case 2:
                                 FirebaseAuth.getInstance().signOut();
-                                Constants.myEditShared.putBoolean(Constants.IS_LOGIN, false);
+                                Constants.myEditShared.clear();
                                 Constants.myEditShared.commit();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
