@@ -65,7 +65,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
 
         binding.btnCheck.setOnClickListener(view1 -> {
             if (!answersAreChecked) {
-                closeKeyboard();
+                Constants.closeKeyboard(requireActivity());
                 adapter.isChecking = true;
                 answersAreChecked = true;
                 adapter.notifyDataSetChanged();
@@ -98,31 +98,6 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
         binding.myRec.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AttentionGameRecyclerAdapter(showedMap, getContext(), figureType);
         binding.myRec.setAdapter(adapter);
-    }
-
-
-    private void closeKeyboard()
-    {
-        // this will give us the view
-        // which is currently focus
-        // in this layout
-        View view = requireActivity().getCurrentFocus();
-
-        // if nothing is currently
-        // focus then this will protect
-        // the app from crash
-        if (view != null) {
-
-            // now assign the system
-            // service to InputMethodManager
-            InputMethodManager manager
-                    = (InputMethodManager)
-                    requireActivity().getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-            manager
-                    .hideSoftInputFromWindow(
-                            view.getWindowToken(), 0);
-        }
     }
 
     public static BackPressedListener backpressedlistener;

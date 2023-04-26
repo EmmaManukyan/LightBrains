@@ -1,5 +1,7 @@
 package com.example.lightbrains.dialogs;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +13,11 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.lightbrains.R;
+import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentCustomDialogToWritePasswordBinding;
 import com.example.lightbrains.homepage.ProfileFragment;
 
@@ -47,14 +51,17 @@ public class CustomDialogToWritePasswordFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment.checkPassword(Objects.requireNonNull(binding.edtPassword.getText()).toString());
-                dismiss();
+        binding.btnOk.setOnClickListener(view1 -> {
+            if (!binding.edtPassword.getText().toString().isEmpty()){
+                fragment.reAuthenticateUser(Objects.requireNonNull(binding.edtPassword.getText()).toString());
+            }else{
+                Toast.makeText(getContext(), "Enter password", Toast.LENGTH_SHORT).show();
             }
+            dismiss();
+
         });
     }
+
 
 
 }

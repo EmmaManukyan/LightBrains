@@ -80,6 +80,7 @@
     <string name="check">Check</string>
     <string name="quantity_of_figure">Quantity of а figure</string>
     <string name="enter_password_to_make_changes">Enter password to make changes</string>
+    <string name="cancel">Cancel</string>
 
 
     <string-array name="string_languages_array">

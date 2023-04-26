@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -32,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private boolean IS_IN_PROFILE_PAGE = false;
-    private DatabaseReference myDataBase;
 
 
     @Override
@@ -41,51 +41,56 @@ public class HomeActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
-        myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
-        Constants.createSharedPreferences(HomeActivity.this);
-        if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME,null)==null){
-            Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
-            getDataFromDB();
-        }else{
-            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
-            binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME,null));
-        }
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
         binding.myBottomNav.setSelectedItemId(R.id.menu_home);
 
-        binding.myBottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                Fragment fragment = null;
-                switch (item.getItemId()) {
-                    case R.id.menu_home:
-                        IS_IN_PROFILE_PAGE = false;
-                        fragment = new HomeFragment();
-                        break;
-                    case R.id.menu_profile:
-                        IS_IN_PROFILE_PAGE = true;
-                        fragment = new ProfileFragment();
-                        break;
-                    case R.id.menu_settings:
-                        IS_IN_PROFILE_PAGE = false;
-                        fragment = new SettingsFragment();
-                        break;
-                    /*case R.id.leader_board:
-                        fragment = new LeaderBoardFragment();
-                        IS_IN_PROFILE_PAGE = false;
-                        break;*/
-                }
-                if (fragment != null) {
-                    loadFragment(fragment);
-                    setPageParams();
-                }
-                return true;
+        binding.imgProfile.setOnClickListener(view -> {
+            IS_IN_PROFILE_PAGE = true;
+            Fragment fragment = new ProfileFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_anim_slide_in,R.anim.enter_anim_from_right).replace(R.id.fr_container, fragment).addToBackStack(null).commit();
+            binding.myBottomNav.setSelectedItemId(R.id.menu_profile);
+        });
+
+
+        Constants.createSharedPreferences(HomeActivity.this);
+        if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
+            Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
+            getDataFromDB();
+        } else {
+            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+            binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
+        }
+
+
+
+
+        binding.myBottomNav.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+            switch (item.getItemId()) {
+                case R.id.menu_home:
+                    IS_IN_PROFILE_PAGE = false;
+                    fragment = new HomeFragment();
+                    break;
+                case R.id.menu_profile:
+                    IS_IN_PROFILE_PAGE = true;
+                    fragment = new ProfileFragment();
+                    break;
+                case R.id.menu_settings:
+                    IS_IN_PROFILE_PAGE = false;
+                    fragment = new SettingsFragment();
+                    break;
+                /*case R.id.leader_board:
+                    fragment = new LeaderBoardFragment();
+                    IS_IN_PROFILE_PAGE = false;
+                    break;*/
             }
+            if (fragment != null) {
+                loadFragment(fragment);
+                setPageParams();
+            }
+            return true;
         });
     }
 
@@ -107,27 +112,24 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getDataFromDB() {
-        Log.d("taguhi","Mtanq");
 
-        ValueEventListener vListener = new ValueEventListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("taguhi","hhhhhhhhhhhhhhhhhhhhhhhh"+ snapshot.getChildren());
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    User user = ds.getValue(User.class);
-                    assert user != null;
-                    binding.tvProfileName.setText(user.getUserName());
-                    Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
-                    Constants.myEditShared.commit();
-                }
+                User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
+                binding.tvProfileName.setText(user.getUserName());
+                Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
+                Constants.myEditShared.commit();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        };
-        myDataBase.addValueEventListener(vListener);
+        });
 
     }
+
+
 }

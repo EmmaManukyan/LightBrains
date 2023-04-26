@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
@@ -100,6 +101,21 @@ public class Constants {
             edtAnswer.requestFocus();
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(edtAnswer, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    public static void closeKeyboard(Activity activity)
+    {
+        View view = activity.getCurrentFocus();
+
+        if (view != null) {
+            InputMethodManager manager
+                    = (InputMethodManager)
+                    activity.getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+            manager
+                    .hideSoftInputFromWindow(
+                            view.getWindowToken(), 0);
         }
     }
 

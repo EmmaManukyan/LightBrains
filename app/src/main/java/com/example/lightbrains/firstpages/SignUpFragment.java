@@ -4,10 +4,6 @@ import static com.example.lightbrains.common.ConstantsForFireBase.USER_KEY;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,11 +23,7 @@ import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignUpBinding;
 import com.example.lightbrains.dialogs.CustomDialogForSignUpFragment;
-import com.example.lightbrains.firebase_classes.ConnectionReceiver;
 import com.example.lightbrains.firebase_classes.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 
-public class SignUpFragment extends Fragment implements ConnectionReceiver.ReceiverListener{
+public class SignUpFragment extends Fragment{
     private FragmentSignUpBinding binding;
     private String passwordError = "";
     private FirebaseAuth mAuth;
@@ -88,9 +80,9 @@ public class SignUpFragment extends Fragment implements ConnectionReceiver.Recei
                     passwordError = "Password can't contain space";
                     binding.includedLayout.tvLayPassword.setError(passwordError);
                 }
-                if (password.length() > 10) {
+                if (password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH) {
                     binding.includedLayout.tvLayPassword.setHelperText("");
-                    passwordError = "Password's max length is 10";
+                    passwordError = "Password's max length is "+ConstantsForFireBase.PASSWORD_MAX_LENGTH;
                     binding.includedLayout.tvLayPassword.setError(passwordError);
                 }
             }
@@ -111,10 +103,10 @@ public class SignUpFragment extends Fragment implements ConnectionReceiver.Recei
                 binding.includedLayout.tvLayName.setError("Enter name");
             } else if (Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayMail.setError("Enter mail");
-            } else if (password.equals("") || password.length() > 10 || password.length() < 8 || password.contains(" ")) {
+            } else if (password.equals("") || password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH || password.length() < 8 || password.contains(" ")) {
                 binding.includedLayout.tvLayPassword.setHelperText("");
                 binding.includedLayout.tvLayPassword.setError(passwordError);
-            } else if(!checkConnection()){
+            } else if(ConstantsForFireBase.checkConnection(requireActivity())){
                 Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();
@@ -156,7 +148,7 @@ public class SignUpFragment extends Fragment implements ConnectionReceiver.Recei
     private void init() {
         mAuth = FirebaseAuth.getInstance();
         myDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
-
+        binding.includedLayout.tvLayPassword.setCounterMaxLength(ConstantsForFireBase.PASSWORD_MAX_LENGTH);
     }
 
     private void saveUser(String Uid) {
@@ -168,30 +160,4 @@ public class SignUpFragment extends Fragment implements ConnectionReceiver.Recei
 
     }
 
-    private boolean checkConnection() {
-
-        // initialize intent filter
-        IntentFilter intentFilter = new IntentFilter();
-
-        // add action
-        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
-
-
-        // Initialize listener
-        ConnectionReceiver.Listener = this;
-
-        // Initialize connectivity manager
-        ConnectivityManager manager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        // Initialize network info
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-
-        // get connection status
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
-    }
-
-    @Override
-    public void onNetworkChange(boolean isConnected) {
-
-    }
 }
