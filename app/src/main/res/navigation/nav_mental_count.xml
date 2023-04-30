@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mentalCountingSettingsFragment_to_showMentalCountFragment"
             app:destination="@id/showMentalCountFragment" />
+        <action
+            android:id="@+id/action_mentalCountingSettingsFragment_to_mentalCountingPartWorkingPageFragment"
+            app:destination="@id/mentalCountingPartWorkingPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/showMentalCountFragment"
@@ -40,4 +43,9 @@
             android:id="@+id/action_showResultsFragment2_to_mentalCountingSettingsFragment"
             app:destination="@id/mentalCountingSettingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mentalCountingPartWorkingPageFragment"
+        android:name="com.example.lightbrains.part_first_mental.mental_counting.MentalCountingPartWorkingPageFragment"
+        android:label="fragment_mental_counting_part_working_page"
+        tools:layout="@layout/fragment_mental_counting_part_working_page" />
 </navigation>

@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.firstpages.MainActivity;
+import com.example.lightbrains.homepage.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -41,53 +42,51 @@ public class CustomDialogFragmentForExit extends DialogFragment {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(getResources().getString(R.string.do_you_really_want_to_exit)).
-                setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        NavHostFragment navHostFragment;
-                        NavController navController;
-                        switch (DIALOG_POSITION_CODE){
-                            case 0:
-                                navHostFragment =
-                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
-                                assert navHostFragment != null;
-                                navController = navHostFragment.getNavController();
-                                navController.navigate(R.id.action_showFlashCardsFragment_to_fleshAnzanSettingsFragment);
-                                break;
-                            case 1:
-                                navHostFragment =
-                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_mental_counting);
-                                assert navHostFragment != null;
-                                navController = navHostFragment.getNavController();
-                                navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
-                                break;
-                            case 2:
-                                FirebaseAuth.getInstance().signOut();
-                                Constants.myEditShared.clear();
-                                Constants.myEditShared.commit();
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(intent);
-                                requireActivity().finish();
-                                break;
+                setPositiveButton(getResources().getString(R.string.yes), (dialogInterface, i) -> {
+                    NavHostFragment navHostFragment;
+                    NavController navController;
+                    switch (DIALOG_POSITION_CODE){
+                        case 0:
+                            navHostFragment =
+                                    (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
+                            assert navHostFragment != null;
+                            navController = navHostFragment.getNavController();
+                            navController.navigate(R.id.action_showFlashCardsFragment_to_fleshAnzanSettingsFragment);
+                            break;
+                        case 1:
+                            navHostFragment =
+                                    (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_mental_counting);
+                            assert navHostFragment != null;
+                            navController = navHostFragment.getNavController();
+                            navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
+                            break;
+                        case 2:
+                            ProfileFragment.saveUser();
+                            FirebaseAuth.getInstance().signOut();
+                            Constants.myEditShared.clear();
+                            Constants.myEditShared.commit();
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                            requireActivity().finish();
+                            break;
 
-                            case 3:
-                                navHostFragment =
-                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
-                                assert navHostFragment != null;
-                                navController = navHostFragment.getNavController();
-                                navController.navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameSettingsFragment);
-                                break;
-                            case 4:
-                                navHostFragment =
-                                        (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
-                                assert navHostFragment != null;
-                                navController = navHostFragment.getNavController();
-                                navController.navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameSettingsFragment);
-                                break;
-                        }
-
-                        dismiss();
+                        case 3:
+                            navHostFragment =
+                                    (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
+                            assert navHostFragment != null;
+                            navController = navHostFragment.getNavController();
+                            navController.navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameSettingsFragment);
+                            break;
+                        case 4:
+                            navHostFragment =
+                                    (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
+                            assert navHostFragment != null;
+                            navController = navHostFragment.getNavController();
+                            navController.navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameSettingsFragment);
+                            break;
                     }
+
+                    dismiss();
                 }).
                 setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override

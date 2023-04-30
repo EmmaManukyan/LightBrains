@@ -53,14 +53,13 @@ public class Constants {
     public static final String FIGURES_SHOW_FINISH_TIME = "FiguresShowFinishTime";
 
 
-
     public static SharedPreferences sharedPreferences = null;
     public static SharedPreferences.Editor myEditShared = null;
 
 
     public static int[] rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_heart_eyes_smile};
 
-    public static ArrayList<Techniques> animations = new ArrayList<>(Arrays.asList(Techniques.RollIn,Techniques.Wave,Techniques.ZoomIn,
+    public static ArrayList<Techniques> animations = new ArrayList<>(Arrays.asList(Techniques.RollIn, Techniques.Wave, Techniques.ZoomIn,
             Techniques.SlideInUp, Techniques.Pulse, Techniques.FlipInX
     ));
 
@@ -104,8 +103,7 @@ public class Constants {
         }
     }
 
-    public static void closeKeyboard(Activity activity)
-    {
+    public static void closeKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
 
         if (view != null) {

@@ -104,6 +104,9 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             Log.d("TAG",countOfExamples+"");
             binding.sliderExampleCount.setValue(countOfExamples);
             binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ countOfExamples);
+            if (topicLevel!=0){
+                binding.tvLaySubTopic.setVisibility(View.VISIBLE);
+            }
 
         }else{
             binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ 5);
@@ -154,6 +157,11 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             topicLevel = position;
             topicPosition = position;
             setSubTopicsSpinnerItem(topicLevel);
+            if (topicLevel==0){
+                binding.tvLaySubTopic.setVisibility(View.GONE);
+            }else{
+                binding.tvLaySubTopic.setVisibility(View.VISIBLE);
+            }
         });
 
         binding.autoTvSubTopic.setOnItemClickListener((adapterView, view, i, l) -> {
@@ -173,7 +181,11 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
         int temp;
 
         if (binding.btnStart.equals(view)) {
-            if (speed != -1 && digit != -1 && countOfRows != -1) {
+            if (topicLevel>1){
+                Log.d("taguhi",""+subtopicLevel);
+                Navigation.findNavController(view).navigate(R.id.action_mentalCountingSettingsFragment_to_mentalCountingPartWorkingPageFragment);
+            }
+            else if (speed != -1 && digit != -1 && countOfRows != -1) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.SPEED_MENTAL, speed);
                 bundle.putInt(Constants.DIGIT_MENTAL, digit);

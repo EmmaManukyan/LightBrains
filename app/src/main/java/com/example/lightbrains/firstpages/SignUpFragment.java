@@ -111,7 +111,7 @@ public class SignUpFragment extends Fragment{
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog);
+                ConstantsForFireBase.showProgressDialog(progressDialog,"Registration");
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
@@ -155,7 +155,7 @@ public class SignUpFragment extends Fragment{
         String id = myDataBase.getKey();
         String userName = Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString();
         String email = Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString();
-        User newUser = new User(id,userName,email,0);
+        User newUser = new User(id,userName,email,0,"hello");
         myDataBase.child(Uid).setValue(newUser);
 
     }

@@ -44,7 +44,7 @@
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment"
-            app:popUpTo="@id/signInFragment"
+            app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true"
             />
     </fragment>
@@ -57,7 +57,13 @@
         android:id="@+id/forgotFragment"
         android:name="com.example.lightbrains.firstpages.ForgotFragment"
         android:label="fragment_forgot"
-        tools:layout="@layout/fragment_forgot" />
+        tools:layout="@layout/fragment_forgot" >
+        <action
+            app:popUpTo="@id/forgotFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_forgotFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <activity
         android:id="@+id/homeActivity"
         android:name="com.example.lightbrains.homepage.HomeActivity"

@@ -65,7 +65,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
                 progressDialog = new ProgressDialog(getContext(),R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog);
+                ConstantsForFireBase.showProgressDialog(progressDialog,"Registration");
 
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

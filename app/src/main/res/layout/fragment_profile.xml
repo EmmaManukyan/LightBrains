@@ -16,6 +16,8 @@
         android:layout_gravity="center"
         android:scaleType="centerCrop"
         android:src="@drawable/img_temp"
+        app:strokeColor="@color/color_secondary_variant"
+        app:strokeWidth="1dp"
         app:shapeAppearanceOverlay="@style/SpecificCornerRoundedImage" />
 
     <TextView

@@ -2,14 +2,11 @@ package com.example.lightbrains.homepage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,12 +15,6 @@ import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.ActivityHomeBinding;
 import com.example.lightbrains.firebase_classes.User;
-import com.example.lightbrains.homepage.HomeFragment;
-import com.example.lightbrains.homepage.LeaderBoardFragment;
-import com.example.lightbrains.homepage.ProfileFragment;
-import com.example.lightbrains.homepage.SettingsFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private boolean IS_IN_PROFILE_PAGE = false;
+
 
 
     @Override
@@ -120,6 +112,8 @@ public class HomeActivity extends AppCompatActivity {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
                 binding.tvProfileName.setText(user.getUserName());
                 Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
+                Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri());
+                Log.d("taguhi",""+user.getImageUri());
                 Constants.myEditShared.commit();
             }
 

@@ -2,9 +2,13 @@ package com.example.lightbrains.homepage;
 
 import static com.example.lightbrains.R.string.flash_anzan;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,27 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.lightbrains.R;
 import com.example.lightbrains.adapters.RecyclerAdapterFlashCards;
-import com.example.lightbrains.common.ConstantsForFireBase;
-import com.example.lightbrains.databinding.BottomSheetLayoutBinding;
-import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.part_first_mental.flashanzan.FLashActivity;
 import com.example.lightbrains.part_first_mental.flashanzan.RecyclerViewItem;
 import com.example.lightbrains.part_first_mental.mental_counting.MentalCountingActivity;
 import com.example.lightbrains.part_second.attention_game.AttentionGameActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
