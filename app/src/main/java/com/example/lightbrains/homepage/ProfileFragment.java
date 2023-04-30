@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
@@ -94,12 +96,13 @@ public class ProfileFragment extends Fragment {
             String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.edtName.getText()).toString().equals("")) {
                 binding.tvLayName.setError("Enter name");
-            } else if (password.equals("") || password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH || password.length() < 8 || password.contains(" ")) {
-                binding.tvLayPassword.setHelperText("");
-                binding.tvLayPassword.setError(passwordError);
             } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
                 Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
+            } else if (password.isEmpty()) {
+                updateUserName(binding.edtName.getText().toString());
+                disEnableViews();
             } else {
+                updateUserName(binding.edtName.getText().toString());
                 updateUserPassword(binding.edtPassword.getText().toString());
                 disEnableViews();
             }
@@ -113,6 +116,8 @@ public class ProfileFragment extends Fragment {
         binding.imgProfile.setOnClickListener(view15 -> {
             if (!ConstantsForFireBase.checkConnection(requireActivity())) {
                 getImage();
+            }else{
+                Toast.makeText(getContext(), "No internet", Toast.LENGTH_SHORT).show();
             }
         });
         binding.edtPassword.addTextChangedListener(new TextWatcher() {
@@ -146,15 +151,37 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    private void updateUserName(String newName) {
+        Constants.createSharedPreferences(requireActivity());
+        String id = myDataBase.getKey();
+        FirebaseUser curUser = mAuth.getCurrentUser();
+        assert curUser != null;
+        Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+        User newUser = new User(id, newName, curUser.getEmail(), 0, Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+        if (id != null) {
+            myDataBase.child(curUser.getUid()).setValue(newUser);
+            binding.tvProfileName.setText(newUser.getUserName());
+            Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, newUser.getUserName());
+            Constants.myEditShared.commit();
+            HomeActivity.binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
+
+            Log.d("taguhi", "" + curUser.getUid() + "name " + newUser.getImageUri());
+        }
+    }
+
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
     private void setViewParams() {
+        binding.progressBarWithImage.setVisibility(View.VISIBLE);
         binding.edtName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         binding.edtPassword.setText("");
         binding.edtPassword.setHintTextColor(getResources().getColorStateList(R.color.grey));
         binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         Log.d("taguhi", "ui   " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI));
         Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(binding.imgProfile);
+        binding.progressBarWithImage.setVisibility(View.GONE);
+        HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -192,28 +219,34 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateUserPassword(String newPassword) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
-        progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-        ConstantsForFireBase.showProgressDialog(progressDialog,"Please wait...");
-        user.updatePassword(newPassword)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d("taguhi", "User password updated.");
-                        Toast.makeText(getContext(), "Confirmed!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.d("taguhi", "" + task.getException());
-                        Toast.makeText(getContext(), "Something went wrong " + task.getException(), Toast.LENGTH_SHORT).show();
-                    }
-                    progressDialog.dismiss();
-                });
+        if (newPassword.equals("") || newPassword.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH || newPassword.length() < 8 || newPassword.contains(" ")) {
+            binding.tvLayPassword.setHelperText("");
+            binding.tvLayPassword.setError(passwordError);
+        } else {
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            assert user != null;
+            progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
+            ConstantsForFireBase.showProgressDialog(progressDialog, "Please wait...");
+            user.updatePassword(newPassword)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d("taguhi", "User password updated.");
+                            Toast.makeText(getContext(), "Confirmed!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("taguhi", "" + task.getException());
+                            Toast.makeText(getContext(), "Something went wrong " + task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                        progressDialog.dismiss();
+                    });
+        }
 
     }
 
     public void reAuthenticateUser(String password) {
         Constants.closeKeyboard(requireActivity());
         progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-        ConstantsForFireBase.showProgressDialog(progressDialog,"Please wait...");
+        ConstantsForFireBase.showProgressDialog(progressDialog, "Please wait...");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         AuthCredential credential = EmailAuthProvider
@@ -253,13 +286,18 @@ public class ProfileFragment extends Fragment {
         StorageReference myRef = myStorageReference.child(ConstantsForFireBase.USER_KEY).child(ConstantsForFireBase.IMAGE_DB_CHILD);
         UploadTask up = myRef.putBytes(byteArr);
         Constants.createSharedPreferences(requireActivity());
-
+        binding.imgProfile.setVisibility(View.INVISIBLE);
+        binding.progressBarWithImage.setVisibility(View.VISIBLE);
         Task<Uri> task = up.continueWithTask(task12 -> myRef.getDownloadUrl()).addOnCompleteListener(task1 -> {
             uploadUri = task1.getResult();
             Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, String.valueOf(uploadUri));
             Constants.myEditShared.commit();
             Log.d("taguhi", "ggggggggggggggggg            " + uploadUri.toString());
             binding.btnLogOut.setEnabled(true);
+            binding.progressBarWithImage.setVisibility(View.GONE);
+            binding.imgProfile.setVisibility(View.VISIBLE);
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(HomeActivity.binding.imgProfile);
+
         });
     }
 
@@ -276,8 +314,8 @@ public class ProfileFragment extends Fragment {
         if (!TextUtils.isEmpty(name)) {
             FirebaseUser curUser = mAuth.getCurrentUser();
             assert curUser != null;
-            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null));
-            User newUser = new User(id, name, curUser.getEmail(), 0, Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null));
+            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+            User newUser = new User(id, name, curUser.getEmail(), 0, Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
                 Log.d("taguhi", "" + curUser.getUid());

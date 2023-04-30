@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homepage.HomeActivity">
+    tools:context=".homepage.HomeActivity"
+    >
+
+    <TextView
+        android:id="@+id/img_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/my_bottom_nav"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
+        app:layout_constraintVertical_bias="0"
+        android:text="@string/wait_a_little"
+        android:gravity="center"
+        style="@style/MyStyleForTitleTextView"
+        android:layout_marginTop="0dp"
+        />
 
     <RelativeLayout
         android:id="@+id/fr_container"
@@ -12,7 +26,12 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/my_bottom_nav"
         app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0"
+        android:background="@color/white"/>
+
+
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/my_guide_line_for_title_image_home"
@@ -33,31 +52,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.28"
+        app:layout_constraintVertical_bias="0.3"
         app:shapeAppearanceOverlay="@style/SpecificCornerRoundedImage"
         app:strokeColor="@color/color_secondary_variant"
-        app:strokeWidth="2dp"
-        />
+        app:strokeWidth="1dp" />
 
 
     <TextView
         android:id="@+id/tv_profile_name"
         style="@style/MyStyleForTitleTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="4dp"
-        android:gravity="start"
-        tools:text="Manukyan Emma"
+        android:gravity="end"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/img_profile"
         app:layout_constraintEnd_toStartOf="@id/img_profile"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/img_profile"
-
-        />
-
-
-
+        tools:text="Manukyan Emma Arturi hello barev ba inch ka chka"
+        app:layout_constraintHorizontal_bias="1"/>
 
 
     <include

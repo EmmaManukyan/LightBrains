@@ -107,6 +107,10 @@
     </style>
 
 
+    <style name="MyStyleForProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:colorAccent">@color/color_secondary_variant</item>
+    </style>
+
 
 
 

@@ -1,11 +1,14 @@
 package com.example.lightbrains.dialogs;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,11 +18,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.firstpages.MainActivity;
 import com.example.lightbrains.homepage.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Objects;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CustomDialogFragmentForExit extends DialogFragment {
 
@@ -29,6 +34,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     //2->appLogout
     //3->att_game
     //4->att_game_write_answers
+    //5->delete accaunt
     private final int DIALOG_POSITION_CODE;
 
     public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
@@ -41,8 +47,13 @@ public class CustomDialogFragmentForExit extends DialogFragment {
         Constants.createSharedPreferences(getActivity());
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(getResources().getString(R.string.do_you_really_want_to_exit)).
-                setPositiveButton(getResources().getString(R.string.yes), (dialogInterface, i) -> {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        if (DIALOG_POSITION_CODE==5){
+            builder.setTitle(getResources().getString(R.string.do_you_really_want_to_delete_your_accaunt));
+        }else{
+            builder.setTitle(getResources().getString(R.string.do_you_really_want_to_exit));
+        }
+        builder.setPositiveButton(getResources().getString(R.string.yes), (dialogInterface, i) -> {
                     NavHostFragment navHostFragment;
                     NavController navController;
                     switch (DIALOG_POSITION_CODE){
@@ -83,6 +94,29 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             assert navHostFragment != null;
                             navController = navHostFragment.getNavController();
                             navController.navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameSettingsFragment);
+                            break;
+                        case 5:
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            assert user != null;
+                            DatabaseReference myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+                            myDataBase.child(user.getUid()).removeValue();
+                            Toast.makeText(getContext(), "Removed?", Toast.LENGTH_SHORT).show();
+                            Constants.myEditShared.clear();
+                            Constants.myEditShared.commit();
+                            user.delete()
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "User account deleted.");
+                                            FirebaseAuth.getInstance().signOut();
+
+                                        }else{
+                                            Toast.makeText(getContext(), "chexav", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            Intent intent1 = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent1);
+                            requireActivity().finish();
+
                             break;
                     }
 

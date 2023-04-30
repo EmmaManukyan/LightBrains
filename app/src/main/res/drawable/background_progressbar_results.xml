@@ -21,7 +21,6 @@
                     android:type="sweep"
                     android:centerColor="@color/color_primary_variant"
                     android:useLevel="true">
-
                 </gradient>
             </shape>
         </rotate>

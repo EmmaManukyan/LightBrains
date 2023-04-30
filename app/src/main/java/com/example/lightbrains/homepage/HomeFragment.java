@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
         init(view);
         viewMental.setOnClickListener(view12 -> openBottomSheet(0));
 

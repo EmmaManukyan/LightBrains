@@ -20,11 +20,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
-    private ActivityHomeBinding binding;
+    public static ActivityHomeBinding binding;
     private boolean IS_IN_PROFILE_PAGE = false;
-
+    private int PAGE_COUNTER = 0;
 
 
     @Override
@@ -41,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
             IS_IN_PROFILE_PAGE = true;
             Fragment fragment = new ProfileFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.enter_anim_slide_in,R.anim.enter_anim_from_right).replace(R.id.fr_container, fragment).addToBackStack(null).commit();
+            transaction.setCustomAnimations(R.anim.enter_anim_slide_in, R.anim.enter_anim_from_right).replace(R.id.fr_container, fragment).addToBackStack(null).commit();
             binding.myBottomNav.setSelectedItemId(R.id.menu_profile);
         });
 
@@ -53,25 +54,37 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(binding.imgProfile);
+
         }
-
-
 
 
         binding.myBottomNav.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.menu_home:
-                    IS_IN_PROFILE_PAGE = false;
-                    fragment = new HomeFragment();
+                    if (PAGE_COUNTER != 0) {
+                        binding.frContainer.setVisibility(View.GONE);
+                        IS_IN_PROFILE_PAGE = false;
+                        fragment = new HomeFragment();
+                        PAGE_COUNTER = 0;
+                    }
                     break;
                 case R.id.menu_profile:
-                    IS_IN_PROFILE_PAGE = true;
-                    fragment = new ProfileFragment();
+                    if (PAGE_COUNTER != 1) {
+                        binding.frContainer.setVisibility(View.GONE);
+                        IS_IN_PROFILE_PAGE = true;
+                        fragment = new ProfileFragment();
+                        PAGE_COUNTER = 1;
+                    }
                     break;
                 case R.id.menu_settings:
-                    IS_IN_PROFILE_PAGE = false;
-                    fragment = new SettingsFragment();
+                    binding.frContainer.setVisibility(View.GONE);
+                    if (PAGE_COUNTER != 2) {
+                        IS_IN_PROFILE_PAGE = false;
+                        fragment = new SettingsFragment();
+                        PAGE_COUNTER = 2;
+                    }
                     break;
                 /*case R.id.leader_board:
                     fragment = new LeaderBoardFragment();
@@ -86,9 +99,15 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void loadFragment(Fragment fragment) {
         //to attach fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, fragment).commit();
+
     }
 
 
@@ -98,9 +117,8 @@ public class HomeActivity extends AppCompatActivity {
             binding.tvProfileName.setVisibility(View.VISIBLE);
         } else {
             binding.imgProfile.setVisibility(View.GONE);
-            binding.tvProfileName.setVisibility(View.GONE);
+            binding.tvProfileName.setVisibility(View.INVISIBLE);
         }
-
     }
 
     private void getDataFromDB() {
@@ -113,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
                 binding.tvProfileName.setText(user.getUserName());
                 Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
                 Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri());
-                Log.d("taguhi",""+user.getImageUri());
+                Log.d("taguhi", "" + user.getImageUri());
                 Constants.myEditShared.commit();
             }
 
