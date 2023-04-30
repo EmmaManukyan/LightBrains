@@ -52,7 +52,8 @@ public class SignUpFragment extends Fragment{
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Toast.makeText(getContext(), "User already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "User already exists"
+                    +currentUser.getUid(), Toast.LENGTH_SHORT).show();
         }
     }
 
