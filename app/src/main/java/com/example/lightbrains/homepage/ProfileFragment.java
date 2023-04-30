@@ -92,6 +92,10 @@ public class ProfileFragment extends Fragment {
             showDialog(2);
         });
 
+        binding.btnDelete.setOnClickListener(v -> {
+            showDialog(5);
+        });
+
         binding.btnConfirm.setOnClickListener(view13 -> {
             String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.edtName.getText()).toString().equals("")) {
@@ -113,14 +117,10 @@ public class ProfileFragment extends Fragment {
             disEnableViews();
         });
 
-        binding.btnDelete.setOnClickListener(v -> {
-            showDialog(5);
-        });
-
         binding.imgProfile.setOnClickListener(view15 -> {
             if (!ConstantsForFireBase.checkConnection(requireActivity())) {
                 getImage();
-            }else{
+            } else {
                 Toast.makeText(getContext(), "No internet", Toast.LENGTH_SHORT).show();
             }
         });
@@ -168,7 +168,6 @@ public class ProfileFragment extends Fragment {
             Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, newUser.getUserName());
             Constants.myEditShared.commit();
             HomeActivity.binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
-
             Log.d("taguhi", "" + curUser.getUid() + "name " + newUser.getImageUri());
         }
     }
@@ -176,14 +175,14 @@ public class ProfileFragment extends Fragment {
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
     private void setViewParams() {
-//        binding.progressBarWithImage.setVisibility(View.VISIBLE);
+        binding.progressBarWithImage.setVisibility(View.VISIBLE);
         binding.edtName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         binding.edtPassword.setText("");
         binding.edtPassword.setHintTextColor(getResources().getColorStateList(R.color.grey));
         binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         Log.d("taguhi", "ui   " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI));
-        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
-
+        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(binding.imgProfile);
+        binding.progressBarWithImage.setVisibility(View.GONE);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
 
     }
@@ -302,7 +301,7 @@ public class ProfileFragment extends Fragment {
             binding.btnLogOut.setEnabled(true);
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
-            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(HomeActivity.binding.imgProfile);
 
         });
     }
