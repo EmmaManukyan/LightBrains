@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,8 @@ public class ForgotFragment extends Fragment {
                 Toast.makeText(getContext(), "Check your email", Toast.LENGTH_LONG).show();
                 Navigation.findNavController(view).navigate(R.id.action_forgotFragment_to_signInFragment);
             } else {
-                Toast.makeText(getContext(), "Error Occurred", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Error Occurred "+task.getException(), Toast.LENGTH_LONG).show();
+                Log.d("taguhi","error  "+task.getException());
             }
         }).addOnFailureListener(e -> {
             progressDialog.dismiss();

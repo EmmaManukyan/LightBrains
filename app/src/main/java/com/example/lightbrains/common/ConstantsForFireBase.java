@@ -12,7 +12,7 @@ public class ConstantsForFireBase {
     public static String IMAGE_DB = "ImageDB";
     public static String IMAGE_DB_CHILD = "user_image";
     public static String PROFILE_IMAGE_URI = "ImageUri";
-    public static String DEFAULT_IMAGE_URI = "https://firebasestorage.googleapis.com/v0/b/lightbrains-5d955.appspot.com/o/ImageDB%2FUsers%2Fuser_image?alt=media&token=59633fd0-68c5-471b-8c17-2f8d82893790";
+    public static String DEFAULT_IMAGE_URI = "";
 
     public static String USER_KEY = "Users";
     public static String USER_NAME = "UserName";

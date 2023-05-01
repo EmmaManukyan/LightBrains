@@ -44,7 +44,10 @@
     <string name="finish">Ավարտել</string>
     <string name="yes">Այո</string>
     <string name="no">Ոչ</string>
+
+    //firebase
     <string name="do_you_really_want_to_exit">Դուք իսկապե՞ս ուզում եք դուրս գալ</string>
+    <string name="do_you_really_want_to_delete_your_account">Դուք իսկապե՞ս ուզում եք ջնջել Ձեր հաշիվը</string>
 
 
     <string name="time">Ժամանակ</string>
@@ -83,6 +86,7 @@
     <string name="quantity_of_figure">Պատկերի քանակ</string>
     <string name="enter_password_to_make_changes">Մուտքագրեք գաղտնաբառը փոփոխություններ անելու համար</string>
     <string name="cancel">Չեղարկել</string>
+    <string name="delete_account">Ջնջել հաշիվը</string>
     <string name="we_are_still_working_on_this_part">Մենք դեռ աշխատում ենք այս հատվածի վրա...</string>
     <string name="wait_a_little">Մի փոքր սպասեք...</string>
 

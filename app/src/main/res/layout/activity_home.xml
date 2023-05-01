@@ -55,7 +55,8 @@
         app:layout_constraintVertical_bias="0.3"
         app:shapeAppearanceOverlay="@style/SpecificCornerRoundedImage"
         app:strokeColor="@color/color_secondary_variant"
-        app:strokeWidth="1dp" />
+        app:strokeWidth="1dp"
+        android:background="@drawable/background_img_profile_default"/>
 
 
     <TextView

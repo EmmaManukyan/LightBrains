@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.btnLogOut.setOnClickListener(view12 -> {
-            showDialog();
+            showDialog(2);
         });
 
         binding.btnConfirm.setOnClickListener(view13 -> {
@@ -111,6 +111,10 @@ public class ProfileFragment extends Fragment {
         binding.btnCancel.setOnClickListener(view14 -> {
             setViewParams();
             disEnableViews();
+        });
+
+        binding.btnDelete.setOnClickListener(v -> {
+            showDialog(5);
         });
 
         binding.imgProfile.setOnClickListener(view15 -> {
@@ -172,14 +176,14 @@ public class ProfileFragment extends Fragment {
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
     private void setViewParams() {
-        binding.progressBarWithImage.setVisibility(View.VISIBLE);
+//        binding.progressBarWithImage.setVisibility(View.VISIBLE);
         binding.edtName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         binding.edtPassword.setText("");
         binding.edtPassword.setHintTextColor(getResources().getColorStateList(R.color.grey));
         binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         Log.d("taguhi", "ui   " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI));
-        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(binding.imgProfile);
-        binding.progressBarWithImage.setVisibility(View.GONE);
+        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
+
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
 
     }
@@ -194,9 +198,10 @@ public class ProfileFragment extends Fragment {
         binding.tvLayName.setEnabled(true);
         binding.edtName.setFocusedByDefault(true);
         binding.tvLayPassword.setEnabled(true);
-        binding.imgEditProfile.setClickable(false);
+        binding.imgEditProfile.setVisibility(View.GONE);
         binding.btnConfirm.setVisibility(View.VISIBLE);
         binding.btnCancel.setVisibility(View.VISIBLE);
+        binding.btnDelete.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
@@ -208,13 +213,14 @@ public class ProfileFragment extends Fragment {
         binding.tvLayName.setEnabled(false);
         binding.edtName.setFocusedByDefault(false);
         binding.tvLayPassword.setEnabled(false);
-        binding.imgEditProfile.setClickable(true);
+        binding.imgEditProfile.setVisibility(View.VISIBLE);
         binding.btnConfirm.setVisibility(View.GONE);
         binding.btnCancel.setVisibility(View.GONE);
+        binding.btnDelete.setVisibility(View.GONE);
     }
 
-    private void showDialog() {
-        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(2);
+    private void showDialog(int dialogCode) {
+        CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(dialogCode);
         customDialogFragmentForExit.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 
@@ -296,7 +302,7 @@ public class ProfileFragment extends Fragment {
             binding.btnLogOut.setEnabled(true);
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
-            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(HomeActivity.binding.imgProfile);
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
 
         });
     }

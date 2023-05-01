@@ -49,7 +49,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         if (DIALOG_POSITION_CODE==5){
-            builder.setTitle(getResources().getString(R.string.do_you_really_want_to_delete_your_accaunt));
+            builder.setTitle(getResources().getString(R.string.do_you_really_want_to_delete_your_account));
         }else{
             builder.setTitle(getResources().getString(R.string.do_you_really_want_to_exit));
         }
@@ -113,10 +113,10 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                                             Toast.makeText(getContext(), "chexav", Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                            FirebaseAuth.getInstance().signOut();
                             Intent intent1 = new Intent(getActivity(), MainActivity.class);
                             startActivity(intent1);
                             requireActivity().finish();
-
                             break;
                     }
 

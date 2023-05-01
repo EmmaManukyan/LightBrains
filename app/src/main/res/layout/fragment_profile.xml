@@ -14,14 +14,14 @@
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_temp"
         android:visibility="visible"
+        android:background="@drawable/background_img_profile_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/SpecificCornerRoundedImage"
         app:strokeColor="@color/color_secondary_variant"
-        app:strokeWidth="1dp" />
+        app:strokeWidth="0dp" />
 
     <ProgressBar
         android:id="@+id/progress_bar_with_image"
@@ -144,7 +144,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
 
                     <Button
                         android:id="@+id/btn_confirm"
@@ -157,7 +158,6 @@
                         android:padding="4dp"
                         android:text="@string/confirm"
                         android:textAllCaps="false"
-                        android:textStyle="bold"
                         android:visibility="gone" />
 
                     <Button
@@ -176,6 +176,20 @@
                         />
 
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/color_primary_variant"
+                    android:padding="4dp"
+                    android:text="@string/delete_account"
+                    android:textAllCaps="false"
+                    android:visibility="gone"
+
+                    />
 
 
             </LinearLayout>

@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
-            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(binding.imgProfile);
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
 
         }
 
@@ -128,11 +128,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
-                binding.tvProfileName.setText(user.getUserName());
-                Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
-                Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri());
-                Log.d("taguhi", "" + user.getImageUri());
-                Constants.myEditShared.commit();
+                if (user != null) {
+                    binding.tvProfileName.setText(user.getUserName());
+                    Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
+                    Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri());
+                    Log.d("taguhi", "" + user.getImageUri());
+                    Constants.myEditShared.commit();
+                }
             }
 
             @Override

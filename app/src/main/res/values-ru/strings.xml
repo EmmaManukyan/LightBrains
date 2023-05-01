@@ -46,7 +46,10 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
+    //firebase
     <string name="do_you_really_want_to_exit">Ты действительно хочешь выйти?</string>
+    <string name="do_you_really_want_to_delete_your_account">Ты действительно хочешь удалить свой аккаунт?</string>
+
 
 
     <string name="time">Время</string>
@@ -84,6 +87,7 @@
     <string name="quantity_of_figure">Количество фигурки</string>
     <string name="enter_password_to_make_changes">Введите пароль для внесения изменений</string>
     <string name="cancel">Отмена</string>
+    <string name="delete_account">Удалить аккаунт</string>
     <string name="we_are_still_working_on_this_part">Мы еще работаем над этой часть...!</string>
     <string name="wait_a_little">Подождите немного...</string>
 
