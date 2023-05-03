@@ -51,6 +51,7 @@ public class Constants {
 
     public static final String FIGURES_SHOW_START_TIME = "FiguresShowStartTime";
     public static final String FIGURES_SHOW_FINISH_TIME = "FiguresShowFinishTime";
+    public static final String RIGHT_ANSWERS = "RightAnswers";
 
 
     public static SharedPreferences sharedPreferences = null;

@@ -87,6 +87,7 @@
     <string name="delete_account">Delete account</string>
     <string name="we_are_still_working_on_this_part">We are still working on this part...!</string>
     <string name="wait_a_little">Wait a little...</string>
+    <string name="results">Results</string>
 
 
     <string-array name="string_languages_array">

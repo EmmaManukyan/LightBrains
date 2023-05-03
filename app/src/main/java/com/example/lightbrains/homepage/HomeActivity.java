@@ -130,6 +130,7 @@ public class HomeActivity extends AppCompatActivity {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
                 if (user != null) {
                     binding.tvProfileName.setText(user.getUserName());
+                    Picasso.get().load(user.getImageUri()).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
                     Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
                     Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri());
                     Log.d("taguhi", "" + user.getImageUri());

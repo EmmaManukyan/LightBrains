@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
@@ -25,9 +26,12 @@ import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
 import com.example.lightbrains.interfaces.BackPressedListener;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
-public class AttentionGameWriteAnswersFragment extends Fragment implements BackPressedListener{
+public class AttentionGameWriteAnswersFragment extends Fragment implements BackPressedListener {
     private FragmentAttentionGameWriteAnswersBinding binding;
     private RecyclerView.LayoutManager lm;
     private AttentionGameRecyclerAdapter adapter;
@@ -38,8 +42,10 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
 
     private boolean answersAreChecked = false;
 
+    private int scores = 0;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAttentionGameWriteAnswersBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
@@ -51,7 +57,9 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
+        assert bundle != null;
+        //figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
+        figuresGroupCount = AttentionGameValues.getFiguresGroupCount();
         showedMap = new HashMap<>();
         HashMap<Integer, Integer> tempShowedMap = (HashMap<Integer, Integer>) bundle.getSerializable(Constants.HASHMAP_BUNDLE);
         for (Integer key : tempShowedMap.keySet()) {
@@ -59,8 +67,8 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 showedMap.put(key, tempShowedMap.get(key));
             }
         }
-        figureType = bundle.getInt(Constants.FIGURES_TYPE);
-        Log.d("TAG", "jjjjjjjjjjjjjjjjjjjjjjj             " + showedMap.toString());
+        // figureType = bundle.getInt(Constants.FIGURES_TYPE);
+        figureType = AttentionGameValues.getFiguresType();
         init();
 
         binding.btnCheck.setOnClickListener(view1 -> {
@@ -68,27 +76,39 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 Constants.closeKeyboard(requireActivity());
                 adapter.isChecking = true;
                 answersAreChecked = true;
+                if (!adapter.getAnswersMap().containsValue(false) && adapter.getAnswersMap().containsValue(true)) {
+                    scores += 5;
+                    Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (Integer key : adapter.getAnswersMap().keySet()) {
+                        scores = Boolean.TRUE.equals(adapter.getAnswersMap().get(key)) ? scores + 1 : scores - 1;
+                    }
+                }
                 adapter.notifyDataSetChanged();
-                if (figuresGroupCount!=0) {
+                if (figuresGroupCount != 0) {
                     binding.btnCheck.setText(getResources().getString(R.string.next));
-                }else{
+                } else {
                     binding.btnCheck.setText(getResources().getString(R.string.finish));
                 }
-            } else if (figuresGroupCount==0) {
+            } else if (figuresGroupCount == 0) {
                 Bundle bundleToNavigate = new Bundle();
-                bundleToNavigate.putInt(Constants.SCORES,10);
-                bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS,10);
-                bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME,System.currentTimeMillis()-bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
-                Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_showResultsFragment3,bundleToNavigate);
+                bundleToNavigate.putInt(Constants.RIGHT_ANSWERS, scores);
+                bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS, Constants.sharedPreferences.getInt(Constants.FIGURES_GROUP_COUNT, 0));
+                bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME, System.currentTimeMillis() - bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
+                Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_showResultsFragment3, bundleToNavigate);
             } else {
+
                 Bundle bundleToNavigate = new Bundle();
-                bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-                bundle.putInt(Constants.FIGURES_TYPE,bundle.getInt(Constants.FIGURES_TYPE));
-                bundle.putInt(Constants.FIGURES_LEVEL,bundle.getInt(Constants.FIGURES_LEVEL));
-                bundle.putFloat(Constants.FIGURES_SHOW_TIME,bundle.getFloat(Constants.FIGURES_SHOW_TIME));
-                bundle.putInt(Constants.FIGURES_COUNT,bundle.getInt(Constants.FIGURES_COUNT));
-                bundleToNavigate.putLong(Constants.FIGURES_SHOW_START_TIME,bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
-                Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameShowFiguresFragment,bundleToNavigate);
+                //bundleToNavigate.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
+                //bundleToNavigate.putInt(Constants.FIGURES_TYPE,bundle.getInt(Constants.FIGURES_TYPE));
+                //bundleToNavigate.putInt(Constants.FIGURES_LEVEL,bundle.getInt(Constants.FIGURES_LEVEL));
+                //bundleToNavigate.putFloat(Constants.FIGURES_SHOW_TIME,bundle.getFloat(Constants.FIGURES_SHOW_TIME));
+                //bundleToNavigate.putInt(Constants.FIGURES_COUNT,bundle.getInt(Constants.FIGURES_COUNT));
+                //bundleToNavigate.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,bundle.getInt(Constants.FIGURES_COMPLEXITY_LEVEL));
+                //bundleToNavigate.putLong(Constants.FIGURES_SHOW_START_TIME,bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
+                //   Log.d("taguhi",figuresGroupCount+"  \nftype  " +bundle.getInt(Constants.FIGURES_TYPE)+"\nflvrl  "+bundle.getInt(Constants.FIGURES_LEVEL)+"\nTIME======  "+bundle.getFloat(Constants.FIGURES_SHOW_TIME)+"\nfcount  "+bundle.getInt(Constants.FIGURES_COUNT));
+
+                Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameShowFiguresFragment, bundleToNavigate);
             }
         });
 

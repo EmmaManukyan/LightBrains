@@ -20,15 +20,19 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<AttentionGameRecyclerAdapter.MyViewHolder> {
-    private HashMap<Integer,Integer> showedMap;
+    private final HashMap<Integer,Integer> showedMap;
 
-    private HashMap<Integer,Boolean> answersMap;
-    private Context context;
-    private int figureType;
+    private final HashMap<Integer,Boolean> answersMap;
 
-    private Integer[] keys;
+    public HashMap<Integer, Boolean> getAnswersMap() {
+        return answersMap;
+    }
 
-   // private  MyViewHolder holder1;
+    private final Context context;
+    private final int figureType;
+
+    private final Integer[] keys;
+
 
     boolean isChecking =false;
 

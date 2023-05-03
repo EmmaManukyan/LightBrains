@@ -1,6 +1,7 @@
 package com.example.lightbrains.part_second.attention_game;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameSettingsBinding;
+
+import java.util.Objects;
 
 public class AttentionGameSettingsFragment extends Fragment implements View.OnClickListener {
 
@@ -36,7 +39,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     private ArrayAdapter arrayAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAttentionGameSettingsBinding.inflate(inflater, container, false);
@@ -50,33 +53,33 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         init();
 
 
-
         binding.checkboxInfo.setOnClickListener(view1 -> {
-            if (!binding.checkboxInfo.isChecked()){
+            if (!binding.checkboxInfo.isChecked()) {
                 binding.checkboxInfo.setChecked(true);
                 binding.tvInfo.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.BounceInDown).duration(500).playOn(binding.tvInfo);
-            }else {
+            } else {
                 binding.checkboxInfo.setChecked(false);
                 binding.tvInfo.setVisibility(View.GONE);
             }
         });
         binding.btnLetsGo.setOnClickListener(view12 -> {
-            if (binding.checkBoxDefineMyslf.isChecked()){
-                if (figuresType !=-1 && figuresLevel!=-1) {
+            if (binding.checkBoxDefineMyslf.isChecked()) {
+                if (figuresType != -1 && figuresLevel != -1) {
                     putBundlesWithoutComplexity();
-                    Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment,bundle);
+                    Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment, bundle);
 
-                }else{
-                    Toast.makeText(getContext(), "Select fields", Toast.LENGTH_SHORT).show();;
+                } else {
+                    Toast.makeText(getContext(), "Select fields", Toast.LENGTH_SHORT).show();
+                    ;
                 }
-            }else{
+            } else {
                 putBundlesWithComplexity();
-                bundle.putLong(Constants.FIGURES_SHOW_START_TIME,System.currentTimeMillis());
+                bundle.putLong(Constants.FIGURES_SHOW_START_TIME, System.currentTimeMillis());
                 Constants.myEditShared.putInt(Constants.FIGURES_COMPLEXITY_LEVEL, complexityLevel);
                 Constants.myEditShared.putInt(Constants.FIGURES_GROUP_COUNT, figuresGroupCount);
                 Constants.myEditShared.commit();
-                Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment,bundle);
+                Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment, bundle);
             }
         });
 
@@ -96,7 +99,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         int temp;
 
         if (binding.btnPlus.equals(view)) {
-            temp = Integer.parseInt(binding.autoTvCountOfFigureGroups.getText().toString());
+            temp = Integer.parseInt(Objects.requireNonNull(binding.autoTvCountOfFigureGroups.getText()).toString());
             temp++;
             figuresGroupCount = temp;
             binding.autoTvCountOfFigureGroups.setText(Integer.toString(temp));
@@ -131,7 +134,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         binding.includedLayout.autoTvFiguresLevel.setOnItemClickListener((adapterView, view, i, l) -> figuresLevel = i);
 
         binding.includedLayout.sliderTime.addOnChangeListener((slider, value, fromUser) -> {
-            float time = (float) value/10;
+            float time = (float) value / 10;
             showTime = time;
             binding.includedLayout.tvTime.setText(getResources().getString(R.string.time) + ": " + time);
         });
@@ -139,7 +142,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
 
         binding.includedLayout.sliderFigureCount.addOnChangeListener((slider, value, fromUser) -> {
             figuresCount = (int) value;
-            binding.includedLayout.tvFigureCount.setText(getResources().getString(R.string.number_of_following_figures)+" "+figuresCount);
+            binding.includedLayout.tvFigureCount.setText(getResources().getString(R.string.number_of_following_figures) + " " + figuresCount);
         });
     }
 
@@ -174,32 +177,52 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         Constants.createSharedPreferences(getActivity());
         complexityArrayStrings = getResources().getStringArray(R.array.string_complexity_array);
         arrayAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, complexityArrayStrings);
-        complexityLevel = Constants.sharedPreferences.getInt(Constants.FIGURES_COMPLEXITY_LEVEL,0);
-        figuresGroupCount = Constants.sharedPreferences.getInt(Constants.FIGURES_GROUP_COUNT,1);
-        binding.autoTvCountOfFigureGroups.setText(""+figuresGroupCount);
+        complexityLevel = Constants.sharedPreferences.getInt(Constants.FIGURES_COMPLEXITY_LEVEL, 0);
+        figuresGroupCount = Constants.sharedPreferences.getInt(Constants.FIGURES_GROUP_COUNT, 1);
+        binding.autoTvCountOfFigureGroups.setText("" + figuresGroupCount);
         binding.autoTvComplexity.setText(complexityArrayStrings[complexityLevel]);
         binding.autoTvComplexity.setAdapter(arrayAdapter);
     }
 
-    private void putBundlesWithComplexity(){
-        figuresGroupCount = Integer.parseInt(binding.autoTvCountOfFigureGroups.getText().toString());
-        bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-        bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,complexityLevel);
+    private void putBundlesWithComplexity() {
+        figuresGroupCount = Integer.parseInt(Objects.requireNonNull(binding.autoTvCountOfFigureGroups.getText()).toString());
+//        bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
+//        bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,complexityLevel);
 
-        bundle.putInt(Constants.FIGURES_TYPE,-1);
-        bundle.putInt(Constants.FIGURES_LEVEL,-1);
-        bundle.putFloat(Constants.FIGURES_SHOW_TIME,-1);
-        bundle.putInt(Constants.FIGURES_COUNT,-1);
+//        bundle.putInt(Constants.FIGURES_TYPE,-1);
+//        bundle.putInt(Constants.FIGURES_LEVEL,-1);
+//        bundle.putFloat(Constants.FIGURES_SHOW_TIME,-1);
+//        bundle.putInt(Constants.FIGURES_COUNT,-1);
+
+        AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
+        AttentionGameValues.setComplexityLevel(complexityLevel);
+
+        AttentionGameValues.setFiguresType(-1);
+        AttentionGameValues.setFiguresLevel(-1);
+        AttentionGameValues.setShowTime(-1);
+        AttentionGameValues.setFiguresCount(-1);
     }
 
-    private void putBundlesWithoutComplexity(){
-        figuresGroupCount = Integer.parseInt(binding.autoTvCountOfFigureGroups.getText().toString());
-        bundle.putInt(Constants.FIGURES_TYPE,figuresType);
-        bundle.putInt(Constants.FIGURES_LEVEL,figuresLevel);
-        bundle.putFloat(Constants.FIGURES_SHOW_TIME,showTime);
-        bundle.putInt(Constants.FIGURES_COUNT,figuresCount);
+    private void putBundlesWithoutComplexity() {
+        figuresGroupCount = Integer.parseInt(Objects.requireNonNull(binding.autoTvCountOfFigureGroups.getText()).toString());
 
-        bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-        bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,-1);
+        AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
+        AttentionGameValues.setComplexityLevel(-1);
+
+        AttentionGameValues.setFiguresType(figuresType);
+        AttentionGameValues.setFiguresLevel(figuresLevel);
+        AttentionGameValues.setShowTime(showTime);
+        AttentionGameValues.setFiguresCount(figuresCount);
+
+        Log.d("taguhi","showtime  "+showTime);
+        Log.d("taguhi","showtimeAttVal  "+AttentionGameValues.getShowTime());
+
+//        bundle.putInt(Constants.FIGURES_TYPE,figuresType);
+//        bundle.putInt(Constants.FIGURES_LEVEL,figuresLevel);
+//        bundle.putFloat(Constants.FIGURES_SHOW_TIME,showTime);
+//        bundle.putInt(Constants.FIGURES_COUNT,figuresCount);
+
+        //bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
+        //bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,-1);
     }
 }

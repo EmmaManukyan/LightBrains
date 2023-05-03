@@ -22,21 +22,21 @@ import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
 import com.example.lightbrains.interfaces.BackPressedListener;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 public class AttentionGameShowFiguresFragment extends Fragment implements BackPressedListener {
 
-//    Bundle bundle;
 
-    FragmentAttentionGameShowFiguresBinding binding;
+    private FragmentAttentionGameShowFiguresBinding binding;
 
-    private int complexityLevel = 0;
     private int figuresType = -1;
     private int figuresLevel = -1;
 
     private int figuresCount = 3;
     private int figuresGroupCount = 0;
     private int showTime = 300;
+    private int complexityLevel;
 
     private ThreadToShowFigures threadToShowFigures;
 
@@ -48,7 +48,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAttentionGameShowFiguresBinding.inflate(inflater, container, false);
@@ -59,6 +59,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        Log.d("taguhi", "mtav inint");
         if (!threadToShowFigures.isAlive()) {
             threadToShowFigures.start();
         }
@@ -75,15 +76,23 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constants.HASHMAP_BUNDLE, showedMap);
-                bundle.putInt(Constants.FIGURES_TYPE, figuresType);
-                Log.d("TAG", "firs showedMap " + showedMap.toString());
-                figuresCount--;
-                bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-                bundle.putInt(Constants.FIGURES_TYPE,figuresType);
-                bundle.putInt(Constants.FIGURES_LEVEL,figuresLevel);
-                bundle.putFloat(Constants.FIGURES_SHOW_TIME,showTime);
-                bundle.putInt(Constants.FIGURES_COUNT,figuresCount);
-                bundle.putLong(Constants.FIGURES_SHOW_START_TIME,startTime);
+                figuresGroupCount--;
+                //bundle.putInt(Constants.FIGURES_GROUP_COUNT, figuresGroupCount);
+                //bundle.putInt(Constants.FIGURES_TYPE, figuresType);
+                //bundle.putInt(Constants.FIGURES_LEVEL, figuresLevel);
+                //bundle.putFloat(Constants.FIGURES_SHOW_TIME, (float) showTime / 1000);
+                //bundle.putInt(Constants.FIGURES_COUNT, figuresCount);
+                //bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL, complexityLevel);
+                //bundle.putLong(Constants.FIGURES_SHOW_START_TIME, startTime);
+
+                AttentionGameValues.setComplexityLevel(complexityLevel);
+                AttentionGameValues.setFiguresType(figuresType);
+                AttentionGameValues.setFiguresLevel(figuresLevel);
+                AttentionGameValues.setShowTime((float) showTime/1000);
+                AttentionGameValues.setFiguresCount(figuresCount);
+                AttentionGameValues.setStartTime(startTime);
+                AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
+                //  Log.d("taguhi","compllevel  "+complexityLevel+"figgcount"+figuresGroupCount+"  \nftype  " +figuresType+"\nflvrl  "+figuresLevel+"\nTIME======  "+showTime+"\nfcount  "+figuresCount);
                 Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment, bundle);
             }
         });
@@ -96,15 +105,27 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
     }
 
     private void getArgs() {
-        Bundle bundle = getArguments();
-        assert bundle != null;
-        complexityLevel = bundle.getInt(Constants.FIGURES_COMPLEXITY_LEVEL);
-        figuresType = bundle.getInt(Constants.FIGURES_TYPE);
-        figuresLevel = bundle.getInt(Constants.FIGURES_LEVEL);
-        figuresCount = bundle.getInt(Constants.FIGURES_COUNT);
-        figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
-        startTime = bundle.getLong(Constants.FIGURES_SHOW_START_TIME);
-        showTime = (int) (bundle.getFloat(Constants.FIGURES_SHOW_TIME) * 1000);
+        //Bundle bundle = getArguments();
+        //assert bundle != null;
+//        complexityLevel = bundle.getInt(Constants.FIGURES_COMPLEXITY_LEVEL);
+//        figuresType = bundle.getInt(Constants.FIGURES_TYPE);
+//        figuresLevel = bundle.getInt(Constants.FIGURES_LEVEL);
+//        figuresCount = bundle.getInt(Constants.FIGURES_COUNT);
+//        figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
+//        startTime = bundle.getLong(Constants.FIGURES_SHOW_START_TIME);
+        // showTime = (int) (bundle.getFloat(Constants.FIGURES_SHOW_TIME) * 1000);
+
+
+        complexityLevel = AttentionGameValues.getComplexityLevel();
+        figuresType = AttentionGameValues.getFiguresType();
+        figuresLevel = AttentionGameValues.getFiguresLevel();
+        figuresCount = AttentionGameValues.getFiguresCount();
+        figuresGroupCount = AttentionGameValues.getFiguresGroupCount();
+        showTime = (int) (AttentionGameValues.getShowTime()*1000);
+        startTime = AttentionGameValues.getStartTime();
+
+        Log.d("taguhi", "GET\ncompllevel  " + complexityLevel + "figgcount" + figuresGroupCount + "  \nftype  " + figuresType + "\nflvrl  " + figuresLevel + "\nTIME======  " + showTime + "\nfcount  " + figuresCount);
+
         Toast.makeText(getContext(), "" + showTime, Toast.LENGTH_SHORT).show();
 
 
@@ -125,11 +146,11 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             showTime = 700;
             figuresCount = 14;
         }
-        Log.d("TAG", "compLevel: " + complexityLevel);
-        Log.d("TAG", "figType: " + figuresType);
-        Log.d("TAG", "figLevel: " + figuresLevel);
-        Log.d("TAG", "figCount: " + figuresCount);
-        Log.d("TAG", "time: " + showTime);
+        Log.d("taguhi", "compLevel: " + complexityLevel);
+        Log.d("taguhi", "figType: " + figuresType);
+        Log.d("taguhi", "figLevel: " + figuresLevel);
+        Log.d("taguhi", "figCount: " + figuresCount);
+        Log.d("taguhi", "time: " + showTime);
 
 
     }
@@ -161,11 +182,11 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             for (int j = 0; j < figuresCount; j++) {
                 if (runningThread) {
                     int finalI = j;
-                    getActivity().runOnUiThread(() -> {
+                    requireActivity().runOnUiThread(() -> {
                         int key = getIndexOfArrToShow(showThisMap);
                         int temp = showThisMap.get(key) - 1;
                         showThisMap.put(key, temp);
-                        Log.d("TAG", showThisMap.toString());
+                        Log.d("taguhi", "Show map in showfigures   " + showThisMap.toString());
                         binding.imgFigure.setImageResource(FigureListCreator.figureTypes[figuresType][key]);
                         YoYo.with(Techniques.FadeIn).duration(showTime).playOn(binding.imgFigure);
                         if (finalI == FigureListCreator.figureTypes[1].length) {

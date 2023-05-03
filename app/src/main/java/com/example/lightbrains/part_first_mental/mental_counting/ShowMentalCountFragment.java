@@ -106,7 +106,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                         isFirstTime = false;
 
                     } else {
-                        bundle.putInt(Constants.SCORES, scores);
+                        bundle.putInt(Constants.RIGHT_ANSWERS, scores);
                         bundle.putInt(Constants.COUNT_FLASH_CARDS, countOfExamples);
                         bundle.putLong(Constants.FIGURES_SHOW_TIME,endTime-startTime);
                         Navigation.findNavController(view).navigate(R.id.action_showMentalCountFragment_to_showResultsFragment2, bundle);

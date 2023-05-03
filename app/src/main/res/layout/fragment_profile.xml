@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/SpecificCornerRoundedImage"
         app:strokeColor="@color/color_secondary_variant"
-        app:strokeWidth="0dp" />
+        app:strokeWidth="1dp" />
 
     <ProgressBar
         android:id="@+id/progress_bar_with_image"
@@ -164,7 +164,7 @@
                         android:id="@+id/btn_cancel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="12dp"
                         android:layout_marginEnd="16dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/grey"

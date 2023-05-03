@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.text.Html;
 import android.util.Log;
@@ -20,19 +19,16 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.databinding.FragmentShowResultsBinding;
 import com.example.lightbrains.homepage.HomeActivity;
-import com.example.lightbrains.homepage.HomeFragment;
-import com.example.lightbrains.interfaces.BackPressedListener;
-
-import java.util.Objects;
 
 
 public class ShowResultsFragment extends Fragment {
     private FragmentShowResultsBinding binding;
-    private float time;
-    private int scores;
+    private double time;
+    private int rightAnswers;
+    private String timeToShow;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentShowResultsBinding.inflate(inflater, container, false);
@@ -44,13 +40,17 @@ public class ShowResultsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        scores = requireArguments().getInt(Constants.SCORES);
+        rightAnswers = requireArguments().getInt(Constants.RIGHT_ANSWERS);
         int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
-        time = (float) requireArguments().getLong(Constants.FIGURES_SHOW_TIME)/60000;
-        time = (float) (Math.round(time * 100.0) / 100.0);
-        Log.d("TAG",time+"");
+        time = (double) requireArguments().getLong(Constants.FIGURES_SHOW_TIME) / 60000;
+        Log.d("taguhi", time + "");
 
-        float percent = (scores*100)/(float)count;
+        time = (float) (Math.round(time * 100.0) / 100.0);
+        String tempTime = String.valueOf(time);
+        timeToShow = tempTime.substring(0,4);
+        Log.d("taguhi", timeToShow + "");
+
+        float percent = (rightAnswers * 100) / (float) count;
 
         progressBarAnimation((int) percent);
         binding.tvLayTime.setError(" ");
@@ -62,8 +62,8 @@ public class ShowResultsFragment extends Fragment {
             startActivity(intent);
             requireActivity().finish();
         });
-        binding.edtTime.setText(""+time +" "+getResources().getString(R.string.minutes));
-        binding.edtScores.setText(""+scores +" "+getResources().getString(R.string.scores).toLowerCase());
+        binding.edtTime.setText("" + time + " " + getResources().getString(R.string.minutes));
+        binding.edtScores.setText("" + rightAnswers + " " + getResources().getString(R.string.scores).toLowerCase());
     }
 
     @SuppressLint("SetTextI18n")
@@ -85,12 +85,12 @@ public class ShowResultsFragment extends Fragment {
                 binding.tvLayTime.setVisibility(View.VISIBLE);
                 binding.tvLayScores.setVisibility(View.VISIBLE);
                 String html = "<font color=" + getResources().getColor(R.color.color_primary_variant)
-                        + ">"+time +"</font><font color="
-                        + getResources().getColor(R.color.color_secondary_variant) + "> "+getResources().getString(R.string.minutes)+"</font>";
+                        + ">" + timeToShow + "</font><font color="
+                        + getResources().getColor(R.color.color_secondary_variant) + "> " + getResources().getString(R.string.minutes) + "</font>";
                 binding.edtTime.setText(Html.fromHtml(html));
                 html = "<font color=" + getResources().getColor(R.color.color_secondary_variant)
-                        + ">"+scores +"</font><font color="
-                        + getResources().getColor(R.color.color_primary_variant) + "> "+getResources().getString(R.string.scores).toLowerCase()+"</font>";
+                        + ">" + rightAnswers + "</font><font color="
+                        + getResources().getColor(R.color.color_primary_variant) + "> " + getResources().getString(R.string.scores).toLowerCase() + "</font>";
                 binding.edtScores.setText(Html.fromHtml(html));
                 YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);
                 YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayScores);
