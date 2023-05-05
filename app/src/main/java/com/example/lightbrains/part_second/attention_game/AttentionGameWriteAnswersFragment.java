@@ -43,6 +43,8 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     private boolean answersAreChecked = false;
 
     private int scores = 0;
+    private int rightAnswers = 0;
+    private int count = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -78,12 +80,16 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 answersAreChecked = true;
                 if (!adapter.getAnswersMap().containsValue(false) && adapter.getAnswersMap().containsValue(true)) {
                     scores += 5;
+                    rightAnswers+=adapter.getAnswersMap().size();
                     Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
                 } else {
                     for (Integer key : adapter.getAnswersMap().keySet()) {
                         scores = Boolean.TRUE.equals(adapter.getAnswersMap().get(key)) ? scores + 1 : scores - 1;
+                        rightAnswers = Boolean.TRUE.equals(adapter.getAnswersMap().get(key)) ? rightAnswers + 1 : rightAnswers;
+                        Log.d("taguhi","=========================================  ");
                     }
                 }
+                count+=adapter.getAnswersMap().size();
                 adapter.notifyDataSetChanged();
                 if (figuresGroupCount != 0) {
                     binding.btnCheck.setText(getResources().getString(R.string.next));
@@ -92,22 +98,20 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 }
             } else if (figuresGroupCount == 0) {
                 Bundle bundleToNavigate = new Bundle();
-                bundleToNavigate.putInt(Constants.RIGHT_ANSWERS, scores);
-                bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS, Constants.sharedPreferences.getInt(Constants.FIGURES_GROUP_COUNT, 0));
+                bundleToNavigate.putInt(Constants.RIGHT_ANSWERS, rightAnswers);
+                bundleToNavigate.putInt(Constants.SCORES, scores);
+                bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS, count);
                 bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME, System.currentTimeMillis() - bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
+                Log.d("taguhi","rightansers: "+rightAnswers);
+                Log.d("taguhi","scores: "+scores);
+                Log.d("taguhi","count: "+count);
+
                 Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_showResultsFragment3, bundleToNavigate);
             } else {
-
+                Log.d("taguhi","rightansers: "+rightAnswers);
+                Log.d("taguhi","scores: "+scores);
+                Log.d("taguhi","count: "+count);
                 Bundle bundleToNavigate = new Bundle();
-                //bundleToNavigate.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-                //bundleToNavigate.putInt(Constants.FIGURES_TYPE,bundle.getInt(Constants.FIGURES_TYPE));
-                //bundleToNavigate.putInt(Constants.FIGURES_LEVEL,bundle.getInt(Constants.FIGURES_LEVEL));
-                //bundleToNavigate.putFloat(Constants.FIGURES_SHOW_TIME,bundle.getFloat(Constants.FIGURES_SHOW_TIME));
-                //bundleToNavigate.putInt(Constants.FIGURES_COUNT,bundle.getInt(Constants.FIGURES_COUNT));
-                //bundleToNavigate.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,bundle.getInt(Constants.FIGURES_COMPLEXITY_LEVEL));
-                //bundleToNavigate.putLong(Constants.FIGURES_SHOW_START_TIME,bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
-                //   Log.d("taguhi",figuresGroupCount+"  \nftype  " +bundle.getInt(Constants.FIGURES_TYPE)+"\nflvrl  "+bundle.getInt(Constants.FIGURES_LEVEL)+"\nTIME======  "+bundle.getFloat(Constants.FIGURES_SHOW_TIME)+"\nfcount  "+bundle.getInt(Constants.FIGURES_COUNT));
-
                 Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameShowFiguresFragment, bundleToNavigate);
             }
         });

@@ -132,7 +132,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
         if (complexityLevel == 0) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
             figuresLevel = 3;
-            showTime = 900;
+            showTime = 400;
             figuresCount = 7;
         } else if (complexityLevel == 1) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);

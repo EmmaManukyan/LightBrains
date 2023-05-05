@@ -54,6 +54,8 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
         return new MyViewHolder(view);
     }
 
+
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d("TAG","imgIndex =    "+this.showedMap.get(keys[position]));
@@ -61,8 +63,10 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
        // holder1 = holder;
 
         if (isChecking){
+
             holder.imgIsRight.setVisibility(View.VISIBLE);
             holder.edtAnswer.setEnabled(false);
+
         }
         holder.edtAnswer.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,8 +81,8 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!holder.edtAnswer.getText().toString().equals("")){
-                    if (Integer.parseInt(holder.edtAnswer.getText().toString())==showedMap.get(keys[position])){
+                if (!holder.edtAnswer.getText().toString().equals("") && !isChecking){
+                    if (Integer.parseInt(holder.edtAnswer.getText().toString())== showedMap.get(keys[position])){
                         answersMap.put(keys[position], true);
                         holder.imgIsRight.setImageResource(R.drawable.right);
                     }else{

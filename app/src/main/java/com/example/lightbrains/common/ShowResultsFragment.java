@@ -26,6 +26,7 @@ public class ShowResultsFragment extends Fragment {
     private double time;
     private int rightAnswers;
     private String timeToShow;
+    private int scores;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,6 +44,7 @@ public class ShowResultsFragment extends Fragment {
         rightAnswers = requireArguments().getInt(Constants.RIGHT_ANSWERS);
         int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
         time = (double) requireArguments().getLong(Constants.FIGURES_SHOW_TIME) / 60000;
+        scores = requireArguments().getInt(Constants.SCORES,-1);
         Log.d("taguhi", time + "");
 
         time = (float) (Math.round(time * 100.0) / 100.0);
@@ -89,7 +91,7 @@ public class ShowResultsFragment extends Fragment {
                         + getResources().getColor(R.color.color_secondary_variant) + "> " + getResources().getString(R.string.minutes) + "</font>";
                 binding.edtTime.setText(Html.fromHtml(html));
                 html = "<font color=" + getResources().getColor(R.color.color_secondary_variant)
-                        + ">" + rightAnswers + "</font><font color="
+                        + ">" + scores + "</font><font color="
                         + getResources().getColor(R.color.color_primary_variant) + "> " + getResources().getString(R.string.scores).toLowerCase() + "</font>";
                 binding.edtScores.setText(Html.fromHtml(html));
                 YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);

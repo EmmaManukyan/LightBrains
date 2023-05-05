@@ -102,12 +102,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
+        binding.myBottomNav.setSelectedItemId(R.id.menu_home);
     }
 
     private void loadFragment(Fragment fragment) {
         //to attach fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, fragment).commit();
-
     }
 
 
@@ -145,6 +146,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+
 
 
 }

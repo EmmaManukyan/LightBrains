@@ -45,7 +45,7 @@
             android:drawableTint="@color/green_dark"
             android:gravity="center_horizontal"
             android:textCursorDrawable="@color/green_dark"
-            android:maxLength="5"
+            android:maxLength="10"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
