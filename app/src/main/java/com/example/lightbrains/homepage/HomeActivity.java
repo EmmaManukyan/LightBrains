@@ -1,5 +1,7 @@
 package com.example.lightbrains.homepage;
 
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -31,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getDelegate().setLocalNightMode(MODE_NIGHT_NO);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
@@ -146,7 +148,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }
