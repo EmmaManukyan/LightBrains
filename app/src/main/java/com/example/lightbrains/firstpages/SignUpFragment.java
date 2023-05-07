@@ -32,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 
-public class SignUpFragment extends Fragment{
+public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding binding;
     private String passwordError = "";
     private FirebaseAuth mAuth;
@@ -41,7 +41,7 @@ public class SignUpFragment extends Fragment{
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -52,8 +52,7 @@ public class SignUpFragment extends Fragment{
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Toast.makeText(getContext(), "User already exists"
-                    +currentUser.getUid(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "User already exists", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -73,17 +72,17 @@ public class SignUpFragment extends Fragment{
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String password = charSequence.toString();
-                binding.includedLayout.tvLayPassword.setHelperText("Enter minimum 8 char");
+                binding.includedLayout.tvLayPassword.setHelperText(getResources().getString(R.string.enter_minimum_8_char));
                 binding.includedLayout.tvLayPassword.setError("");
-                passwordError = "Enter minimum 8 char";
+                passwordError = getResources().getString(R.string.enter_minimum_8_char);
                 if (password.contains(" ")) {
                     binding.includedLayout.tvLayPassword.setHelperText("");
-                    passwordError = "Password can't contain space";
+                    passwordError = getResources().getString(R.string.password_cant_contain_space);
                     binding.includedLayout.tvLayPassword.setError(passwordError);
                 }
                 if (password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH) {
                     binding.includedLayout.tvLayPassword.setHelperText("");
-                    passwordError = "Password's max length is "+ConstantsForFireBase.PASSWORD_MAX_LENGTH;
+                    passwordError = getResources().getString(R.string.passwords_max_length_is) + ConstantsForFireBase.PASSWORD_MAX_LENGTH;
                     binding.includedLayout.tvLayPassword.setError(passwordError);
                 }
             }
@@ -101,18 +100,18 @@ public class SignUpFragment extends Fragment{
             binding.includedLayout.tvLayPassword.setErrorEnabled(false);
             String password = Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString().equals("")) {
-                binding.includedLayout.tvLayName.setError("Enter name");
+                binding.includedLayout.tvLayName.setError(getResources().getString(R.string.enter_name));
             } else if (Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString().equals("")) {
-                binding.includedLayout.tvLayMail.setError("Enter mail");
+                binding.includedLayout.tvLayMail.setError(getResources().getString(R.string.enter_email));
             } else if (password.equals("") || password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH || password.length() < 8 || password.contains(" ")) {
                 binding.includedLayout.tvLayPassword.setHelperText("");
                 binding.includedLayout.tvLayPassword.setError(passwordError);
-            } else if(ConstantsForFireBase.checkConnection(requireActivity())){
-                Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
+            } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
+                Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog,"Registration");
+                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration));
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
@@ -120,10 +119,11 @@ public class SignUpFragment extends Fragment{
                                 FirebaseUser curUser = mAuth.getCurrentUser();
                                 assert curUser != null;
                                 saveUser(curUser.getUid());
-                                sendEmailVerification(view,curUser);
+                                sendEmailVerification(view, curUser);
                                 progressDialog.dismiss();
                             } else {
-                                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+
+                                Constants.createToast(getContext(),R.string.something_went_wrong);
                                 progressDialog.dismiss();
                             }
                         });
@@ -141,7 +141,7 @@ public class SignUpFragment extends Fragment{
                 dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
                 Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_signInFragment);
             } else {
-                Toast.makeText(getContext(), "Email verification hasn't been send", Toast.LENGTH_SHORT).show();
+                Constants.createToast(getContext(), R.string.email_verification_hasnt_been_sent);
             }
         });
     }
@@ -156,7 +156,7 @@ public class SignUpFragment extends Fragment{
         String id = myDataBase.getKey();
         String userName = Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString();
         String email = Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString();
-        User newUser = new User(id,userName,email,0,"hello");
+        User newUser = new User(id, userName, email, 0, "");
         myDataBase.child(Uid).setValue(newUser);
 
     }

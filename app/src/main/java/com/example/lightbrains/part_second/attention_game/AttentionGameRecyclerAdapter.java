@@ -66,8 +66,7 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Log.d("TAG", "imgIndex =    " + this.showedMap.get(keys[position]));
-        // holder1 = holder;
+        //Log.d("TAG", "imgIndex =    " + this.showedMap.get(keys[position]));
 
         if (isChecking) {
             holder.imgIsRight.setVisibility(View.VISIBLE);
@@ -77,7 +76,7 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
                 if (s.equals("")) s = "?";
                 Log.d("tagavor", answersMap.toString());
                 holder.edtAnswer.setTextColor(context.getResources().getColor(R.color.is_wrong));
-                holder.edtAnswer.setText(s + "!=" + holder.imgFigure.getContentDescription().toString().replace(Constants.WRONG, ""));
+                holder.edtAnswer.setText(s + "≠" + holder.imgFigure.getContentDescription().toString().replace(Constants.WRONG, ""));
             } else if (holder.imgIsRight.getContentDescription().toString().contains(Constants.WRONG)) {
                 holder.edtAnswer.setTextColor(context.getResources().getColor(R.color.is_wrong));
                 holder.edtAnswer.setText(s + " ≠ " + showedMap.get(Integer.parseInt(holder.imgIsRight.getContentDescription().toString().replace(Constants.WRONG, ""))));

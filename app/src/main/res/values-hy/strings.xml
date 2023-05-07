@@ -19,8 +19,14 @@
     <string name="registration">Գրանցում</string>
     <string name="you_are_offline">Դուք կապի մեջ չեք</string>
     <string name="enter_email">Մուտքագրեք Ձեր էլ․ փոստը</string>
+    <string name="enter_name">Մուտքագրեք օգտանուն</string>
     <string name="email_or_password_is_incprrect">Էլփոստը կամ գաղտնաբառը սխալ Է</string>
     <string name="email_not_veified">Էլ․ փոստը հաստատված չէ</string>
+    <string name="password_cant_contain_space">Գաղտնաբառը չի կարող բացատ պարունակել</string>
+    <string name="enter_minimum_8_char">Մուտքագրեք նվազագույնը 8 նիշ</string>
+    <string name="passwords_max_length_is">Գաղտնաբառի առավելագույն երկարությունը </string>
+    <string name="email_verification_hasnt_been_sent">Էլփոստի հաստատումը չի ուղարկվել</string>
+    <string name="something_went_wrong">Ինչ-որ բան այնպես չգնաց</string>
 
 
 

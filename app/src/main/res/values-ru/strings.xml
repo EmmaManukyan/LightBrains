@@ -19,8 +19,14 @@
     <string name="registration">Регистрация</string>
     <string name="you_are_offline">Вы не в сети</string>
     <string name="enter_email">Введите адрес эл. почты</string>
+    <string name="enter_name">Введите имя пользователя</string>
     <string name="email_or_password_is_incprrect">Почта или пароль указан неверно</string>
     <string name="email_not_veified">Электронная почта не подтверждена</string>
+    <string name="password_cant_contain_space">Пароль не может содержать пробел</string>
+    <string name="enter_minimum_8_char">Введите минимум 8 символов</string>
+    <string name="passwords_max_length_is">Максимальная длина пароля</string>
+    <string name="email_verification_hasnt_been_sent">Подтверждение эл. почты не было отправлено</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
 
 
 
