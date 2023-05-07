@@ -12,10 +12,12 @@
     <string name="name">Օգտանուն</string>
     <string name="create_account">Գրանցում</string>
     <string name="check_email">Ստուգեք ձեր էլ․ փոստը և հաստատեք գրանցումը</string>
+    <string name="check_email_forgot">Ստուգեք ձեր էլ․ փոստը</string>
     <string name="reset_my_password">Վերականգնել գաղտնաբառը</string>
     <string name="email_address_forgot">Էլ․ փոստ</string>
 
     <string name="enter_password">Մուտքագրեք գաղտնաբառ</string>
+    <string name="enter_strong_password">Մուտքագրեք ուժեղ գաղտնաբառ</string>
     <string name="registration">Գրանցում</string>
     <string name="you_are_offline">Դուք կապի մեջ չեք</string>
     <string name="enter_email">Մուտքագրեք Ձեր էլ․ փոստը</string>
@@ -29,6 +31,8 @@
     <string name="something_went_wrong">Ինչ-որ բան այնպես չգնաց</string>
     <string name="password_is_wrong">Գաղտնաբառը սխալ է</string>
     <string name="confirmed">Հաստատված է!</string>
+    <string name="sending_email">Ուղարկում ենք...</string>
+
 
 
 

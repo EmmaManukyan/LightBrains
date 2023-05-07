@@ -32,7 +32,7 @@ public class ForgotFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentForgotBinding.inflate(inflater, container, false);
@@ -46,27 +46,28 @@ public class ForgotFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.btnReset.setOnClickListener(v -> {
             if (!binding.edtMail.getText().toString().isEmpty()) {
-                beginRecovery(binding.edtMail.getText().toString(),view);
+                beginRecovery(binding.edtMail.getText().toString(), view);
             } else {
-                Toast.makeText(getContext(), "Email is empty", Toast.LENGTH_SHORT).show();
+                Constants.createToast(getContext(), R.string.enter_email);
             }
         });
     }
 
-    private void beginRecovery(String email,View view) {
-        ConstantsForFireBase.showProgressDialog(progressDialog,"Sending email...");
+    private void beginRecovery(String email, View view) {
+        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sending_email));
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             progressDialog.dismiss();
             if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "Check your email", Toast.LENGTH_LONG).show();
+
+                Constants.createToast(getContext(), R.string.check_email_forgot);
                 Navigation.findNavController(view).navigate(R.id.action_forgotFragment_to_signInFragment);
             } else {
-                Toast.makeText(getContext(), "Error Occurred "+task.getException(), Toast.LENGTH_LONG).show();
-                Log.d("taguhi","error  "+task.getException());
+//                Toast.makeText(getContext(), "Error Occurred " + task.getException(), Toast.LENGTH_LONG).show();
+//                Log.d("taguhi", "error  " + task.getException());
             }
         }).addOnFailureListener(e -> {
             progressDialog.dismiss();
-            Toast.makeText(getContext(), "Error Failed", Toast.LENGTH_LONG).show();
+            Constants.createToast(getContext(), R.string.something_went_wrong);
         });
     }
 }

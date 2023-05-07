@@ -12,10 +12,12 @@
     <string name="name">Имя пользователя</string>
     <string name="create_account">Создание \nАккаунта</string>
     <string name="check_email">Проверьте электронную почту и подтвердите регистрацию</string>
+    <string name="check_email_forgot">Проверьте электронную почту</string>
     <string name="reset_my_password">Сбросить пароль</string>
     <string name="email_address_forgot">Эл. адрес</string>
 
     <string name="enter_password">Введите пароль</string>
+    <string name="enter_strong_password">Введите надежный пароль</string>
     <string name="registration">Регистрация</string>
     <string name="you_are_offline">Вы не в сети</string>
     <string name="enter_email">Введите адрес эл. почты</string>
@@ -29,6 +31,7 @@
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="password_is_wrong">Неверный пароль</string>
     <string name="confirmed">Пароль подтвержден</string>
+    <string name="sending_email">Отправляем...</string>
 
 
 

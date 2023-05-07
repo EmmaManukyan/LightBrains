@@ -13,10 +13,12 @@
     <string name="name">Username</string>
     <string name="create_account">Create \nAccount</string>
     <string name="check_email">Check your email and verify your sign up</string>
+    <string name="check_email_forgot">Check your email</string>
     <string name="reset_my_password">Reset my password</string>
     <string name="email_address_forgot">Email address</string>
 
     <string name="enter_password">Enter password</string>
+    <string name="enter_strong_password">Enter strong password</string>
     <string name="registration">Registration</string>
     <string name="you_are_offline">You are offline</string>
     <string name="enter_email">Enter email</string>
@@ -30,6 +32,7 @@
     <string name="email_verification_hasnt_been_sent">Email verification hasn\'t been send</string>
     <string name="password_is_wrong">Password is incorrect</string>
     <string name="confirmed">Confirmed!</string>
+    <string name="sending_email">Sending email...</string>
 
 
 
