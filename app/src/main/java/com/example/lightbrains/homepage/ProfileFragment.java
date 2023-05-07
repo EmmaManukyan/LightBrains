@@ -17,14 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
@@ -50,7 +47,7 @@ import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
     private static FragmentProfileBinding binding;
-    private String passwordError = "Password is empty";
+    private String passwordError = getResources().getString(R.string.enter_password);
     private static final int REQUEST_CODE = 122;
     private static DatabaseReference myDataBase;
     private static FirebaseAuth mAuth;
@@ -99,9 +96,9 @@ public class ProfileFragment extends Fragment {
         binding.btnConfirm.setOnClickListener(view13 -> {
             String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.edtName.getText()).toString().equals("")) {
-                binding.tvLayName.setError("Enter name");
+                binding.tvLayName.setError(getResources().getString(R.string.enter_name));
             } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
-                Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
+                Constants.createToast(getContext(), R.string.you_are_offline);
             } else if (password.isEmpty()) {
                 updateUserName(binding.edtName.getText().toString());
                 disEnableViews();
@@ -121,7 +118,7 @@ public class ProfileFragment extends Fragment {
             if (!ConstantsForFireBase.checkConnection(requireActivity())) {
                 getImage();
             } else {
-                Toast.makeText(getContext(), "No internet", Toast.LENGTH_SHORT).show();
+                Constants.createToast(getContext(), R.string.you_are_offline);
             }
         });
         binding.edtPassword.addTextChangedListener(new TextWatcher() {
@@ -133,17 +130,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String password = charSequence.toString();
-                binding.tvLayPassword.setHelperText("Enter minimum 8 char");
+                binding.tvLayPassword.setHelperText(getResources().getString(R.string.enter_minimum_8_char));
                 binding.tvLayPassword.setErrorEnabled(false);
-                passwordError = "Enter minimum 8 char";
+                passwordError = getResources().getString(R.string.enter_minimum_8_char);
                 if (password.contains(" ")) {
                     binding.tvLayPassword.setHelperText("");
-                    passwordError = "Password can't contain space";
+                    passwordError = getResources().getString(R.string.password_cant_contain_space);
                     binding.tvLayPassword.setError(passwordError);
                 }
                 if (password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH) {
                     binding.tvLayPassword.setHelperText("");
-                    passwordError = "Password's max length is " + ConstantsForFireBase.PASSWORD_MAX_LENGTH;
+                    passwordError = getResources().getString(R.string.passwords_max_length_is) + " " + ConstantsForFireBase.PASSWORD_MAX_LENGTH;
                     binding.tvLayPassword.setError(passwordError);
                 }
             }
@@ -232,15 +229,16 @@ public class ProfileFragment extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-            ConstantsForFireBase.showProgressDialog(progressDialog, "Please wait...");
+            ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little));
             user.updatePassword(newPassword)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Log.d("taguhi", "User password updated.");
-                            Toast.makeText(getContext(), "Confirmed!", Toast.LENGTH_SHORT).show();
+//                            Log.d("taguhi", "User password updated.");
+                            Constants.createToast(getContext(), R.string.confirmed);
                         } else {
-                            Log.d("taguhi", "" + task.getException());
-                            Toast.makeText(getContext(), "Something went wrong " + task.getException(), Toast.LENGTH_SHORT).show();
+//                            Log.d("taguhi", "" + task.getException());
+
+                            Constants.createToast(getContext(), R.string.something_went_wrong);
                         }
                         progressDialog.dismiss();
                     });
@@ -251,22 +249,18 @@ public class ProfileFragment extends Fragment {
     public void reAuthenticateUser(String password) {
         Constants.closeKeyboard(requireActivity());
         progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-        ConstantsForFireBase.showProgressDialog(progressDialog, "Please wait...");
+        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little));
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         AuthCredential credential = EmailAuthProvider
                 .getCredential(Objects.requireNonNull(user.getEmail()), password);
-        Log.d("taguhi", "re Auth   " + user.getEmail());
 
         user.reauthenticate(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Log.d("taguhi", "User re-authenticated.");
                         enableViews();
                     } else {
-                        Log.d("taguhi", "reAuth  " + task.getException());
-                        Toast.makeText(getContext(), "Password is wrong", Toast.LENGTH_SHORT).show();
-
+                        Constants.createToast(getContext(), R.string.password_is_wrong);
                     }
                     progressDialog.dismiss();
                 });
@@ -297,7 +291,6 @@ public class ProfileFragment extends Fragment {
             uploadUri = task1.getResult();
             Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, String.valueOf(uploadUri));
             Constants.myEditShared.commit();
-            Log.d("taguhi", "ggggggggggggggggg            " + uploadUri.toString());
             binding.btnLogOut.setEnabled(true);
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
@@ -319,11 +312,10 @@ public class ProfileFragment extends Fragment {
         if (!TextUtils.isEmpty(name)) {
             FirebaseUser curUser = mAuth.getCurrentUser();
             assert curUser != null;
-            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+//            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
             User newUser = new User(id, name, curUser.getEmail(), 0, Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
-                Log.d("taguhi", "" + curUser.getUid());
             }
         } else {
             // Toast.makeText(getContext(), "Some fields are empty", Toast.LENGTH_SHORT).show();

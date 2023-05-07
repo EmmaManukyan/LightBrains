@@ -27,6 +27,8 @@
     <string name="passwords_max_length_is">Максимальная длина пароля</string>
     <string name="email_verification_hasnt_been_sent">Подтверждение эл. почты не было отправлено</string>
     <string name="something_went_wrong">Что-то пошло не так</string>
+    <string name="password_is_wrong">Неверный пароль</string>
+    <string name="confirmed">Пароль подтвержден</string>
 
 
 

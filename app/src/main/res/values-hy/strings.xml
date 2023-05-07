@@ -27,6 +27,8 @@
     <string name="passwords_max_length_is">Գաղտնաբառի առավելագույն երկարությունը </string>
     <string name="email_verification_hasnt_been_sent">Էլփոստի հաստատումը չի ուղարկվել</string>
     <string name="something_went_wrong">Ինչ-որ բան այնպես չգնաց</string>
+    <string name="password_is_wrong">Գաղտնաբառը սխալ է</string>
+    <string name="confirmed">Հաստատված է!</string>
 
 
 
