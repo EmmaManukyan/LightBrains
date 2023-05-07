@@ -15,6 +15,17 @@
     <string name="reset_my_password">Վերականգնել գաղտնաբառը</string>
     <string name="email_address_forgot">Էլ․ փոստ</string>
 
+    <string name="enter_password">Մուտքագրեք գաղտնաբառ</string>
+    <string name="registration">Գրանցում</string>
+    <string name="you_are_offline">Դուք կապի մեջ չեք</string>
+    <string name="enter_email">Մուտքագրեք Ձեր էլ․ փոստը</string>
+    <string name="email_or_password_is_incprrect">Էլփոստը կամ գաղտնաբառը սխալ Է</string>
+    <string name="email_not_veified">Էլ․ փոստը հաստատված չէ</string>
+
+
+
+
+
 
     <string name="let_s_count_together">Արի հաշվենք միասին</string>
     <string name="how_is_your_memory">Մարզե՞նք \nհիշողությունդ</string>
@@ -90,14 +101,6 @@
     <string name="we_are_still_working_on_this_part">Մենք դեռ աշխատում ենք այս հատվածի վրա...</string>
     <string name="wait_a_little">Մի փոքր սպասեք...</string>
     <string name="results">Արդյունքներ</string>
-
-
-
-
-
-
-
-
 
 
     <string-array name="string_complexity_array">

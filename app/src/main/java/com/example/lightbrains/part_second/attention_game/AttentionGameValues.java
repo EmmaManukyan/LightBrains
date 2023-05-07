@@ -8,6 +8,35 @@ public class AttentionGameValues {
     private static int figuresGroupCount = 0;
     private static float showTime = 0.3f;
 
+    private static int scores = 0;
+    private static int rightAnswers = 0;
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        AttentionGameValues.count = count;
+    }
+
+    private static int count = 0;
+
+    public static int getScores() {
+        return scores;
+    }
+
+    public static void setScores(int scores) {
+        AttentionGameValues.scores = scores;
+    }
+
+    public static int getRightAnswers() {
+        return rightAnswers;
+    }
+
+    public static void setRightAnswers(int rightAnswers) {
+        AttentionGameValues.rightAnswers = rightAnswers;
+    }
+
     public static long getStartTime() {
         return startTime;
     }

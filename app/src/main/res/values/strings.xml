@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">LightBrains</string>
+<!--    firstPages-->
     <string name="start">Start</string>
     <string name="sign_in">Sign in</string>
     <string name="continue_in_armenian">Continue in Armenian</string>
@@ -14,6 +15,17 @@
     <string name="check_email">Check your email and verify your sign up</string>
     <string name="reset_my_password">Reset my password</string>
     <string name="email_address_forgot">Email address</string>
+
+    <string name="enter_password">Enter password</string>
+    <string name="registration">Registration</string>
+    <string name="you_are_offline">You are offline</string>
+    <string name="enter_email">Enter email</string>
+    <string name="email_or_password_is_incprrect">Email or password is incorrect</string>
+    <string name="email_not_veified">Email is not verified</string>
+
+
+
+
     <string name="let_s_count_together">Let\'s count together!</string>
     <string name="how_is_your_memory">How is your memory?</string>
 

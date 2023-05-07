@@ -15,6 +15,17 @@
     <string name="reset_my_password">Сбросить пароль</string>
     <string name="email_address_forgot">Эл. адрес</string>
 
+    <string name="enter_password">Введите пароль</string>
+    <string name="registration">Регистрация</string>
+    <string name="you_are_offline">Вы не в сети</string>
+    <string name="enter_email">Введите адрес эл. почты</string>
+    <string name="email_or_password_is_incprrect">Почта или пароль указан неверно</string>
+    <string name="email_not_veified">Электронная почта не подтверждена</string>
+
+
+
+
+
 
     <string name="let_s_count_together">Давай посчитаем вместе!</string>
     <string name="how_is_your_memory">Потренируем твою память?</string>
@@ -65,7 +76,7 @@
     <string name="mix_formulas">Микс формулы</string>
 
     <string name="first_topic_name">Прямой счёт</string>
-    <string name="confirm">Подверждать</string>
+    <string name="confirm">Подвердить</string>
 
     <string name="complexity">Сложность</string>
     <string name="figures">Фигуры</string>

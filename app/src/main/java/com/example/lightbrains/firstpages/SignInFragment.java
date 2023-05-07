@@ -5,44 +5,36 @@ import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignInBinding;
 import com.example.lightbrains.homepage.HomeActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-public class SignInFragment extends Fragment implements View.OnClickListener{
+public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FragmentSignInBinding binding;
     private FirebaseAuth mAuth;
 
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
         init();
         FirebaseUser user = mAuth.getCurrentUser();
-        Log.d("taguhi", String.valueOf(""+user==null));
         return binding.getRoot();
     }
 
@@ -55,43 +47,39 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
             binding.tvLayMail.setErrorEnabled(false);
             binding.tvLayPassword.setErrorEnabled(false);
             if (Objects.requireNonNull(binding.edtMail.getText()).toString().equals("")) {
-                binding.tvLayMail.setError("Enter mail");
+                binding.tvLayMail.setError(getResources().getString(R.string.enter_email));
             } else if (Objects.requireNonNull(binding.edtPassword.getText()).toString().equals("")) {
                 binding.tvLayPassword.setHelperText("");
-                binding.tvLayPassword.setError("Enter password");
-            }else if(ConstantsForFireBase.checkConnection(requireActivity())){
-                Toast.makeText(getContext(), "There is no internet", Toast.LENGTH_SHORT).show();
+                binding.tvLayPassword.setError(getResources().getString(R.string.enter_password));
+            } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
+                Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
-                progressDialog = new ProgressDialog(getContext(),R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog,"Registration");
+                progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
+                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration));
 
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful() ){
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            assert user!=null;
-                            if (user.isEmailVerified()){
-                                Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
-                                Constants.myEditShared.commit();
-                                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                                intent.putExtra(ConstantsForFireBase.USER_KEY,user.getUid());
-                                Log.d("taguhi","user id   "+user.getUid());
-                                startActivity(intent);
-                                requireActivity().finish();
-                            }else{
-                                Toast.makeText(getContext(), "Email is not verified", Toast.LENGTH_SHORT).show();
-                            }
-
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        assert user != null;
+                        if (user.isEmailVerified()) {
+                            Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
+                            Constants.myEditShared.commit();
+                            Intent intent = new Intent(getActivity(), HomeActivity.class);
+                            intent.putExtra(ConstantsForFireBase.USER_KEY, user.getUid());
+//                            Log.d("taguhi","user id   "+user.getUid());
+                            startActivity(intent);
+                            requireActivity().finish();
+                        } else {
+                            Constants.createToast(getContext(),R.string.email_not_veified);
                         }
-                        else{
-                            Toast.makeText(getContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
-                        }
-                        progressDialog.dismiss();
 
+                    } else {
+                        Constants.createToast(getContext(), R.string.email_or_password_is_incprrect);
                     }
+                    progressDialog.dismiss();
+
                 });
 
             }

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.example.lightbrains.R;
@@ -52,6 +53,8 @@ public class Constants {
     public static final String FIGURES_SHOW_START_TIME = "FiguresShowStartTime";
     public static final String FIGURES_SHOW_FINISH_TIME = "FiguresShowFinishTime";
     public static final String RIGHT_ANSWERS = "RightAnswers";
+    public static final String RIGHT = "right";
+    public static final String WRONG = "wrong";
 
 
     public static SharedPreferences sharedPreferences = null;
@@ -116,6 +119,10 @@ public class Constants {
                     .hideSoftInputFromWindow(
                             view.getWindowToken(), 0);
         }
+    }
+
+    public static void createToast(Context context,int stringId){
+        Toast.makeText(context, context.getResources().getString(stringId), Toast.LENGTH_SHORT).show();
     }
 
 }

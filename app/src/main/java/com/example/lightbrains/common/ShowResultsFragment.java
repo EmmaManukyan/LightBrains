@@ -60,6 +60,7 @@ public class ShowResultsFragment extends Fragment {
         binding.tvLayTime.setError(" ");
 
         binding.btnMainPage.setOnClickListener(view1 -> {
+            binding.myProgressbarResult.setProgress(0);
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
             requireActivity().finish();
