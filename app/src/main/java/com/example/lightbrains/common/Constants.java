@@ -56,6 +56,9 @@ public class Constants {
     public static final String RIGHT = "right";
     public static final String WRONG = "wrong";
 
+    public static final String[] languageLogs = {"ru","hy","en"};
+
+
 
     public static SharedPreferences sharedPreferences = null;
     public static SharedPreferences.Editor myEditShared = null;

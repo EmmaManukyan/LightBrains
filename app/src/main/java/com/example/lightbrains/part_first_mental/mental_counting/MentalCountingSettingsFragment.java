@@ -201,6 +201,8 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
                 Constants.myEditShared.putInt(Constants.COUNT_OF_EXAMPLES_MENTAL, countOfExamples);
                 Constants.myEditShared.commit();
                 Navigation.findNavController(view).navigate(R.id.action_mentalCountingSettingsFragment_to_showMentalCountFragment, bundle);
+            }else{
+                Constants.createToast(getContext(), R.string.select_all_necessary_fields);
             }
         } else if (binding.btnPlus.equals(view)) {
             temp = Integer.parseInt(binding.autoTvCount.getText().toString());

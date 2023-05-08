@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentAttentionGameWriteAnswersBinding;
@@ -71,7 +73,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 if (!adapter.getAnswersMap().containsValue(false) && adapter.getAnswersMap().containsValue(true)) {
                     AttentionGameValues.setScores(AttentionGameValues.getScores() + getHighScore());
                     AttentionGameValues.setRightAnswers(AttentionGameValues.getRightAnswers() + adapter.getAnswersMap().size());
-                    Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
+                    showRightAnimation();
                 } else {
                     for (Integer key : adapter.getAnswersMap().keySet()) {
                         AttentionGameValues.setScores(Boolean.TRUE.equals(adapter.getAnswersMap().get(key)) ? AttentionGameValues.getScores() + 1 : AttentionGameValues.getScores());
@@ -90,7 +92,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 bundleToNavigate.putInt(Constants.RIGHT_ANSWERS, AttentionGameValues.getRightAnswers());
                 bundleToNavigate.putInt(Constants.SCORES, AttentionGameValues.getScores());
                 bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS, AttentionGameValues.getCount());
-                bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME, System.currentTimeMillis() - bundle.getLong(Constants.FIGURES_SHOW_START_TIME));
+                bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME, System.currentTimeMillis() - AttentionGameValues.getStartTime());
 //                Log.d("attgame", "rightansers: " + AttentionGameValues.getRightAnswers());
 //                Log.d("attgame", "scores: " + AttentionGameValues.getScores());
 //                Log.d("attgame", "count: " + AttentionGameValues.getCount());
@@ -141,5 +143,25 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
         int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 4 + AttentionGameValues.getFiguresCount() - 3);
         Log.d("attgame", "scores  " + scores);
         return scores;
+    }
+    private void showRightAnimation() {
+        new Thread(() -> {
+            requireActivity().runOnUiThread(() -> {
+
+                AttentionGameActivity.binding.tvExcellent.setVisibility(View.VISIBLE);
+                YoYo.with(Techniques.BounceInUp).duration(800).playOn(AttentionGameActivity.binding.tvExcellent);
+              //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
+
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            requireActivity().runOnUiThread(() -> {
+                YoYo.with(Techniques.ZoomOut).duration(500).playOn(AttentionGameActivity.binding.tvExcellent);
+            });
+
+        }).start();
     }
 }

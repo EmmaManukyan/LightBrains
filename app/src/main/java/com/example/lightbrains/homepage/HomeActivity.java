@@ -2,11 +2,17 @@ package com.example.lightbrains.homepage;
 
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
 
+import static com.example.lightbrains.common.Constants.languageLogs;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +23,7 @@ import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.ActivityHomeBinding;
 import com.example.lightbrains.firebase_classes.User;
+import com.example.lightbrains.firstpages.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,10 +31,31 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 public class HomeActivity extends AppCompatActivity {
     public static ActivityHomeBinding binding;
     private boolean IS_IN_PROFILE_PAGE = false;
     private int PAGE_COUNTER = 0;
+
+
+    @Override
+    protected void onStart() {
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        int CHECKED_LANGUAGE = sh.getInt(Constants.CHECKED_LANGUAGE, 0);
+        setLocal(HomeActivity.this,languageLogs[CHECKED_LANGUAGE]);
+
+        super.onStart();
+    }
+
+    public void setLocal(Activity activity, String langCode) {
+        Locale locale = new Locale(langCode);
+        locale.setDefault(locale);
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
 
 
     @Override
@@ -51,10 +79,10 @@ public class HomeActivity extends AppCompatActivity {
 
         Constants.createSharedPreferences(HomeActivity.this);
         if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
-            Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
             getDataFromDB();
         } else {
-            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
 
@@ -81,8 +109,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.menu_settings:
-                    binding.frContainer.setVisibility(View.GONE);
                     if (PAGE_COUNTER != 2) {
+                        binding.frContainer.setVisibility(View.GONE);
                         IS_IN_PROFILE_PAGE = false;
                         fragment = new SettingsFragment();
                         PAGE_COUNTER = 2;

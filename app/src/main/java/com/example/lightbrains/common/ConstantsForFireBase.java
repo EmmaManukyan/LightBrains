@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.example.lightbrains.R;
+
 public class ConstantsForFireBase {
     public static final int PASSWORD_MAX_LENGTH= 15;
     public static String IMAGE_DB = "ImageDB";
@@ -18,8 +20,8 @@ public class ConstantsForFireBase {
     public static String USER_NAME = "UserName";
     public static ProgressDialog progressDialog;
 
-    public static void showProgressDialog(ProgressDialog progressDialog,String title){
-        progressDialog.setMessage("Please wait...");
+    public static void showProgressDialog(ProgressDialog progressDialog,String title,Context context){
+        progressDialog.setMessage(context.getResources().getString(R.string.wait_a_little));
         progressDialog.setTitle(title);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();

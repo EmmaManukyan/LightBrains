@@ -52,7 +52,16 @@ public class ShowResultsFragment extends Fragment {
         timeToShow = tempTime.substring(0,4);
         Log.d("taguhi", timeToShow + "");
 
+
+
         float percent = (rightAnswers * 100) / (float) count;
+
+        if (percent >= 50) {
+            binding.btnMainPage.setText(getResources().getString(R.string.great));
+        }else {
+            binding.btnMainPage.setText(getResources().getString(R.string.go_back_main_page));
+
+        }
 
         progressBarAnimation((int) percent);
         binding.tvLayTime.setError(" ");

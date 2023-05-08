@@ -12,7 +12,7 @@ import com.example.lightbrains.databinding.ActivityAttentionGameBinding;
 import com.example.lightbrains.part_first_mental.flashanzan.ShowFlashCardsFragment;
 
 public class AttentionGameActivity extends AppCompatActivity {
-    ActivityAttentionGameBinding binding;
+    public static ActivityAttentionGameBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,31 +25,15 @@ public class AttentionGameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (AttentionGameShowFiguresFragment.backpressedlistener!=null){
+        if (AttentionGameShowFiguresFragment.backpressedlistener != null) {
             AttentionGameShowFiguresFragment.backpressedlistener.onBackPressed();
-        } else if (AttentionGameWriteAnswersFragment.backpressedlistener!=null) {
+        } else if (AttentionGameWriteAnswersFragment.backpressedlistener != null) {
             AttentionGameWriteAnswersFragment.backpressedlistener.onBackPressed();
 
-        } else{
+        } else {
             super.onBackPressed();
         }
     }
-    public void showRightAnimation(){
-        new Thread(() -> {
-            runOnUiThread(() -> {
-                binding.imgAnim.setVisibility(View.VISIBLE);
-                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.imgAnim);
 
-            });
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            runOnUiThread(() -> {
-                YoYo.with(Techniques.ZoomOut).duration(1000).playOn(binding.imgAnim);
-            });
 
-        });
-    }
 }

@@ -115,7 +115,7 @@
                     app:counterMaxLength="10"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
-                    app:helperText="Enter strong password"
+                    app:helperText="@string/enter_strong_password"
                     app:helperTextEnabled="true"
                     app:helperTextTextColor="@color/white"
                     app:startIconDrawable="@drawable/ic_round_lock_24"

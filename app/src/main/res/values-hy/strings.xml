@@ -32,6 +32,11 @@
     <string name="password_is_wrong">Գաղտնաբառը սխալ է</string>
     <string name="confirmed">Հաստատված է!</string>
     <string name="sending_email">Ուղարկում ենք...</string>
+    <string name="select_all_necessary_fields">Ընտրեք բոլոր անհրաժեշտ դաշտերը</string>
+    <string name="repeat_password">Կրկնեք գաղտնաբառը</string>
+    <string name="this_password_is_different">Այս գաղտնաբառը տարբերվում է վերը նշված գաղտնաբառից</string>
+    <string name="user_already_exists">Նման էլփոստով օգտատեր արդեն գոյություն ունի</string>
+    <string name="email_is_invalid">Էլփոստն անվավեր է</string>
 
 
 
@@ -113,6 +118,12 @@
     <string name="we_are_still_working_on_this_part">Մենք դեռ աշխատում ենք այս հատվածի վրա...</string>
     <string name="wait_a_little">Մի փոքր սպասեք...</string>
     <string name="results">Արդյունքներ</string>
+    <string name="go_back_main_page">Վերադառնալ դեպի գլխավոր էջ</string>
+    <string name="excellent">Գերազանց է!</string>
+    <string name="settings">Կարգավորումներ</string>
+    <string name="sounds_on_off">Ձայնային էֆեկտներ</string>
+
+
 
 
     <string-array name="string_complexity_array">

@@ -1,5 +1,7 @@
 package com.example.lightbrains.firstpages;
 
+import static com.example.lightbrains.common.Constants.languageLogs;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -14,7 +16,6 @@ import com.example.lightbrains.common.Constants;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String[] languageLogs = {"ru","hy","en"};
 
 
     @Override

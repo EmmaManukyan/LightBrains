@@ -54,7 +54,7 @@ public class ForgotFragment extends Fragment {
     }
 
     private void beginRecovery(String email, View view) {
-        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sending_email));
+        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sending_email),getContext());
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             progressDialog.dismiss();
             if (task.isSuccessful()) {

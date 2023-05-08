@@ -148,6 +148,8 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
                 Constants.myEditShared.putInt(Constants.COUNT_FLASH_CARDS, count);
                 Constants.myEditShared.commit();
                 Navigation.findNavController(view).navigate(R.id.action_fleshAnzanSettingsFragment_to_showFlashCardsFragment, bundle);
+            } else {
+                Constants.createToast(getContext(), R.string.select_all_necessary_fields);
             }
         } else if (binding.btnPlus.equals(view)) {
             temp = Integer.parseInt(binding.autoTvCount.getText().toString());

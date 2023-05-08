@@ -46,8 +46,9 @@ import java.util.Objects;
 
 
 public class ProfileFragment extends Fragment {
+    @SuppressLint("StaticFieldLeak")
     private static FragmentProfileBinding binding;
-    private String passwordError = getResources().getString(R.string.enter_password);
+    private String passwordError;
     private static final int REQUEST_CODE = 122;
     private static DatabaseReference myDataBase;
     private static FirebaseAuth mAuth;
@@ -229,7 +230,7 @@ public class ProfileFragment extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-            ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little));
+            ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little),getContext());
             user.updatePassword(newPassword)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -249,7 +250,7 @@ public class ProfileFragment extends Fragment {
     public void reAuthenticateUser(String password) {
         Constants.closeKeyboard(requireActivity());
         progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little));
+        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little),getContext());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         AuthCredential credential = EmailAuthProvider
@@ -300,6 +301,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
+        passwordError = getResources().getString(R.string.enter_password);
         myStorageReference = FirebaseStorage.getInstance().getReference(ConstantsForFireBase.IMAGE_DB);
         myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         mAuth = FirebaseAuth.getInstance();

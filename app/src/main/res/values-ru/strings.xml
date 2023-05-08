@@ -32,6 +32,11 @@
     <string name="password_is_wrong">Неверный пароль</string>
     <string name="confirmed">Пароль подтвержден</string>
     <string name="sending_email">Отправляем...</string>
+    <string name="select_all_necessary_fields">Выберите все необходимые поля</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="this_password_is_different">Этот пароль отличается от пароля выше</string>
+    <string name="user_already_exists">Пользователь с таким адресом эл. почты уже существует</string>
+    <string name="email_is_invalid">Электронная почта недействительна</string>
 
 
 
@@ -113,6 +118,10 @@
     <string name="we_are_still_working_on_this_part">Мы еще работаем над этой часть...!</string>
     <string name="wait_a_little">Подождите немного...</string>
     <string name="results">Результаты</string>
+    <string name="go_back_main_page">Вернуться на главную страницу</string>
+    <string name="excellent">Отлично!</string>
+    <string name="settings">Настройки</string>
+    <string name="sounds_on_off">Звуковые эффекты</string>
 
 
 

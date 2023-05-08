@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,9 @@ import com.example.lightbrains.databinding.FragmentSignUpBinding;
 import com.example.lightbrains.dialogs.CustomDialogForSignUpFragment;
 import com.example.lightbrains.firebase_classes.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -98,20 +102,27 @@ public class SignUpFragment extends Fragment {
             binding.includedLayout.tvLayName.setErrorEnabled(false);
             binding.includedLayout.tvLayMail.setErrorEnabled(false);
             binding.includedLayout.tvLayPassword.setErrorEnabled(false);
+            binding.includedLayout.tvLayRepeatPassword.setErrorEnabled(false);
             String password = Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayName.setError(getResources().getString(R.string.enter_name));
             } else if (Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayMail.setError(getResources().getString(R.string.enter_email));
+            }else if (Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString().equals("")) {
+                binding.includedLayout.tvLayPassword.setHelperText("");
+                binding.includedLayout.tvLayPassword.setError(getResources().getString(R.string.enter_password));
             } else if (password.equals("") || password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH || password.length() < 8 || password.contains(" ")) {
                 binding.includedLayout.tvLayPassword.setHelperText("");
                 binding.includedLayout.tvLayPassword.setError(passwordError);
+            } else if (!Objects.requireNonNull(binding.includedLayout.edtRepeatPassword.getText()).toString().equals(binding.includedLayout.edtPassword.getText().toString())) {
+                binding.includedLayout.tvLayRepeatPassword.setError(getResources().getString(R.string.this_password_is_different));
+                Log.d("taguhi",binding.includedLayout.edtPassword.getText().toString()+"  "+binding.includedLayout.edtRepeatPassword.getText().toString());
             } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration));
+                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration), Objects.requireNonNull(getContext()));
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
@@ -122,8 +133,20 @@ public class SignUpFragment extends Fragment {
                                 sendEmailVerification(view, curUser);
                                 progressDialog.dismiss();
                             } else {
+                                try {
+                                    throw Objects.requireNonNull(task.getException());
+                                } catch(FirebaseAuthWeakPasswordException e) {
+//                                    mTxtPassword.setError(getString(R.string.error_weak_password));
+                                } catch(FirebaseAuthInvalidCredentialsException e) {
+                                    Constants.createToast(getContext(),R.string.email_is_invalid);
+//                                    mTxtEmail.setError(getString(R.string.error_invalid_email));
+                                } catch(FirebaseAuthUserCollisionException e) {
+                                    Constants.createToast(getContext(),R.string.email);
+                                } catch(Exception e) {
+                                    //Log.e(TAG, e.getMessage());
+                                    Constants.createToast(getContext(),R.string.something_went_wrong);
 
-                                Constants.createToast(getContext(),R.string.something_went_wrong);
+                                }
                                 progressDialog.dismiss();
                             }
                         });
@@ -150,6 +173,7 @@ public class SignUpFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         myDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
         binding.includedLayout.tvLayPassword.setCounterMaxLength(ConstantsForFireBase.PASSWORD_MAX_LENGTH);
+        binding.includedLayout.tvLayRepeatPassword.setCounterMaxLength(ConstantsForFireBase.PASSWORD_MAX_LENGTH);
     }
 
     private void saveUser(String Uid) {

@@ -49,17 +49,22 @@
         app:layout_constraintTop_toBottomOf="@id/tv_attention_game"
         app:navGraph="@navigation/nav_attention_game" />
 
-    <ImageView
-        android:id="@+id/img_anim"
+    <TextView
+        android:id="@+id/tv_excellent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_attention_game"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/img_smile_heart"
-        android:padding="32dp"
+        android:padding="16dp"
         android:visibility="gone"
+        android:text="@string/excellent"
+        android:textSize="52sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:fontFamily="@font/my_font"
+        android:textColor="@color/purple_500"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

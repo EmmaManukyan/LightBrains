@@ -44,7 +44,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
     private HashMap<Integer, Integer> showedMap;
 
-    private long startTime;
+    //private long startTime;
 
 
     @Override
@@ -82,7 +82,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
                 AttentionGameValues.setFiguresLevel(figuresLevel);
                 AttentionGameValues.setShowTime((float) showTime/1000);
                 AttentionGameValues.setFiguresCount(figuresCount);
-                AttentionGameValues.setStartTime(startTime);
+                //AttentionGameValues.setStartTime(startTime);
                 AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
                 Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment, bundle);
             }
@@ -104,7 +104,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
         figuresCount = AttentionGameValues.getFiguresCount();
         figuresGroupCount = AttentionGameValues.getFiguresGroupCount();
         showTime = (int) (AttentionGameValues.getShowTime()*1000);
-        startTime = AttentionGameValues.getStartTime();
+        //startTime = AttentionGameValues.getStartTime();
 
 
 
@@ -112,7 +112,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
         if (complexityLevel == 0) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
             figuresLevel = 3;
-            showTime = 400;
+            showTime = 800;
             figuresCount = 7;
         } else if (complexityLevel == 1) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
