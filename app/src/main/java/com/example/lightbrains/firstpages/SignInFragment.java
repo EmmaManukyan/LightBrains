@@ -1,5 +1,6 @@
 package com.example.lightbrains.firstpages;
 
+import static com.example.lightbrains.common.ConstantsForFireBase.PASSWORD_MAX_LENGTH;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
 import android.app.ProgressDialog;
@@ -57,7 +58,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sign_in),getContext());
+                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sign_in), getContext());
 
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -72,7 +73,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                             startActivity(intent);
                             requireActivity().finish();
                         } else {
-                            Constants.createToast(getContext(),R.string.email_not_veified);
+                            Constants.createToast(getContext(), R.string.email_not_veified);
                         }
 
                     } else {
@@ -92,7 +93,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         binding.btnSignIn.setOnClickListener(this);
         binding.btnNewUser.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
-
+        binding.tvLayPassword.setCounterMaxLength(PASSWORD_MAX_LENGTH);
         mAuth = FirebaseAuth.getInstance();
     }
 

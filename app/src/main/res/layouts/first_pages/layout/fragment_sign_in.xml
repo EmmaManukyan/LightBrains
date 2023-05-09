@@ -45,7 +45,7 @@
         app:startIconDrawable="@drawable/ic_round_lock_24"
         style="@style/MyStyleForTextInputLayout"
         app:counterEnabled="true"
-        app:counterMaxLength="10"
+        app:counterMaxLength="15"
         >
 
         <com.google.android.material.textfield.TextInputEditText

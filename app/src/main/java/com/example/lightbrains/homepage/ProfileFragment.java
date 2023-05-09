@@ -1,6 +1,7 @@
 package com.example.lightbrains.homepage;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.lightbrains.common.ConstantsForFireBase.PASSWORD_MAX_LENGTH;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
 import android.annotation.SuppressLint;
@@ -230,7 +231,7 @@ public class ProfileFragment extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-            ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little),getContext());
+            ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little), getContext());
             user.updatePassword(newPassword)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -250,7 +251,7 @@ public class ProfileFragment extends Fragment {
     public void reAuthenticateUser(String password) {
         Constants.closeKeyboard(requireActivity());
         progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little),getContext());
+        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little), getContext());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         AuthCredential credential = EmailAuthProvider
@@ -305,6 +306,7 @@ public class ProfileFragment extends Fragment {
         myStorageReference = FirebaseStorage.getInstance().getReference(ConstantsForFireBase.IMAGE_DB);
         myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         mAuth = FirebaseAuth.getInstance();
+        binding.tvLayPassword.setCounterMaxLength(PASSWORD_MAX_LENGTH);
 
     }
 

@@ -122,7 +122,7 @@ public class SignUpFragment extends Fragment {
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration), Objects.requireNonNull(getContext()));
+                ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration), requireContext());
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
