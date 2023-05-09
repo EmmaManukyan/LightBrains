@@ -37,6 +37,8 @@
     <string name="this_password_is_different">Այս գաղտնաբառը տարբերվում է վերը նշված գաղտնաբառից</string>
     <string name="user_already_exists">Նման էլփոստով օգտատեր արդեն գոյություն ունի</string>
     <string name="email_is_invalid">Էլփոստն անվավեր է</string>
+    <string name="guest">Հյուր</string>
+    <string name="tv_guest_info">Հավելվածին ծանոթանալու համար օգտվեք մուտքի հետևյալ տվյալներից. \n\n</string>
 
 
 

@@ -3,6 +3,7 @@ package com.example.lightbrains.firstpages;
 import static com.example.lightbrains.common.ConstantsForFireBase.PASSWORD_MAX_LENGTH;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
@@ -28,6 +31,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FragmentSignInBinding binding;
     private FirebaseAuth mAuth;
+    private boolean guestOpened = false;
 
 
     @Override
@@ -35,7 +39,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
         init();
-        FirebaseUser user = mAuth.getCurrentUser();
+        binding.imgGuest.setOnClickListener(v -> {
+            binding.tvGuestInfo.setVisibility(!guestOpened? View.VISIBLE:View.GONE);
+            YoYo.with(!guestOpened? Techniques.SlideInRight:Techniques.SlideOutRight).duration(500).playOn(binding.tvGuestInfo);
+            guestOpened = !guestOpened;
+        });
         return binding.getRoot();
     }
 
@@ -64,7 +72,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         assert user != null;
-                        if (user.isEmailVerified()) {
+                        if (user.isEmailVerified() || Objects.equals(user.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
                             Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
                             Constants.myEditShared.commit();
                             Intent intent = new Intent(getActivity(), HomeActivity.class);
@@ -72,7 +80,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 //                            Log.d("taguhi","user id   "+user.getUid());
                             startActivity(intent);
                             requireActivity().finish();
-                        } else {
+                        }  else {
                             Constants.createToast(getContext(), R.string.email_not_veified);
                         }
 
@@ -89,11 +97,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void init() {
         binding.btnSignIn.setOnClickListener(this);
         binding.btnNewUser.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
         binding.tvLayPassword.setCounterMaxLength(PASSWORD_MAX_LENGTH);
+        binding.tvGuestInfo.setText(getResources().getString(R.string.tv_guest_info)+getResources().getString(R.string.email)+": "+
+                ConstantsForFireBase.GUEST_EMAIL+"\n"+getResources().getString(R.string.password)+": "+ConstantsForFireBase.GUEST_PASSWORD);
         mAuth = FirebaseAuth.getInstance();
     }
 

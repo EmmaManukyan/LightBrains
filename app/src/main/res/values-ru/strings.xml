@@ -122,6 +122,8 @@
     <string name="excellent">Отлично!</string>
     <string name="settings">Настройки</string>
     <string name="sounds_on_off">Звуковые эффекты</string>
+    <string name="guest">Гость</string>
+    <string name="tv_guest_info">Используйте следующие данные для входа в приложение \n\n</string>
 
 
 

@@ -180,7 +180,7 @@ public class SignUpFragment extends Fragment {
         String id = myDataBase.getKey();
         String userName = Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString();
         String email = Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString();
-        User newUser = new User(id, userName, email, 0, "");
+        User newUser = new User(id, userName, email, 0, "hello");
         myDataBase.child(Uid).setValue(newUser);
 
     }

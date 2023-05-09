@@ -18,6 +18,8 @@ public class ConstantsForFireBase {
 
     public static String USER_KEY = "Users";
     public static String USER_NAME = "UserName";
+    public static String GUEST_EMAIL = "example@gmail.com";
+    public static String GUEST_PASSWORD = "12345678";
     public static ProgressDialog progressDialog;
 
     public static void showProgressDialog(ProgressDialog progressDialog,String title,Context context){

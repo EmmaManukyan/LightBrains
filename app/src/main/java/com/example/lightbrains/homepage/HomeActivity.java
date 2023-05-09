@@ -85,7 +85,6 @@ public class HomeActivity extends AppCompatActivity {
 //            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
-
         }
 
 
@@ -161,11 +160,11 @@ public class HomeActivity extends AppCompatActivity {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
                 if (user != null) {
                     binding.tvProfileName.setText(user.getUserName());
-                    Picasso.get().load(user.getImageUri()).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
+                    Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri()!=null?user.getImageUri():"");
                     Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
-                    Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri());
-                    Log.d("taguhi", "" + user.getImageUri());
                     Constants.myEditShared.commit();
+                    Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
+                    Log.d("taguhi", "" + user.getImageUri());
                 }
             }
 

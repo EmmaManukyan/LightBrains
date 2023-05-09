@@ -180,7 +180,7 @@ public class ProfileFragment extends Fragment {
         binding.edtPassword.setHintTextColor(getResources().getColorStateList(R.color.grey));
         binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         Log.d("taguhi", "ui   " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI));
-        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(binding.imgProfile);
+        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
         binding.progressBarWithImage.setVisibility(View.GONE);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
 
@@ -296,7 +296,7 @@ public class ProfileFragment extends Fragment {
             binding.btnLogOut.setEnabled(true);
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
-            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI)).into(HomeActivity.binding.imgProfile);
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
 
         });
     }
