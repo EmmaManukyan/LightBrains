@@ -48,15 +48,15 @@ public class CustomDialogFragmentForExit extends DialogFragment {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        if (DIALOG_POSITION_CODE==5){
+        if (DIALOG_POSITION_CODE == 5) {
             builder.setTitle(getResources().getString(R.string.do_you_really_want_to_delete_your_account));
-        }else{
+        } else {
             builder.setTitle(getResources().getString(R.string.do_you_really_want_to_exit));
         }
         builder.setPositiveButton(getResources().getString(R.string.yes), (dialogInterface, i) -> {
                     NavHostFragment navHostFragment;
                     NavController navController;
-                    switch (DIALOG_POSITION_CODE){
+                    switch (DIALOG_POSITION_CODE) {
                         case 0:
                             navHostFragment =
                                     (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_flash_cards);
@@ -72,7 +72,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
                             break;
                         case 2:
-                            ProfileFragment.saveUser();
+                            ProfileFragment.saveUser(false);
                             FirebaseAuth.getInstance().signOut();
                             Constants.myEditShared.clear();
                             Constants.myEditShared.commit();
@@ -106,10 +106,10 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             user.delete()
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
-                                            Log.d(TAG, "User account deleted.");
+                                            Log.d("TAG", "User account deleted.");
                                             FirebaseAuth.getInstance().signOut();
 
-                                        }else{
+                                        } else {
                                             Toast.makeText(getContext(), "chexav", Toast.LENGTH_SHORT).show();
                                         }
                                     });

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         int CHECKED_LANGUAGE = sh.getInt(Constants.CHECKED_LANGUAGE, 0);
         setLocal(MainActivity.this,languageLogs[CHECKED_LANGUAGE]);
-
         super.onStart();
     }
 

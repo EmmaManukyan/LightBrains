@@ -18,10 +18,10 @@
         android:iconTint="@color/color_secondary"
         />
 
-    <!--<item
+    <item
         android:id="@+id/leader_board"
         android:icon="@drawable/baseline_leaderboard_24"
         android:title="Leaderboard"
         android:iconTint="@color/color_secondary"
-        />-->
+        />
 </menu>

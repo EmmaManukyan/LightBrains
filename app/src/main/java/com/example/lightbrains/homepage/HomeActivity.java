@@ -24,6 +24,8 @@ import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.ActivityHomeBinding;
 import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.firstpages.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -115,10 +117,14 @@ public class HomeActivity extends AppCompatActivity {
                         PAGE_COUNTER = 2;
                     }
                     break;
-                /*case R.id.leader_board:
-                    fragment = new LeaderBoardFragment();
-                    IS_IN_PROFILE_PAGE = false;
-                    break;*/
+                case R.id.leader_board:
+                    if (PAGE_COUNTER != 3) {
+                        binding.frContainer.setVisibility(View.GONE);
+                        IS_IN_PROFILE_PAGE = false;
+                        fragment = new LeaderBoardFragment();
+                        PAGE_COUNTER = 3;
+                    }
+                    break;
             }
             if (fragment != null) {
                 loadFragment(fragment);
@@ -154,14 +160,21 @@ public class HomeActivity extends AppCompatActivity {
     private void getDataFromDB() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        DatabaseReference myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser curUser = mAuth.getCurrentUser();
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
                 if (user != null) {
+                    assert curUser != null;
+                    myDataBase.child(curUser.getUid()).child("userName").setValue("Valod");
                     binding.tvProfileName.setText(user.getUserName());
                     Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri()!=null?user.getImageUri():"");
                     Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
+                    Constants.myEditShared.putInt(Constants.SCORES, user.getScores());
                     Constants.myEditShared.commit();
                     Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
                     Log.d("taguhi", "" + user.getImageUri());

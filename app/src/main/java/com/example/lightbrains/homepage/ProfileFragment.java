@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,6 +82,17 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setViewParams();
         init();
+
+        binding.layDataContainer.setOnClickListener(new DoubleClickListener() {
+
+            @Override
+            void onDoubleClick(View v) {
+                CustomDialogToWritePasswordFragment dialog = new CustomDialogToWritePasswordFragment((ProfileFragment) getParentFragment());
+                dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
+            }
+        });
+
+
 
         binding.imgEditProfile.setOnClickListener(view1 -> {
             CustomDialogToWritePasswordFragment dialog = new CustomDialogToWritePasswordFragment(this);
@@ -160,7 +172,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser curUser = mAuth.getCurrentUser();
         assert curUser != null;
         Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
-        User newUser = new User(id, newName, curUser.getEmail(), 0, Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+        User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),true);
         if (id != null) {
             myDataBase.child(curUser.getUid()).setValue(newUser);
             binding.tvProfileName.setText(newUser.getUserName());
@@ -180,7 +192,7 @@ public class ProfileFragment extends Fragment {
         binding.edtPassword.setHintTextColor(getResources().getColorStateList(R.color.grey));
         binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
         Log.d("taguhi", "ui   " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI));
-        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
+        Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
         binding.progressBarWithImage.setVisibility(View.GONE);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
 
@@ -297,7 +309,9 @@ public class ProfileFragment extends Fragment {
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
-
+            if (!ConstantsForFireBase.checkConnection(requireActivity())) {
+                saveUser(true);
+            }
         });
     }
 
@@ -310,20 +324,34 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    public static void saveUser() {
+    public static void saveUser(boolean isSignedIn) {
         String id = myDataBase.getKey();
         String name = Objects.requireNonNull(binding.edtName.getText()).toString();
         if (!TextUtils.isEmpty(name)) {
             FirebaseUser curUser = mAuth.getCurrentUser();
             assert curUser != null;
 //            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
-            User newUser = new User(id, name, curUser.getEmail(), 0, Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+            User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),isSignedIn);
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
             }
-        } else {
-            // Toast.makeText(getContext(), "Some fields are empty", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    abstract static class DoubleClickListener implements View.OnClickListener {
+        private Long lastClickTime = 0L;
+
+        @Override
+        public void onClick(View v) {
+            long clickTime = System.currentTimeMillis();
+            long DOUBLE_CLICK_TIME_DELTA = 300L;
+            if (clickTime-lastClickTime< DOUBLE_CLICK_TIME_DELTA){
+                onDoubleClick(v);
+            }
+            lastClickTime = clickTime;
+        }
+        abstract void onDoubleClick(View v);
+
     }
 
 

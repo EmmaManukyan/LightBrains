@@ -50,8 +50,8 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
         this.context = context;
         this.figureType = figureType;
         this.answersMap = new HashMap<>();
-        for (int i = 0; i < keys.length; i++) {
-            answersMap.put(keys[i],false);
+        for (Integer key : keys) {
+            answersMap.put(key, false);
         }
     }
 

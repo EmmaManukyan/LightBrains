@@ -39,7 +39,7 @@ import java.util.Random;
 
 public class ShowMentalCountFragment extends Fragment implements BackPressedListener {
 
-    FragmentShowMentalCountBinding binding;
+    private FragmentShowMentalCountBinding binding;
 
     private int speed = -1;
     private int digit = -1;
@@ -73,7 +73,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
 
     private int colorCheck = 0;
 
-    private int[] colors = {R.color.color_secondary_variant,R.color.pink_dark};
+    private int[] colors = {R.color.color_secondary_variant, R.color.pink_dark};
 
 
     @Override
@@ -89,12 +89,13 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
         super.onViewCreated(view, savedInstanceState);
         init();
 
+        binding.btnCheck.setOnClickListener(v -> checkAnswer());
 
         binding.btnStart.setOnClickListener(v -> {
             if (binding.btnStart.getText().toString().equals(getResources().getString(R.string.start))) {
                 startTime = System.currentTimeMillis();
             } else if (binding.btnStart.getText().toString().equals(getResources().getString(R.string.finish))) {
-                endTime =System.currentTimeMillis();
+                endTime = System.currentTimeMillis();
             }
             if (!runningThread) {
                 if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
@@ -108,7 +109,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                     } else {
                         bundle.putInt(Constants.RIGHT_ANSWERS, scores);
                         bundle.putInt(Constants.COUNT_FLASH_CARDS, countOfExamples);
-                        bundle.putLong(Constants.FIGURES_SHOW_TIME,endTime-startTime);
+                        bundle.putLong(Constants.FIGURES_SHOW_TIME, endTime - startTime);
                         Navigation.findNavController(view).navigate(R.id.action_showMentalCountFragment_to_showResultsFragment2, bundle);
                     }
 
@@ -121,13 +122,11 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
     }
 
 
-
-
     private void showResults() {
         binding.btnStart.setText(getResources().getString(R.string.finish));
     }
 
-    private void pauseShowing(){
+    private void pauseShowing() {
         binding.btnStart.setText(getResources().getString(R.string.restart));
         runningThread = false;
     }
@@ -148,7 +147,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
             for (final int[] i = {0}; i[0] < countOfExamples; i[0]++) {
                 numbersArrayToShow = levelClass.createArrayToCount(digit, countOfRows, subtopicLevel);
                 if (runningThread) {
-                    Log.d("TAG",Arrays.toString(numbersArrayToShow));
+                    Log.d("TAG", Arrays.toString(numbersArrayToShow));
                     try {
                         Thread.sleep(500);
                         uiThreadIsRunning = true;
@@ -161,7 +160,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                                     binding.tvNumber.setVisibility(View.VISIBLE);
                                     binding.tvNumber.setTextSize(150 - 15 * digit);
                                     binding.tvNumber.setTextColor(getResources().getColor(colors[colorCheck]));
-                                    colorCheck = ++colorCheck%2;
+                                    colorCheck = ++colorCheck % 2;
 
                                     binding.tvNumber.setText(numbersArrayToShow[finalJ] + "");
 
@@ -200,10 +199,12 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                     requireActivity().runOnUiThread(() -> {
                         unVisible();
                         binding.tvAnswerLayout.setVisibility(View.VISIBLE);
+                        binding.btnCheck.setVisibility(View.VISIBLE);
+//                        YoYo.with(Techniques.ZoomIn).duration(800).playOn(binding.btnCheck);
                         binding.edtAnswer.setText("");
                         Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
                         binding.btnStart.setVisibility(View.VISIBLE);
-                        binding.btnStart.setEnabled(false);
+                        binding.btnStart.setVisibility(View.GONE);
                     });
                 }
             }
@@ -241,35 +242,40 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(requireActivity().getCurrentFocus().getWindowToken(), 0);
-
-                if (!TextUtils.isEmpty(Objects.requireNonNull(binding.edtAnswer.getText()).toString())) {
-                    if (binding.edtAnswer.getText().toString().equals(result)) {
-                        answerIsRight();
-                        //Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
-                        binding.tvAnswerLayout.setVisibility(View.GONE);
-
-                    } else {
-                        //Toast.makeText(getContext(), "Wrong", Toast.LENGTH_SHORT).show();
-                        answerIsWrong(binding.edtAnswer.getText().toString(), result);
-                    }
-                    binding.tvAnswerLayout.setVisibility(View.GONE);
-                    binding.btnStart.setEnabled(true);
-                    if (countNumbers > 0) {
-                        binding.btnStart.setText(getResources().getString(R.string.next));
-                    } else {
-                        showResults();
-                    }
-                } else {
-                    if (isFirstTime) {
-                        runningThread = true;
-                        isFirstTime = false;
-                    }
-                }
+                checkAnswer();
 
             }
             return false;
         });
 
+    }
+
+    private void checkAnswer() {
+        if (!TextUtils.isEmpty(Objects.requireNonNull(binding.edtAnswer.getText()).toString())) {
+            if (binding.edtAnswer.getText().toString().equals(result)) {
+                answerIsRight();
+                //Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
+                binding.tvAnswerLayout.setVisibility(View.GONE);
+                binding.btnCheck.setVisibility(View.GONE);
+
+            } else {
+                //Toast.makeText(getContext(), "Wrong", Toast.LENGTH_SHORT).show();
+                answerIsWrong(binding.edtAnswer.getText().toString(), result);
+            }
+            binding.tvAnswerLayout.setVisibility(View.GONE);
+            binding.btnCheck.setVisibility(View.GONE);
+            binding.btnStart.setVisibility(View.VISIBLE);
+            if (countNumbers > 0) {
+                binding.btnStart.setText(getResources().getString(R.string.next));
+            } else {
+                showResults();
+            }
+        } else {
+            if (isFirstTime) {
+                runningThread = true;
+                isFirstTime = false;
+            }
+        }
     }
 
     private void answerIsRight() {
@@ -291,13 +297,12 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
         binding.tvWithSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
 
-        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n" + wrogAnsw + " ≠ " + result+"\n\n");
+        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n\n" + wrogAnsw + " ≠ " + result + "\n\n");
 
         binding.tvWithSmile.setTextSize(32);
         YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvWithSmile);
         YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.imgSmile);
     }
-
 
 
     private void getArgs() {

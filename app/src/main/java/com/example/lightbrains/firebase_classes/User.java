@@ -10,6 +10,8 @@ public class User {
     private String email;
     private int scores;
 
+    private boolean isSignedIn;
+
     public String getImageUri() {
         return imageUri;
     }
@@ -18,12 +20,13 @@ public class User {
 
     User(){}
 
-    public User(String idKey, String userName, String email, int scores,String imageUri) {
+    public User(String idKey, String userName, String email, int scores,String imageUri,boolean isSignedIn) {
         this.idKey = idKey;
         this.userName = userName;
         this.email = email;
         this.scores = scores;
         this.imageUri = imageUri;
+        this.isSignedIn = isSignedIn;
     }
 
     public String getUserName() {
@@ -36,5 +39,13 @@ public class User {
 
     public int getScores() {
         return scores;
+    }
+
+    public boolean isSignedIn() {
+        return isSignedIn;
+    }
+
+    public void setSignedIn(boolean signedIn) {
+        isSignedIn = signedIn;
     }
 }

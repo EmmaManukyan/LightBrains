@@ -21,7 +21,7 @@ import java.util.List;
 public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdapterFlashCards.MyViewHolder> {
 
     private final List<RecyclerViewItem> recyclerItemsList;
-    Context context;
+    private Context context;
 
 
     private final OnItemClickListener listener;
@@ -43,7 +43,6 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterFlashCards.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        final int index = holder.getAdapterPosition();
         Resources res = context.getResources();
         holder.getTvTitleName().setText(recyclerItemsList.get(position).getTitleName());
         holder.getImgLabel().setImageDrawable(res.getDrawable(recyclerItemsList.get(position).getImageResource()));

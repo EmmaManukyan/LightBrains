@@ -93,6 +93,13 @@ public class ShowResultsFragment extends Fragment {
                     throw new RuntimeException(e);
                 }
             }
+            scores=(scores==-1)?rightAnswers:scores;
+            Constants.createSharedPreferences(requireActivity());
+            Log.d("fir","scores before ; "+Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
+            int tempScores = Constants.sharedPreferences.getInt(Constants.SCORES,-1000);
+            Constants.myEditShared.putInt(Constants.SCORES,tempScores+scores);
+            Constants.myEditShared.commit();
+            Log.d("fir","scores; "+Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
             requireActivity().runOnUiThread(() -> {
                 binding.tvLayTime.setVisibility(View.VISIBLE);
                 binding.tvLayScores.setVisibility(View.VISIBLE);

@@ -30,14 +30,16 @@ import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentShowFlashCardsBinding;
 import com.example.lightbrains.dialogs.CustomDialogFragmentForExit;
 import com.example.lightbrains.interfaces.BackPressedListener;
+import com.example.lightbrains.part_second.attention_game.AttentionGameActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 
 public class ShowFlashCardsFragment extends Fragment implements BackPressedListener {
 
-    FragmentShowFlashCardsBinding binding;
+    private FragmentShowFlashCardsBinding binding;
     private ArrayList<Integer> myImageResources;
     private ArrayList<ImageView> myImages;
     private int count;
@@ -58,7 +60,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     private long endTime = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentShowFlashCardsBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -80,6 +82,10 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
         thread = new ShowFleshCardsThread(count, time, digits);
         thread.start();
+        binding.btnCheck.setOnClickListener(v -> {
+            checkAnswer();
+        });
+
         binding.btnStartFlashCards.setOnClickListener(v -> {
             if (binding.btnStartFlashCards.getText().toString().equals(getResources().getString(R.string.start))) {
                 startTime = System.currentTimeMillis();
@@ -142,22 +148,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-                    if (!TextUtils.isEmpty(binding.edtAnswer.getText().toString())) {
-                        if (binding.edtAnswer.getText().toString().equals(result)) {
-                            answerIsRight();
-                            binding.tvAnswerLayout.setVisibility(View.GONE);
-
-                        } else {
-                            answerIsWrong(binding.edtAnswer.getText().toString(), result);
-                        }
-                        binding.tvAnswerLayout.setVisibility(View.GONE);
-                        binding.btnStartFlashCards.setEnabled(true);
-                    } else {
-                        if (isFirstTime) {
-                            running = true;
-                            isFirstTime = false;
-                        }
-                    }
+                    checkAnswer();
 
                 }
                 return false;
@@ -273,12 +264,14 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                         @Override
                         public void run() {
                             binding.tvAnswerLayout.setVisibility(View.VISIBLE);
+                            binding.btnCheck.setVisibility(View.VISIBLE);
+//                            YoYo.with(Techniques.ZoomIn).duration(800).playOn(binding.btnCheck);
                             binding.edtAnswer.setText("");
                             Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
                             unVisible();
 
                             binding.btnStartFlashCards.setVisibility(View.VISIBLE);
-                            binding.btnStartFlashCards.setEnabled(false);
+                            binding.btnStartFlashCards.setVisibility(View.GONE);
                         }
                     });
                 } catch (InterruptedException e) {
@@ -376,5 +369,26 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     @Override
     public void onBackPressed() {
         showDialog();
+    }
+
+    private void checkAnswer(){
+        if (!TextUtils.isEmpty(Objects.requireNonNull(binding.edtAnswer.getText()).toString())) {
+            if (binding.edtAnswer.getText().toString().equals(result)) {
+                answerIsRight();
+                binding.tvAnswerLayout.setVisibility(View.GONE);
+                binding.btnCheck.setVisibility(View.GONE);
+
+            } else {
+                answerIsWrong(binding.edtAnswer.getText().toString(), result);
+            }
+            binding.tvAnswerLayout.setVisibility(View.GONE);
+            binding.btnCheck.setVisibility(View.GONE);
+            binding.btnStartFlashCards.setVisibility(View.VISIBLE);
+        } else {
+            if (isFirstTime) {
+                running = true;
+                isFirstTime = false;
+            }
+        }
     }
 }

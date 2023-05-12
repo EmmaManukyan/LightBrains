@@ -8,6 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.example.lightbrains.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ConstantsForFireBase {
     public static final int PASSWORD_MAX_LENGTH= 15;
@@ -17,10 +20,19 @@ public class ConstantsForFireBase {
     public static String DEFAULT_IMAGE_URI = "";
 
     public static String USER_KEY = "Users";
-    public static String USER_NAME = "UserName";
+    public static String USER_NAME = "userName";
     public static String GUEST_EMAIL = "example@gmail.com";
     public static String GUEST_PASSWORD = "12345678";
     public static ProgressDialog progressDialog;
+
+    public static DatabaseReference myDataBase;
+    public static FirebaseAuth mAuth;
+
+    public static void createFireBaseInstances(){
+        myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        mAuth = FirebaseAuth.getInstance();
+    }
+
 
     public static void showProgressDialog(ProgressDialog progressDialog,String title,Context context){
         progressDialog.setMessage(context.getResources().getString(R.string.wait_a_little));

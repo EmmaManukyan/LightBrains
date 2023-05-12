@@ -33,7 +33,7 @@ public class Constants {
     public static final String SUBTOPIC_LEVEL_MENTAL = "SubtopicLevelMental";
 
 
-    public static final String SCORES = "Scores";
+    public static final String SCORES = "scores";
 
     public static final String IS_LOGIN = "Is log in";
 

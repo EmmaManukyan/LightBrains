@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class CustomDialogToWritePasswordFragment extends DialogFragment {
 
-    FragmentCustomDialogToWritePasswordBinding binding;
+    private FragmentCustomDialogToWritePasswordBinding binding;
 
     ProfileFragment fragment;
 
@@ -52,10 +52,10 @@ public class CustomDialogToWritePasswordFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.btnOk.setOnClickListener(view1 -> {
-            if (!binding.edtPassword.getText().toString().isEmpty()){
+            if (!Objects.requireNonNull(binding.edtPassword.getText()).toString().isEmpty()){
                 fragment.reAuthenticateUser(Objects.requireNonNull(binding.edtPassword.getText()).toString());
             }else{
-                Toast.makeText(getContext(), "Enter password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
             }
             dismiss();
 

@@ -22,7 +22,7 @@ import com.example.lightbrains.databinding.FragmentFlashCardsSettingsBinding;
 
 public class FleshCardSettingsFragment extends Fragment implements View.OnClickListener {
 
-    FragmentFlashCardsSettingsBinding binding;
+    private FragmentFlashCardsSettingsBinding binding;
 
     private ArrayAdapter arrayAdapter;
 

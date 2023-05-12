@@ -23,10 +23,10 @@
     <string name="you_are_offline">You are offline</string>
     <string name="enter_email">Enter email</string>
     <string name="enter_name">Enter name</string>
-    <string name="email_or_password_is_incprrect">Email or password is incorrect</string>
+    <string name="email_or_password_is_incprrect">Email or password are incorrect</string>
     <string name="email_not_veified">Email is not verified</string>
     <string name="password_cant_contain_space">Password can\'t contain space</string>
-    <string name="enter_minimum_8_char">Enter mimimum 8 char</string>
+    <string name="enter_minimum_8_char">Enter minimum 8 char</string>
     <string name="passwords_max_length_is">Password\'s max length is </string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="email_verification_hasnt_been_sent">Email verification hasn\'t been send</string>
