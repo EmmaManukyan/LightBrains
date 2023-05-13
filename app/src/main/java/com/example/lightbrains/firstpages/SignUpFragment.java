@@ -1,23 +1,22 @@
 package com.example.lightbrains.firstpages;
 
-import static com.example.lightbrains.common.ConstantsForFireBase.USER_KEY;
+import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
+import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
@@ -25,13 +24,10 @@ import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignUpBinding;
 import com.example.lightbrains.dialogs.CustomDialogForSignUpFragment;
 import com.example.lightbrains.firebase_classes.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -39,9 +35,6 @@ import java.util.Objects;
 public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding binding;
     private String passwordError = "";
-    private FirebaseAuth mAuth;
-
-    private DatabaseReference myDataBase;
 
 
     @Override
@@ -108,7 +101,7 @@ public class SignUpFragment extends Fragment {
                 binding.includedLayout.tvLayName.setError(getResources().getString(R.string.enter_name));
             } else if (Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayMail.setError(getResources().getString(R.string.enter_email));
-            }else if (Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString().equals("")) {
+            } else if (Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayPassword.setHelperText("");
                 binding.includedLayout.tvLayPassword.setError(getResources().getString(R.string.enter_password));
             } else if (password.equals("") || password.length() > ConstantsForFireBase.PASSWORD_MAX_LENGTH || password.length() < 8 || password.contains(" ")) {
@@ -116,7 +109,7 @@ public class SignUpFragment extends Fragment {
                 binding.includedLayout.tvLayPassword.setError(passwordError);
             } else if (!Objects.requireNonNull(binding.includedLayout.edtRepeatPassword.getText()).toString().equals(binding.includedLayout.edtPassword.getText().toString())) {
                 binding.includedLayout.tvLayRepeatPassword.setError(getResources().getString(R.string.this_password_is_different));
-                Log.d("taguhi",binding.includedLayout.edtPassword.getText().toString()+"  "+binding.includedLayout.edtRepeatPassword.getText().toString());
+                Log.d("taguhi", binding.includedLayout.edtPassword.getText().toString() + "  " + binding.includedLayout.edtRepeatPassword.getText().toString());
             } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
@@ -135,16 +128,16 @@ public class SignUpFragment extends Fragment {
                             } else {
                                 try {
                                     throw Objects.requireNonNull(task.getException());
-                                } catch(FirebaseAuthWeakPasswordException e) {
+                                } catch (FirebaseAuthWeakPasswordException e) {
 //                                    mTxtPassword.setError(getString(R.string.error_weak_password));
-                                } catch(FirebaseAuthInvalidCredentialsException e) {
-                                    Constants.createToast(getContext(),R.string.email_is_invalid);
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
+                                    Constants.createToast(getContext(), R.string.email_is_invalid);
 //                                    mTxtEmail.setError(getString(R.string.error_invalid_email));
-                                } catch(FirebaseAuthUserCollisionException e) {
-                                    Constants.createToast(getContext(),R.string.email);
-                                } catch(Exception e) {
+                                } catch (FirebaseAuthUserCollisionException e) {
+                                    Constants.createToast(getContext(), R.string.email);
+                                } catch (Exception e) {
                                     //Log.e(TAG, e.getMessage());
-                                    Constants.createToast(getContext(),R.string.something_went_wrong);
+                                    Constants.createToast(getContext(), R.string.something_went_wrong);
 
                                 }
                                 progressDialog.dismiss();
@@ -170,8 +163,6 @@ public class SignUpFragment extends Fragment {
     }
 
     private void init() {
-        mAuth = FirebaseAuth.getInstance();
-        myDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
         binding.includedLayout.tvLayPassword.setCounterMaxLength(ConstantsForFireBase.PASSWORD_MAX_LENGTH);
         binding.includedLayout.tvLayRepeatPassword.setCounterMaxLength(ConstantsForFireBase.PASSWORD_MAX_LENGTH);
     }
@@ -182,6 +173,7 @@ public class SignUpFragment extends Fragment {
         String email = Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString();
         User newUser = new User(id, userName, email, 0, "hello",false);
         myDataBase.child(Uid).setValue(newUser);
+//        myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(email.replace(".", "")).setValue(false);
 
     }
 

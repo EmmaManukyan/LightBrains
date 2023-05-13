@@ -1,6 +1,6 @@
 package com.example.lightbrains.dialogs;
 
-import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,8 +23,6 @@ import com.example.lightbrains.firstpages.MainActivity;
 import com.example.lightbrains.homepage.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class CustomDialogFragmentForExit extends DialogFragment {
 
@@ -80,7 +78,6 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             startActivity(intent);
                             requireActivity().finish();
                             break;
-
                         case 3:
                             navHostFragment =
                                     (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_att_game);
@@ -98,8 +95,8 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                         case 5:
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             assert user != null;
-                            DatabaseReference myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
                             myDataBase.child(user.getUid()).removeValue();
+                            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(user.getEmail().replace(".","")).removeValue();
                             Toast.makeText(getContext(), "Removed?", Toast.LENGTH_SHORT).show();
                             Constants.myEditShared.clear();
                             Constants.myEditShared.commit();

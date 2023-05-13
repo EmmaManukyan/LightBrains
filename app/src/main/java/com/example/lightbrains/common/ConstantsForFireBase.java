@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.example.lightbrains.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +21,10 @@ public class ConstantsForFireBase {
     public static String DEFAULT_IMAGE_URI = "";
 
     public static String USER_KEY = "Users";
+    public static String USERS_MAILS_KEY = "UserMails";
     public static String USER_NAME = "userName";
+//    public static String IS_SIGNED_IN = "signedIn";
+    public static String IS_SIGNED_IN = "isSignedIn";
     public static String GUEST_EMAIL = "example@gmail.com";
     public static String GUEST_PASSWORD = "12345678";
     public static ProgressDialog progressDialog;
@@ -30,6 +34,7 @@ public class ConstantsForFireBase {
 
     public static void createFireBaseInstances(){
         myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        Log.d("fir","exav");
         mAuth = FirebaseAuth.getInstance();
     }
 

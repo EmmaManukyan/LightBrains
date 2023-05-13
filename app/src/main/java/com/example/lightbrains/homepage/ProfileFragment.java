@@ -2,6 +2,8 @@ package com.example.lightbrains.homepage;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lightbrains.common.ConstantsForFireBase.PASSWORD_MAX_LENGTH;
+import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
+import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
 import android.annotation.SuppressLint;
@@ -18,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,8 +37,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -52,8 +51,6 @@ public class ProfileFragment extends Fragment {
     private static FragmentProfileBinding binding;
     private String passwordError;
     private static final int REQUEST_CODE = 122;
-    private static DatabaseReference myDataBase;
-    private static FirebaseAuth mAuth;
 
 
     @Override
@@ -175,6 +172,9 @@ public class ProfileFragment extends Fragment {
         User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),true);
         if (id != null) {
             myDataBase.child(curUser.getUid()).setValue(newUser);
+            String idMail = curUser.getEmail().replace(".","");
+//            Log.d("fir",""+myDataBaseForMails.getDatabase());
+//            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(idMail).setValue(true);
             binding.tvProfileName.setText(newUser.getUserName());
             Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, newUser.getUserName());
             Constants.myEditShared.commit();
@@ -318,8 +318,6 @@ public class ProfileFragment extends Fragment {
     private void init() {
         passwordError = getResources().getString(R.string.enter_password);
         myStorageReference = FirebaseStorage.getInstance().getReference(ConstantsForFireBase.IMAGE_DB);
-        myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
-        mAuth = FirebaseAuth.getInstance();
         binding.tvLayPassword.setCounterMaxLength(PASSWORD_MAX_LENGTH);
 
     }
@@ -334,6 +332,7 @@ public class ProfileFragment extends Fragment {
             User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),isSignedIn);
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
+//                myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(curUser.getEmail().replace(".","")).setValue(isSignedIn);
             }
         }
     }

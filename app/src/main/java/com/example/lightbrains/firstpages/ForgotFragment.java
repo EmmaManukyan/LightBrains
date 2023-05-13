@@ -1,5 +1,6 @@
 package com.example.lightbrains.firstpages;
 
+import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
 import static com.example.lightbrains.common.ConstantsForFireBase.progressDialog;
 
 import android.app.ProgressDialog;
@@ -29,14 +30,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotFragment extends Fragment {
     private FragmentForgotBinding binding;
-    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentForgotBinding.inflate(inflater, container, false);
-        mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
         return binding.getRoot();
     }

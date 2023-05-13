@@ -3,6 +3,8 @@ package com.example.lightbrains.homepage;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
 
 import static com.example.lightbrains.common.Constants.languageLogs;
+import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
+import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Constants.createSharedPreferences(HomeActivity.this);
         if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
-//            Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
+         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
             getDataFromDB();
         } else {
 //            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
@@ -160,8 +162,6 @@ public class HomeActivity extends AppCompatActivity {
     private void getDataFromDB() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
-        DatabaseReference myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser curUser = mAuth.getCurrentUser();
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -170,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
                 if (user != null) {
                     assert curUser != null;
-                    myDataBase.child(curUser.getUid()).child("userName").setValue("Valod");
+                    myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(true);
                     binding.tvProfileName.setText(user.getUserName());
                     Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri()!=null?user.getImageUri():"");
                     Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());

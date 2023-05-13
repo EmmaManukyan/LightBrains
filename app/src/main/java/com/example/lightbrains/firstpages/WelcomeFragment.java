@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
+import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.homepage.HomeActivity;
 
 
@@ -46,6 +47,8 @@ public class WelcomeFragment extends Fragment {
         tvWelcome.setAnimation(animBottom);
         layout.setAnimation(animBottom);
         SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        ConstantsForFireBase.createFireBaseInstances();
+
 
         if (sh.getBoolean(Constants.IS_LOGIN,false)){
             new Thread(){
@@ -70,7 +73,6 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
-
                 if (sh.getBoolean(Constants.IS_LOGIN,false)){
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);

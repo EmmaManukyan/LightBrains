@@ -1,5 +1,8 @@
 package com.example.lightbrains.homepage;
 
+import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
+import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -44,8 +47,6 @@ public class LeaderBoardFragment extends Fragment {
     private RecyclerAdapterLeaderBoard adapter;
     private RecyclerView.LayoutManager lm;
 
-    private static DatabaseReference myDataBase;
-    private static FirebaseAuth mAuth;
 
 
     @Override
@@ -67,8 +68,6 @@ public class LeaderBoardFragment extends Fragment {
 
     private void init() {
         lm = new LinearLayoutManager(getContext());
-        myDataBase = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
-        mAuth = FirebaseAuth.getInstance();
 
     }
 
