@@ -48,7 +48,6 @@ public class LeaderBoardFragment extends Fragment {
     private RecyclerView.LayoutManager lm;
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,7 +99,7 @@ public class LeaderBoardFragment extends Fragment {
         assert curUser != null;
 //            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
         if (id != null) {
-            myDataBase.child(curUser.getUid()).child(Constants.SCORES).setValue(Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
+            myDataBase.child(curUser.getUid()).child(Constants.SCORES).setValue(Constants.sharedPreferences.getInt(Constants.SCORES, -1000));
         }
     }
 
@@ -117,7 +116,9 @@ public class LeaderBoardFragment extends Fragment {
                     User user = child.getValue(User.class);
                     assert user != null;
                     Log.d("fir", "" + user.getUserName());
-                    topUsers.add(user);
+                    if (user.isEmailIsVerified()){
+                        topUsers.add(user);
+                    }
                 }
                 binding.progressBrLeaderBorad.setVisibility(View.GONE);
                 adapter = new RecyclerAdapterLeaderBoard(getContext(), topUsers);

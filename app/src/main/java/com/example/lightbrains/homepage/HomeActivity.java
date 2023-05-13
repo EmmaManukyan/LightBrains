@@ -1,15 +1,9 @@
 package com.example.lightbrains.homepage;
 
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
-
 import static com.example.lightbrains.common.Constants.languageLogs;
 import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
 import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -20,13 +14,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.ActivityHomeBinding;
 import com.example.lightbrains.firebase_classes.User;
-import com.example.lightbrains.firstpages.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,13 +39,14 @@ public class HomeActivity extends AppCompatActivity {
     private boolean IS_IN_PROFILE_PAGE = false;
     private int PAGE_COUNTER = 0;
 
+    private boolean isInGetFromDB = false;
 
 
     @Override
     protected void onStart() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         int CHECKED_LANGUAGE = sh.getInt(Constants.CHECKED_LANGUAGE, 0);
-        setLocal(HomeActivity.this,languageLogs[CHECKED_LANGUAGE]);
+        setLocal(HomeActivity.this, languageLogs[CHECKED_LANGUAGE]);
 
         super.onStart();
     }
@@ -84,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Constants.createSharedPreferences(HomeActivity.this);
         if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
-         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
+//         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
             getDataFromDB();
         } else {
 //            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
@@ -164,21 +162,24 @@ public class HomeActivity extends AppCompatActivity {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         FirebaseUser curUser = mAuth.getCurrentUser();
+        isInGetFromDB = true;
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
-                if (user != null) {
+                if (user != null && isInGetFromDB) {
                     assert curUser != null;
-                    myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(true);
+                    myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(!user.getEmail().equals(ConstantsForFireBase.GUEST_EMAIL));
+                    myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(true);
                     binding.tvProfileName.setText(user.getUserName());
-                    Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri()!=null?user.getImageUri():"");
+                    Constants.myEditShared.putString(ConstantsForFireBase.PROFILE_IMAGE_URI, user.getImageUri() != null ? user.getImageUri() : "");
                     Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, user.getUserName());
                     Constants.myEditShared.putInt(Constants.SCORES, user.getScores());
                     Constants.myEditShared.commit();
-                    Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI,null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
+                    Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
                     Log.d("taguhi", "" + user.getImageUri());
+                    isInGetFromDB = false;
                 }
             }
 

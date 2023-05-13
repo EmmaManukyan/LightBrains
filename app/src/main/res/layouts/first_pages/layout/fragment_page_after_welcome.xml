@@ -43,14 +43,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:hint="@string/language"
         android:textColorHint="@color/black"
         app:boxStrokeColor="@color/color_secondary_variant"
         app:hintTextColor="@color/purple_500"
         app:layout_constraintEnd_toEndOf="@id/btn_start"
         app:layout_constraintStart_toStartOf="@id/btn_start"
-        app:layout_constraintBottom_toBottomOf="@id/my_img"
+        app:layout_constraintTop_toBottomOf="@id/my_img"
         app:startIconDrawable="@drawable/round_language_24"
         app:startIconTint="@color/purple_500">
 

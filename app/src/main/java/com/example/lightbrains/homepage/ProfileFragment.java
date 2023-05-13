@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -328,11 +329,12 @@ public class ProfileFragment extends Fragment {
         if (!TextUtils.isEmpty(name)) {
             FirebaseUser curUser = mAuth.getCurrentUser();
             assert curUser != null;
-//            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
+//            Toast.makeText(progressDialog.getContext(), "Mta "+isSignedIn, Toast.LENGTH_SHORT).show();
+            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
             User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),isSignedIn);
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
-//                myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(curUser.getEmail().replace(".","")).setValue(isSignedIn);
+//                myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(isSignedIn);
             }
         }
     }

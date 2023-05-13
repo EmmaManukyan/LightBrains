@@ -39,6 +39,7 @@
     <string name="user_already_exists">A user with such email already exists</string>
     <string name="email_is_invalid">Email is invalid</string>
     <string name="tv_guest_info">Use the following details to login to the app \n\n</string>
+    <string name="user_is_already_signed_in">The user is already signed in</string>
 
 
 

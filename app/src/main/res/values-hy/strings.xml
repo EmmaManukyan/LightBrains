@@ -39,6 +39,7 @@
     <string name="email_is_invalid">Էլփոստն անվավեր է</string>
     <string name="guest">Հյուր</string>
     <string name="tv_guest_info">Հավելվածին ծանոթանալու համար օգտվեք մուտքի հետևյալ տվյալներից. \n\n</string>
+    <string name="user_is_already_signed_in">Օգտատերը արդեն մուտք է գործել</string>
 
 
 

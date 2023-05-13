@@ -18,6 +18,8 @@ public class User {
 
     private String imageUri;
 
+    private boolean emailIsVerified = true;
+
     User(){}
 
     public User(String idKey, String userName, String email, int scores,String imageUri,boolean isSignedIn) {
@@ -40,6 +42,16 @@ public class User {
     public int getScores() {
         return scores;
     }
+
+
+    public boolean isEmailIsVerified() {
+        return emailIsVerified;
+    }
+
+    public void setEmailIsVerified(boolean emailIsVerified) {
+        this.emailIsVerified = emailIsVerified;
+    }
+
 
     public boolean isSignedIn() {
         return isSignedIn;

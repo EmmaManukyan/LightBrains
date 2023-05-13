@@ -37,6 +37,7 @@
     <string name="this_password_is_different">Этот пароль отличается от пароля выше</string>
     <string name="user_already_exists">Пользователь с таким адресом эл. почты уже существует</string>
     <string name="email_is_invalid">Электронная почта недействительна</string>
+    <string name="user_is_already_signed_in">Пользователь уже авторизован</string>
 
 
 

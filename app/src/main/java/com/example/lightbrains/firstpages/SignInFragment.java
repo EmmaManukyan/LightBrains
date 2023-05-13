@@ -103,7 +103,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                                            requireActivity().finish();
                                        } else {
                                            FirebaseAuth.getInstance().signOut();
-                                           Toast.makeText(getContext(), "Signina", Toast.LENGTH_SHORT).show();
+                                           Constants.createToast(getContext(),R.string.user_is_already_signed_in);
                                        }
                                    } else {
                                        Constants.createToast(getContext(), R.string.email_not_veified);

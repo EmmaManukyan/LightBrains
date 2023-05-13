@@ -70,10 +70,12 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             navController.navigate(R.id.action_showMentalCountFragment_to_mentalCountingSettingsFragment);
                             break;
                         case 2:
+                            Log.d("dilijan","mta");
                             ProfileFragment.saveUser(false);
-                            FirebaseAuth.getInstance().signOut();
                             Constants.myEditShared.clear();
+                            Log.d("dilijan","cleared");
                             Constants.myEditShared.commit();
+                            FirebaseAuth.getInstance().signOut();
                             Intent intent = new Intent(getActivity(), MainActivity.class);
                             startActivity(intent);
                             requireActivity().finish();
@@ -96,7 +98,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             assert user != null;
                             myDataBase.child(user.getUid()).removeValue();
-                            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(user.getEmail().replace(".","")).removeValue();
+//                            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(user.getEmail().replace(".","")).removeValue();
                             Toast.makeText(getContext(), "Removed?", Toast.LENGTH_SHORT).show();
                             Constants.myEditShared.clear();
                             Constants.myEditShared.commit();
