@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     private int PAGE_COUNTER = 0;
 
 
+
     @Override
     protected void onStart() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
