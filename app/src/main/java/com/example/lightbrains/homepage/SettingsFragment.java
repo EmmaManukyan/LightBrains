@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
@@ -25,12 +26,11 @@ public class SettingsFragment extends Fragment {
     private int CHECKED_LANGUAGE = 0;
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentSettingsBinding.inflate(inflater,container,false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -40,7 +40,7 @@ public class SettingsFragment extends Fragment {
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
         init();
         binding.autoTvLanguages.setOnItemClickListener((adapterView, view1, position, l) -> {
-            if (CHECKED_LANGUAGE!=position){
+            if (CHECKED_LANGUAGE != position) {
                 CHECKED_LANGUAGE = position;
                 Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
                 requireActivity().finish();
@@ -48,12 +48,19 @@ public class SettingsFragment extends Fragment {
                 Constants.myEditShared.commit();
             }
         });
+
+        binding.internetSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Constants.myEditShared.putBoolean(Constants.USE_INTERNET, isChecked);
+            Constants.myEditShared.commit();
+        });
     }
 
-    private void init(){
+    private void init() {
         languageArrayStrings = getResources().getStringArray(R.array.string_languages_array);
         CHECKED_LANGUAGE = sharedPreferences.getInt(Constants.CHECKED_LANGUAGE, 0);
         setLanguages();
+        Constants.createSharedPreferences(requireActivity());
+        binding.internetSwitch.setChecked(sharedPreferences.getBoolean(Constants.USE_INTERNET,true));
     }
 
     private void setLanguages() {

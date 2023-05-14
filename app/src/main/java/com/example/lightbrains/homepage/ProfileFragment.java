@@ -170,7 +170,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser curUser = mAuth.getCurrentUser();
         assert curUser != null;
         Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
-        User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),true);
+        User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN,ConstantsForFireBase.USER_TOKEN));
         if (id != null) {
             myDataBase.child(curUser.getUid()).setValue(newUser);
             String idMail = curUser.getEmail().replace(".","");
@@ -331,7 +331,7 @@ public class ProfileFragment extends Fragment {
             assert curUser != null;
 //            Toast.makeText(progressDialog.getContext(), "Mta "+isSignedIn, Toast.LENGTH_SHORT).show();
             Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
-            User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),isSignedIn);
+            User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN,ConstantsForFireBase.USER_TOKEN));
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
 //                myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(isSignedIn);

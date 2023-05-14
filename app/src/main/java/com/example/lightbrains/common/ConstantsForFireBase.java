@@ -24,6 +24,7 @@ public class ConstantsForFireBase {
     public static String USERS_MAILS_KEY = "UserMails";
     public static String USER_NAME = "userName";
     public static String IS_SIGNED_IN = "signedIn";
+    public static String USER_TOKEN = "userToken";
     public static String IS_EMAIL_VERIFIED = "emailIsVerified";
     public static String GUEST_EMAIL = "example@gmail.com";
     public static String GUEST_PASSWORD = "12345678";

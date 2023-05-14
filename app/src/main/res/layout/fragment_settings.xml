@@ -65,7 +65,7 @@
         app:hintTextColor="@color/purple_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sounds_switch"
+        app:layout_constraintTop_toBottomOf="@id/internet_switch"
         app:startIconDrawable="@drawable/round_language_24"
         app:startIconTint="@color/purple_500">
 
@@ -76,6 +76,32 @@
             android:inputType="none"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Switch
+        android:id="@+id/internet_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textAlignment="center"
+        android:thumbTint="@color/switch_thumb_selector"
+        android:trackTint="@color/switch_track_selector"
+        app:layout_constraintStart_toStartOf="@id/tv_settings"
+        app:layout_constraintTop_toBottomOf="@id/sounds_switch"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        android:checked="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Use internet if it is turned on"
+        android:textColor="@color/color_secondary_variant"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/internet_switch"
+        app:layout_constraintStart_toEndOf="@id/internet_switch"
+        app:layout_constraintTop_toTopOf="@id/internet_switch"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

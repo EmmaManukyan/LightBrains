@@ -171,7 +171,7 @@ public class SignUpFragment extends Fragment {
         String id = myDataBase.getKey();
         String userName = Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString();
         String email = Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString();
-        User newUser = new User(id, userName, email, 0, "hello",false);
+        User newUser = new User(id, userName, email, 0, "hello",ConstantsForFireBase.USER_TOKEN);
         myDataBase.child(Uid).setValue(newUser);
         myDataBase.child(Uid).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(false);
 //        myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(email.replace(".", "")).setValue(false);

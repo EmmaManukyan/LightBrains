@@ -6,6 +6,7 @@ import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
 import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -24,6 +25,8 @@ import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.ActivityHomeBinding;
 import com.example.lightbrains.firebase_classes.User;
+import com.example.lightbrains.firstpages.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +43,8 @@ public class HomeActivity extends AppCompatActivity {
     private int PAGE_COUNTER = 0;
 
     private boolean isInGetFromDB = false;
+
+    private boolean useInternetPermission;
 
 
     @Override
@@ -71,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.myBottomNav.setSelectedItemId(R.id.menu_home);
 
 
+
         binding.imgProfile.setOnClickListener(view -> {
             IS_IN_PROFILE_PAGE = true;
             Fragment fragment = new ProfileFragment();
@@ -81,11 +87,16 @@ public class HomeActivity extends AppCompatActivity {
 
 
         Constants.createSharedPreferences(HomeActivity.this);
+        useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
+
         if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
 //         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
             getDataFromDB();
         } else {
-//            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+            if (useInternetPermission) {
+                checkIfUserIsNotSignedIn();
+            }
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
         }
@@ -95,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.menu_home:
+                    checkIfUserIsNotSignedIn();
                     if (PAGE_COUNTER != 0) {
                         binding.frContainer.setVisibility(View.GONE);
                         IS_IN_PROFILE_PAGE = false;
@@ -144,6 +156,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         //to attach fragment
+//        checkIfUserIsNotSignedIn();
+//        checkIfUserIsNotSignedIn();
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, fragment).commit();
     }
 
@@ -189,6 +203,42 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void checkIfUserIsNotSignedIn() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
+        FirebaseUser curUser = mAuth.getCurrentUser();
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                assert curUser != null;
+                String curToken = snapshot.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).getValue(String.class);
+                assert curToken != null;
+                useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET,true);
+                if (useInternetPermission){
+                    if (curToken.equals(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN))) {
+                    Toast.makeText(HomeActivity.this, "Esia", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(HomeActivity.this, "Mtaca"+useInternetPermission, Toast.LENGTH_SHORT).show();
+//                    ProfileFragment.saveUser(false);
+                        Constants.myEditShared.clear();
+                        Log.d("dilijan", "cleared");
+                        Constants.myEditShared.commit();
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

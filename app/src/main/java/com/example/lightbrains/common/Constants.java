@@ -55,6 +55,7 @@ public class Constants {
     public static final String RIGHT_ANSWERS = "RightAnswers";
     public static final String RIGHT = "right";
     public static final String WRONG = "wrong";
+    public static final String USE_INTERNET = "useInternet";
 
     public static final String[] languageLogs = {"ru","hy","en"};
 

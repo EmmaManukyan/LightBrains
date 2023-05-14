@@ -25,6 +25,7 @@ import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignInBinding;
+import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.homepage.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,34 +83,36 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     if (task.isSuccessful()) {
                         final boolean[] isSignedIn = {false};
 
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        assert user != null;
+                        FirebaseUser curUser = mAuth.getCurrentUser();
+                        assert curUser != null;
                         myDataBase.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                               if (btnIsClicked){
-                                   isSignedIn[0] = Boolean.TRUE.equals(snapshot.child(user.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).getValue(Boolean.class));
-                                   Log.d("fire", "baa  " + isSignedIn[0]);
-                                   if (user.isEmailVerified() || Objects.equals(user.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
-                                       Log.d("fire", "baa ic heto " + isSignedIn[0]);
+                                if (btnIsClicked) {
+                                    isSignedIn[0] = Boolean.TRUE.equals(snapshot.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).getValue(Boolean.class));
+                                    Log.d("fire", "baa  " + isSignedIn[0]);
+                                    if (curUser.isEmailVerified() || Objects.equals(curUser.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
+                                        Log.d("fire", "baa ic heto " + isSignedIn[0]);
 
-                                       if (!isSignedIn[0]) {
-                                           Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
-                                           Constants.myEditShared.commit();
-                                           Intent intent = new Intent(getActivity(), HomeActivity.class);
-                                           intent.putExtra(ConstantsForFireBase.USER_KEY, user.getUid());
-//                          Log.d("taguhi","user id   "+user.getUid());
-                                           startActivity(intent);
-                                           requireActivity().finish();
-                                       } else {
+                                        /*if (!isSignedIn[0]) {*/
+                                        Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
+                                        String newToken = User.generateToken();
+                                        Constants.myEditShared.putString(ConstantsForFireBase.USER_TOKEN, newToken);
+                                        myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).setValue(newToken);
+                                        Constants.myEditShared.commit();
+                                        Intent intent = new Intent(getActivity(), HomeActivity.class);
+                                        intent.putExtra(ConstantsForFireBase.USER_KEY, curUser.getUid());
+                                        startActivity(intent);
+                                        requireActivity().finish();
+                                       /*} else {
                                            FirebaseAuth.getInstance().signOut();
                                            Constants.createToast(getContext(),R.string.user_is_already_signed_in);
-                                       }
-                                   } else {
-                                       Constants.createToast(getContext(), R.string.email_not_veified);
-                                   }
-                               }
-                               btnIsClicked = false;
+                                       }*/
+                                    } else {
+                                        Constants.createToast(getContext(), R.string.email_not_veified);
+                                    }
+                                }
+                                btnIsClicked = false;
                             }
 
                             @Override
@@ -117,15 +120,15 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                                 Log.d("fire", "pahoo  " + error.getMessage());
                             }
                         });
-                        /*if (user.isEmailVerified() || Objects.equals(user.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
+                        /*if (curUser.isEmailVerified() || Objects.equals(curUser.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
                             Log.d("fire", "baa ic heto "+isSignedIn[0]);
 
                             if (!isSignedIn[0]) {
                                 Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
                                 Constants.myEditShared.commit();
                                 Intent intent = new Intent(getActivity(), HomeActivity.class);
-                                intent.putExtra(ConstantsForFireBase.USER_KEY, user.getUid());
-//                          Log.d("taguhi","user id   "+user.getUid());
+                                intent.putExtra(ConstantsForFireBase.USER_KEY, curUser.getUid());
+//                          Log.d("taguhi","curUser id   "+curUser.getUid());
                                 startActivity(intent);
                                 requireActivity().finish();
                             }else{
