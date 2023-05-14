@@ -210,11 +210,11 @@ public class HomeActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         FirebaseUser curUser = mAuth.getCurrentUser();
 
-        ref.addValueEventListener(new ValueEventListener() {
+        assert curUser != null;
+        ref.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                assert curUser != null;
-                String curToken = snapshot.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).getValue(String.class);
+                String curToken = snapshot.getValue(String.class);
                 assert curToken != null;
                 useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET,true);
                 if (useInternetPermission){

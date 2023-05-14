@@ -26,6 +26,8 @@
     <color name="blue">#688FD9F0</color>
     <color name="green">#689AEDA2</color>
     <color name="yellow">#68EDEC9A</color>
+    <color name="red_light">#68ED9A9A</color>
+    <color name="orange">#68EDB29A</color>
     <color name="pink">#68ED9AE5</color>
 
     <color name="blue_dark">#20A7CF</color>

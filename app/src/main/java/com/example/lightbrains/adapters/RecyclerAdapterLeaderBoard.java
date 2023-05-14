@@ -1,11 +1,13 @@
 package com.example.lightbrains.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,7 @@ import java.util.List;
 public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAdapterLeaderBoard.MyViewHolder> {
     private final Context context;
     private final List<User> users;
-
+    private int colors[] = new int[]{R.color.blue, R.color.green, R.color.yellow, R.color.orange, R.color.red_light, R.color.pink};
     public RecyclerAdapterLeaderBoard(Context context, List<User> users) {
         this.context = context;
         this.users = users;
@@ -37,14 +39,20 @@ public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAda
         return new MyViewHolder(view);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterLeaderBoard.MyViewHolder holder, int position) {
         int realPosition = users.size()-1-position;
         holder.getTvUserName().setText(users.get(realPosition).getUserName());
         holder.getTvScores().setText("" + users.get(realPosition).getScores());
+        holder.layItem.setBackgroundColor(context.getResources().getColor(colors[position%colors.length]));
         Log.d("fir", users.get(realPosition).getImageUri());
         Picasso.get().load(users.get(realPosition).getImageUri()).placeholder(R.drawable.img_profile_default).into(holder.imgUser);
-
+        if (users.get(realPosition).getEmail().equals(ConstantsForFireBase.mAuth.getCurrentUser().getEmail())) {
+            holder.layItem.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.background_btn4_transparent));
+            holder.tvScores.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.background_tv_guest_pink));
+            holder.layItem.setElevation(16f);
+        }
     }
 
     @Override
@@ -56,6 +64,7 @@ public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAda
         private final ImageView imgUser;
         private final TextView tvUserName;
         private final TextView tvScores;
+        private final LinearLayout layItem;
 
         public ImageView getImgUser() {
             return imgUser;
@@ -74,6 +83,8 @@ public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAda
             imgUser = itemView.findViewById(R.id.img_user);
             tvUserName = itemView.findViewById(R.id.tv_userName);
             tvScores = itemView.findViewById(R.id.tv_scores);
+            layItem = itemView.findViewById(R.id.lay_rec_item);
+
 
         }
     }
