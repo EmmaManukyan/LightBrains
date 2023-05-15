@@ -50,7 +50,9 @@ public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAda
         Picasso.get().load(users.get(realPosition).getImageUri()).placeholder(R.drawable.img_profile_default).into(holder.imgUser);
         if (users.get(realPosition).getEmail().equals(ConstantsForFireBase.mAuth.getCurrentUser().getEmail())) {
             holder.layItem.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.background_btn4_transparent));
-            holder.tvScores.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.background_tv_guest_pink));
+            holder.tvScores.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.background_btn1_start));
+            holder.tvScores.setTextColor(context.getResources().getColor(R.color.white));
+            holder.tvScores.setElevation(8f);
             holder.layItem.setElevation(16f);
         }
     }
