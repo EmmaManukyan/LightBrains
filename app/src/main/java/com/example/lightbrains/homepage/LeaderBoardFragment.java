@@ -60,7 +60,7 @@ public class LeaderBoardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
         init();
-        binding.progressBrLeaderBorad.setVisibility(View.VISIBLE);
+        binding.progressBrLeaderBoard.setVisibility(View.VISIBLE);
         new MyAsyncTask().execute();
         users = new ArrayList<>();
     }
@@ -74,7 +74,7 @@ public class LeaderBoardFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            binding.progressBrLeaderBorad.setVisibility(View.VISIBLE);
+            binding.progressBrLeaderBoard.setVisibility(View.VISIBLE);
             Log.d("fir", "mtanq");
         }
 
@@ -120,7 +120,7 @@ public class LeaderBoardFragment extends Fragment {
                         topUsers.add(user);
                     }
                 }
-                binding.progressBrLeaderBorad.setVisibility(View.GONE);
+                binding.progressBrLeaderBoard.setVisibility(View.GONE);
                 adapter = new RecyclerAdapterLeaderBoard(getContext(), topUsers);
                 Log.d("fir", "hello " + topUsers.size());
                 for (User topUser : topUsers) {

@@ -297,7 +297,7 @@ public class ProfileFragment extends Fragment {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] byteArr = baos.toByteArray();
-        StorageReference myRef = myStorageReference.child(ConstantsForFireBase.USER_KEY).child(ConstantsForFireBase.IMAGE_DB_CHILD);
+        StorageReference myRef = myStorageReference.child(ConstantsForFireBase.USER_KEY).child(ConstantsForFireBase.IMAGE_DB_CHILD+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         UploadTask up = myRef.putBytes(byteArr);
         Constants.createSharedPreferences(requireActivity());
         binding.imgProfile.setVisibility(View.INVISIBLE);
