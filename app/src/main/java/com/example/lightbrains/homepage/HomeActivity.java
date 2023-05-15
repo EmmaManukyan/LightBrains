@@ -76,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
         binding.myBottomNav.setSelectedItemId(R.id.menu_home);
 
 
-
         binding.imgProfile.setOnClickListener(view -> {
             IS_IN_PROFILE_PAGE = true;
             Fragment fragment = new ProfileFragment();
@@ -93,8 +92,8 @@ public class HomeActivity extends AppCompatActivity {
 //         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
             getDataFromDB();
         } else {
-            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
-            if (useInternetPermission) {
+//            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+            if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
                 checkIfUserIsNotSignedIn();
             }
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
@@ -137,6 +136,9 @@ public class HomeActivity extends AppCompatActivity {
                         fragment = new LeaderBoardFragment();
                         PAGE_COUNTER = 3;
                     }
+                    if (ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
+                        Constants.createToast(this, R.string.you_are_offline);
+                    }
                     break;
             }
             if (fragment != null) {
@@ -166,9 +168,14 @@ public class HomeActivity extends AppCompatActivity {
         if (!IS_IN_PROFILE_PAGE) {
             binding.imgProfile.setVisibility(View.VISIBLE);
             binding.tvProfileName.setVisibility(View.VISIBLE);
+            binding.tvScores.setVisibility(View.GONE);
+            binding.tvBeforeScores.setVisibility(View.GONE);
         } else {
             binding.imgProfile.setVisibility(View.GONE);
             binding.tvProfileName.setVisibility(View.INVISIBLE);
+            binding.tvScores.setText(String.valueOf(Constants.sharedPreferences.getInt(Constants.SCORES,-1000)));
+            binding.tvScores.setVisibility(View.VISIBLE);
+            binding.tvBeforeScores.setVisibility(View.VISIBLE);
         }
     }
 
@@ -216,12 +223,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String curToken = snapshot.getValue(String.class);
                 assert curToken != null;
-                useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET,true);
-                if (useInternetPermission){
+                useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
+                if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
                     if (curToken.equals(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN))) {
-                    Toast.makeText(HomeActivity.this, "Esia", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "It's me", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(HomeActivity.this, "Mtaca"+useInternetPermission, Toast.LENGTH_SHORT).show();
+                        Constants.createToast(HomeActivity.this,R.string.sign_in_from_other_device);
 //                    ProfileFragment.saveUser(false);
                         Constants.myEditShared.clear();
                         Log.d("dilijan", "cleared");

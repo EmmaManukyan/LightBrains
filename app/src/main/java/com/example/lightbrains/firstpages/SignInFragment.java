@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,7 +26,6 @@ import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignInBinding;
 import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.homepage.HomeActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,7 +68,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             } else if (Objects.requireNonNull(binding.edtPassword.getText()).toString().equals("")) {
                 binding.tvLayPassword.setHelperText("");
                 binding.tvLayPassword.setError(getResources().getString(R.string.enter_password));
-            } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
+            } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
                 String email = binding.edtMail.getText().toString();

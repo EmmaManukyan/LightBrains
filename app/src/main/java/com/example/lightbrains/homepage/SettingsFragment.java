@@ -43,9 +43,9 @@ public class SettingsFragment extends Fragment {
             if (CHECKED_LANGUAGE != position) {
                 CHECKED_LANGUAGE = position;
                 Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
+                Constants.myEditShared.commit();
                 requireActivity().finish();
                 startActivity(requireActivity().getIntent());
-                Constants.myEditShared.commit();
             }
         });
 

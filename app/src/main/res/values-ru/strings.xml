@@ -104,6 +104,7 @@
     <string name="great">Отлично</string>
     <string name="minutes">минут</string>
     <string name="scores">Баллов</string>
+    <string name="scores2">Баллы։ </string>
     <string name="are_you_ready">Вы готовы?</string>
     <string name="string_att_game_info">  Подсчитай количество фигур, появляющихся на экране, а затем запиши их в соответствующем месте.</string>
     <string name="rules">Правила</string>
@@ -126,6 +127,8 @@
     <string name="guest">Гость</string>
     <string name="tv_guest_info">Используйте следующие данные для входа в приложение \n\n</string>
     <string name="top_10_leaders">Топ 10 лидеров</string>
+    <string name="use_internet_to_be_always_online">Использовать интернет, чтобы всегда быть онлайн</string>
+    <string name="sign_in_from_other_device">Вход с другого устройства</string>
 
 
 

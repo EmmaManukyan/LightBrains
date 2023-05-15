@@ -110,7 +110,7 @@ public class SignUpFragment extends Fragment {
             } else if (!Objects.requireNonNull(binding.includedLayout.edtRepeatPassword.getText()).toString().equals(binding.includedLayout.edtPassword.getText().toString())) {
                 binding.includedLayout.tvLayRepeatPassword.setError(getResources().getString(R.string.this_password_is_different));
                 Log.d("taguhi", binding.includedLayout.edtPassword.getText().toString() + "  " + binding.includedLayout.edtRepeatPassword.getText().toString());
-            } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
+            } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
                 String email = binding.includedLayout.edtMail.getText().toString();

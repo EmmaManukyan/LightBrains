@@ -1,5 +1,8 @@
 package com.example.lightbrains.common;
 
+import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
+import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +22,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.databinding.FragmentShowResultsBinding;
 import com.example.lightbrains.homepage.HomeActivity;
+
+import java.util.Objects;
 
 
 public class ShowResultsFragment extends Fragment {
@@ -72,6 +77,9 @@ public class ShowResultsFragment extends Fragment {
             binding.myProgressbarResult.setProgress(0);
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
+            if (Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET,true) && !ConstantsForFireBase.checkConnectionIsOff(requireActivity())){
+                myDataBase.child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).child(Constants.SCORES).setValue(Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
+            }
             requireActivity().finish();
         });
         binding.edtTime.setText("" + time + " " + getResources().getString(R.string.minutes));

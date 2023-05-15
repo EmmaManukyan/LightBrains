@@ -47,7 +47,7 @@ public class ConstantsForFireBase {
         progressDialog.show();
     }
 
-    public static boolean checkConnection(Activity activity) {
+    public static boolean checkConnectionIsOff(Activity activity) {
 
         // initialize intent filter
         IntentFilter intentFilter = new IntentFilter();

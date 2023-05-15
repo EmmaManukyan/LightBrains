@@ -3,6 +3,7 @@ package com.example.lightbrains.homepage;
 import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
 import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -12,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +109,7 @@ public class LeaderBoardFragment extends Fragment {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         Query myTopUsers = ref.orderByChild(Constants.SCORES).limitToFirst(10);
         myTopUsers.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 topUsers.clear();
@@ -121,6 +122,7 @@ public class LeaderBoardFragment extends Fragment {
                     }
                 }
                 binding.progressBrLeaderBoard.setVisibility(View.GONE);
+                binding.tvLeaderBoard.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_leader_board));
                 adapter = new RecyclerAdapterLeaderBoard(getContext(), topUsers);
                 Log.d("fir", "hello " + topUsers.size());
                 for (User topUser : topUsers) {

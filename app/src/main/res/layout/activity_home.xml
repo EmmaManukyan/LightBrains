@@ -7,6 +7,42 @@
     tools:context=".homepage.HomeActivity"
     >
 
+     <TextView
+         android:id="@+id/tv_scores"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:drawablePadding="4dp"
+         android:fontFamily="@font/my_font"
+         android:padding="8dp"
+         android:text="256"
+         android:textColor="@color/color_secondary_variant"
+         android:textSize="24sp"
+         app:drawableEndCompat="@drawable/baseline_scores_24"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.3"
+         android:layout_marginEnd="16dp"
+         android:visibility="gone"
+         android:clickable="true"
+         android:background="@drawable/background_btn4_transparent"/>
+
+    <TextView
+        android:id="@+id/tv_before_scores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_scores"
+        app:layout_constraintTop_toTopOf="@id/tv_scores"
+        app:layout_constraintBottom_toBottomOf="@id/tv_scores"
+        android:text="@string/scores2"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/color_secondary_variant"
+        android:fontFamily="@font/my_font"
+        android:visibility="gone"/>
+
+
+
     <TextView
         android:id="@+id/img_bg"
         android:layout_width="match_parent"
@@ -72,7 +108,7 @@
         app:layout_constraintEnd_toStartOf="@id/img_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/img_profile"
-        tools:text="Manukyan Emma Arturi hello barev ba inch ka chka"
+        tools:text=""
         app:layout_constraintHorizontal_bias="1"/>
 
 

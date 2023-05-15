@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -109,7 +108,7 @@ public class ProfileFragment extends Fragment {
             String password = Objects.requireNonNull(binding.edtPassword.getText()).toString();
             if (Objects.requireNonNull(binding.edtName.getText()).toString().equals("")) {
                 binding.tvLayName.setError(getResources().getString(R.string.enter_name));
-            } else if (ConstantsForFireBase.checkConnection(requireActivity())) {
+            } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else if (password.isEmpty()) {
                 updateUserName(binding.edtName.getText().toString());
@@ -127,7 +126,7 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.imgProfile.setOnClickListener(view15 -> {
-            if (!ConstantsForFireBase.checkConnection(requireActivity())) {
+            if (!ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 getImage();
             } else {
                 Constants.createToast(getContext(), R.string.you_are_offline);
@@ -262,23 +261,28 @@ public class ProfileFragment extends Fragment {
     }
 
     public void reAuthenticateUser(String password) {
-        Constants.closeKeyboard(requireActivity());
-        progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little), getContext());
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(Objects.requireNonNull(user.getEmail()), password);
 
-        user.reauthenticate(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        enableViews();
-                    } else {
-                        Constants.createToast(getContext(), R.string.password_is_wrong);
-                    }
-                    progressDialog.dismiss();
-                });
+       if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())){
+           Constants.createToast(requireActivity(),R.string.you_are_offline);
+       }else{
+           Constants.closeKeyboard(requireActivity());
+           progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
+           ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little), getContext());
+           FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+           assert user != null;
+           AuthCredential credential = EmailAuthProvider
+                   .getCredential(Objects.requireNonNull(user.getEmail()), password);
+
+           user.reauthenticate(credential)
+                   .addOnCompleteListener(task -> {
+                       if (task.isSuccessful()) {
+                           enableViews();
+                       } else {
+                           Constants.createToast(getContext(), R.string.password_is_wrong);
+                       }
+                       progressDialog.dismiss();
+                   });
+       }
     }
 
     private static Uri uploadUri;
@@ -310,7 +314,7 @@ public class ProfileFragment extends Fragment {
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
-            if (!ConstantsForFireBase.checkConnection(requireActivity())) {
+            if (!ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 saveUser(true);
             }
         });

@@ -40,6 +40,7 @@
     <string name="guest">Հյուր</string>
     <string name="tv_guest_info">Հավելվածին ծանոթանալու համար օգտվեք մուտքի հետևյալ տվյալներից. \n\n</string>
     <string name="user_is_already_signed_in">Օգտատերը արդեն մուտք է գործել</string>
+    <string name="sign_in_from_other_device">Մուտք այլ սարքից</string>
 
 
 
@@ -106,6 +107,7 @@
     <string name="great">Ընտիր է</string>
     <string name="minutes">րոպե</string>
     <string name="scores">Միավոր</string>
+    <string name="scores2">Միավորներ։ </string>
     <string name="are_you_ready">Պատրա՞ստ ես</string>
     <string name="string_att_game_info">Մտապահի\'ր էկրանին հայտնվող պատկերներից յուրաքանչյուրի քանակը, իսկ վերջում գրիր համապատասխան դաշտում։</string>
     <string name="rules">Կանոններ</string>
@@ -126,6 +128,7 @@
     <string name="settings">Կարգավորումներ</string>
     <string name="sounds_on_off">Ձայնային էֆեկտներ</string>
     <string name="top_10_leaders">Թոփ 10 առաջատարներ</string>
+    <string name="use_internet_to_be_always_online">Օգտագործել ինտերնետը՝ միշտ առցանց լինելու համար</string>
 
 
 
