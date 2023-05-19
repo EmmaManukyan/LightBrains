@@ -154,7 +154,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
             }
         } else if (binding.tvForgotPassword.equals(view)) {
-            Constants.createSound(requireActivity(), R.raw.spinner_sound);
+            Constants.createSound(requireActivity(), R.raw.sound_first_pages);
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_forgotFragment);
         }
         Constants.mediaPlayer.start();

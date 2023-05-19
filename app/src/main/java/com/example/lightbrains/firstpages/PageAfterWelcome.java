@@ -60,13 +60,13 @@ public class PageAfterWelcome extends Fragment {
 
         binding.autoTvLanguages.setOnItemClickListener((adapterView, view1, position, l) -> {
 
-            Constants.createSound(requireActivity(),R.raw.spinner_sound);
+            Constants.createSound(requireActivity(),R.raw.sound_first_pages);
             Constants.mediaPlayer.start();
 
             CHECKED_LANGUAGE = position;
             Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
-            getActivity().finish();
-            startActivity(getActivity().getIntent());
+            requireActivity().finish();
+            startActivity(requireActivity().getIntent());
             Constants.myEditShared.commit();
         });
     }

@@ -49,21 +49,22 @@ public class ShowResultsFragment extends Fragment {
         rightAnswers = requireArguments().getInt(Constants.RIGHT_ANSWERS);
         int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
         time = (double) requireArguments().getLong(Constants.FIGURES_SHOW_TIME) / 60000;
-        scores = requireArguments().getInt(Constants.SCORES,-1);
+        scores = requireArguments().getInt(Constants.SCORES, -1);
         Log.d("taguhi", time + "");
 
         time = (float) (Math.round(time * 100.0) / 100.0);
         String tempTime = String.valueOf(time);
-        timeToShow = tempTime.substring(0,4);
+        timeToShow = tempTime.substring(0, 4);
         Log.d("taguhi", timeToShow + "");
-
 
 
         float percent = (rightAnswers * 100) / (float) count;
 
         if (percent >= 50) {
             binding.btnMainPage.setText(getResources().getString(R.string.great));
-        }else {
+            Constants.createSound(requireActivity(), R.raw.results);
+            Constants.mediaPlayer.start();
+        } else {
             binding.btnMainPage.setText(getResources().getString(R.string.go_back_main_page));
 
         }
@@ -74,12 +75,14 @@ public class ShowResultsFragment extends Fragment {
         binding.tvLayTime.setError(" ");
 
         binding.btnMainPage.setOnClickListener(view1 -> {
-            binding.myProgressbarResult.setProgress(0);
+            Constants.createSound(requireActivity(), R.raw.btn_click);
+            Constants.mediaPlayer.start();
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
-            if (Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET,true) && !ConstantsForFireBase.checkConnectionIsOff(requireActivity())){
-                myDataBase.child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).child(Constants.SCORES).setValue(Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
+            if (Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true) && !ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
+                myDataBase.child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).child(Constants.SCORES).setValue(Constants.sharedPreferences.getInt(Constants.SCORES, -1000));
             }
+            binding.myProgressbarResult.setProgress(0);
             requireActivity().finish();
         });
         binding.edtTime.setText("" + time + " " + getResources().getString(R.string.minutes));
@@ -101,13 +104,13 @@ public class ShowResultsFragment extends Fragment {
                     throw new RuntimeException(e);
                 }
             }
-            scores=(scores==-1)?rightAnswers:scores;
+            scores = (scores == -1) ? rightAnswers : scores;
             Constants.createSharedPreferences(requireActivity());
-            Log.d("fir","scores before ; "+Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
-            int tempScores = Constants.sharedPreferences.getInt(Constants.SCORES,-1000);
-            Constants.myEditShared.putInt(Constants.SCORES,tempScores+scores);
+            Log.d("fir", "scores before ; " + Constants.sharedPreferences.getInt(Constants.SCORES, -1000));
+            int tempScores = Constants.sharedPreferences.getInt(Constants.SCORES, -1000);
+            Constants.myEditShared.putInt(Constants.SCORES, tempScores + scores);
             Constants.myEditShared.commit();
-            Log.d("fir","scores; "+Constants.sharedPreferences.getInt(Constants.SCORES,-1000));
+            Log.d("fir", "scores; " + Constants.sharedPreferences.getInt(Constants.SCORES, -1000));
             requireActivity().runOnUiThread(() -> {
                 binding.tvLayTime.setVisibility(View.VISIBLE);
                 binding.tvLayScores.setVisibility(View.VISIBLE);

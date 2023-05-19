@@ -45,10 +45,13 @@ public class ForgotFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.btnReset.setOnClickListener(v -> {
             if (!binding.edtMail.getText().toString().isEmpty()) {
+                Constants.createSound(requireActivity(),R.raw.sound_first_pages);
                 beginRecovery(binding.edtMail.getText().toString(), view);
             } else {
+                Constants.createSound(requireActivity(),R.raw.wrong);
                 Constants.createToast(getContext(), R.string.enter_email);
             }
+            Constants.mediaPlayer.start();
         });
     }
 

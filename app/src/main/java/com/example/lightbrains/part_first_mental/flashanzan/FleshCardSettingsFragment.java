@@ -92,6 +92,7 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
     }
 
     private void init(View v) {
+        Constants.createSound(requireActivity(),R.raw.btn_click);
 
 
         binding.btnStart.setOnClickListener(this);
@@ -110,25 +111,21 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
         spinPositions = new int[]{speedPosition, digitPosition};
 
 
-        binding.autoTvSpeed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = speedArrayStrings[position];
-                if (s.contains(" ")) {
-                    s = s.substring(0, s.indexOf(" "));
-                    System.out.println(s);
-                }
-                speed = (int) (Float.parseFloat(s) * 1000);
-                speedPosition = position;
+        binding.autoTvSpeed.setOnItemClickListener((parent, view, position, id) -> {
+            String s = speedArrayStrings[position];
+            if (s.contains(" ")) {
+                s = s.substring(0, s.indexOf(" "));
+                System.out.println(s);
             }
+            speed = (int) (Float.parseFloat(s) * 1000);
+            speedPosition = position;
+            Constants.mediaPlayer.start();
         });
 
-        binding.autoTvDigits.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                digit = Integer.parseInt(digitsArrayStrings[position]);
-                digitPosition = position;
-            }
+        binding.autoTvDigits.setOnItemClickListener((parent, view, position, id) -> {
+            digit = Integer.parseInt(digitsArrayStrings[position]);
+            digitPosition = position;
+            Constants.mediaPlayer.start();
         });
 
     }
@@ -139,6 +136,7 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
 
         if (binding.btnStart.equals(view)) {
             if (speed != -1 && digit != -1 && count != -1) {
+                Constants.createSound(requireActivity(),R.raw.right);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.SPEED_FLASH_CARDS, speed);
                 bundle.putInt(Constants.DIGIT_FLASH_CARDS, digit);
@@ -149,6 +147,7 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
                 Constants.myEditShared.commit();
                 Navigation.findNavController(view).navigate(R.id.action_fleshAnzanSettingsFragment_to_showFlashCardsFragment, bundle);
             } else {
+                Constants.createSound(requireActivity(),R.raw.wrong);
                 Constants.createToast(getContext(), R.string.select_all_necessary_fields);
             }
         } else if (binding.btnPlus.equals(view)) {
@@ -164,6 +163,8 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
                 binding.autoTvCount.setText(Integer.toString(temp));
             }
         }
+
+        Constants.mediaPlayer.start();
     }
 
     @Override

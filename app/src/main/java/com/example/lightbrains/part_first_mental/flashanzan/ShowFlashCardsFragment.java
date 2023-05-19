@@ -121,8 +121,8 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     }
 
     public void init(View view) {
-        bundle = new Bundle();
 
+        bundle = new Bundle();
 
         myImageResources = new ArrayList<Integer>();
         myImageResources.add(R.drawable.img_abac_0);
@@ -260,19 +260,16 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                 try {
                     Thread.sleep(time);
                     running = false;
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            binding.tvAnswerLayout.setVisibility(View.VISIBLE);
-                            binding.btnCheck.setVisibility(View.VISIBLE);
+                    getActivity().runOnUiThread(() -> {
+                        binding.tvAnswerLayout.setVisibility(View.VISIBLE);
+                        binding.btnCheck.setVisibility(View.VISIBLE);
 //                            YoYo.with(Techniques.ZoomIn).duration(800).playOn(binding.btnCheck);
-                            binding.edtAnswer.setText("");
-                            Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
-                            unVisible();
+                        binding.edtAnswer.setText("");
+                        Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
+                        unVisible();
 
-                            binding.btnStartFlashCards.setVisibility(View.VISIBLE);
-                            binding.btnStartFlashCards.setVisibility(View.GONE);
-                        }
+                        binding.btnStartFlashCards.setVisibility(View.VISIBLE);
+                        binding.btnStartFlashCards.setVisibility(View.GONE);
                     });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -287,6 +284,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
 
     private void answerIsWrong(String wrogAnsw, String result) {
+        Constants.createSound(requireActivity(),R.raw.wrong);
         binding.tvWithSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
         binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n" + wrogAnsw + " ≠ " + result);
@@ -324,6 +322,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     }
 
     private void answerIsRight() {
+        Constants.createSound(requireActivity(),R.raw.right);
         scores++;
         binding.imgSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setVisibility(View.VISIBLE);
@@ -390,5 +389,6 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                 isFirstTime = false;
             }
         }
+        Constants.mediaPlayer.start();
     }
 }

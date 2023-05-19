@@ -22,11 +22,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/speed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:soundEffectsEnabled="true"
                 app:boxStrokeColor="@color/blue_dark"
                 app:hintTextColor="@color/blue_dark"
-                >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <AutoCompleteTextView
                     android:id="@+id/auto_tv_speed"
@@ -43,9 +43,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:hint="@string/digits"
-                app:layout_constraintStart_toStartOf="parent"
+                android:soundEffectsEnabled="true"
                 app:boxStrokeColor="@color/blue_dark"
                 app:hintTextColor="@color/blue_dark"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_lay_speed">
 
 
@@ -54,8 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="@string/digits"
-                    />
+                    android:text="@string/digits" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -73,21 +73,20 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:text="-"
-                    android:textSize="24sp"
                     android:backgroundTint="@color/blue_dark"
-                    />
+                    android:soundEffectsEnabled="true"
+                    android:text="-"
+                    android:textSize="24sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:hint="@string/quantity"
-                    app:hintTextColor="@color/blue_dark"
-                    app:boxStrokeColor="@color/blue_dark"
                     android:focusedByDefault="true"
-                    >
+                    android:hint="@string/quantity"
+                    app:boxStrokeColor="@color/blue_dark"
+                    app:hintTextColor="@color/blue_dark">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/auto_tv_count"
@@ -106,14 +105,11 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/blue_dark"
+                    android:soundEffectsEnabled="true"
                     android:text="+"
-                    android:textSize="24sp"
-                    android:backgroundTint="@color/blue_dark"/>
-
-
+                    android:textSize="24sp" />
             </LinearLayout>
-
-
 
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -125,6 +121,7 @@
                 android:background="@drawable/background_btn_letsgo_blue"
                 android:padding="16dp"
                 android:paddingStart="0dp"
+                android:soundEffectsEnabled="true"
                 android:scaleType="fitStart"
                 android:src="@drawable/lets_start_flash_cards"
                 app:layout_constraintTop_toBottomOf="@id/tv_lay_count" />
@@ -134,11 +131,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:fontFamily="@font/my_font"
                 android:text="@string/lets_go"
                 android:textAllCaps="false"
                 android:textColor="@color/color_secondary_variant"
                 android:textSize="28sp"
-                android:fontFamily="@font/my_font"
                 app:layout_constraintBottom_toBottomOf="@id/btn_start"
                 app:layout_constraintEnd_toEndOf="@id/btn_start"
                 app:layout_constraintHorizontal_bias="0.9"
