@@ -52,7 +52,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             binding.tvGuestInfo.setVisibility(!guestOpened ? View.VISIBLE : View.GONE);
             YoYo.with(!guestOpened ? Techniques.SlideInRight : Techniques.SlideOutRight).duration(500).playOn(binding.tvGuestInfo);
             guestOpened = !guestOpened;
-            if (guestOpened) Constants.mediaPlayer.start();
+            if (guestOpened) Constants.makeSoundEffect();
         });
         return binding.getRoot();
     }
@@ -157,7 +157,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             Constants.createSound(requireActivity(), R.raw.sound_first_pages);
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_forgotFragment);
         }
-        Constants.mediaPlayer.start();
+        Constants.makeSoundEffect();
     }
 
     @SuppressLint("SetTextI18n")

@@ -44,7 +44,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Constants.createSharedPreferences(getActivity());
         Constants.createSound(requireActivity(),R.raw.wrong);
-        Constants.mediaPlayer.start();
+        Constants.makeSoundEffect();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         if (DIALOG_POSITION_CODE == 5) {

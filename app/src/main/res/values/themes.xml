@@ -53,15 +53,16 @@
     <style name="MyStyleForTextInputLayoutToShowResults" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_marginTop">32dp</item>
         <item name="boxBackgroundColor">@color/white</item>
-
         <item name="boxBackgroundMode">outline</item>
         <item name="android:focusedByDefault">true</item>
         <item name="boxStrokeWidth">3dp</item>
         <item name="boxStrokeWidthFocused">3dp</item>
-
-
-
     </style>
+
+    <style name="MyStyleForTextInputLayoutSettings" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:soundEffectsEnabled">true</item>
+    </style>
+
 
     <style name="MyStyleForTitleTextView" parent="Widget.AppCompat.TextView">
 
@@ -106,9 +107,9 @@
     </style>
 
     <style name="MyStyleForProgressDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-    <item name="colorAccent">@color/color_primary_variant</item>
-    <item name="android:textColorPrimary">@color/purple_500</item>
-    <item name="android:background">@color/white</item>
+        <item name="colorAccent">@color/color_primary_variant</item>
+        <item name="android:textColorPrimary">@color/purple_500</item>
+        <item name="android:background">@color/white</item>
     </style>
 
 
@@ -137,8 +138,6 @@
         <item name="android:layout_marginStart">32dp</item>
         <item name="android:layout_marginEnd">32dp</item>
     </style>
-
-
 
 
 </resources>

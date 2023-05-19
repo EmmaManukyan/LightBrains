@@ -151,7 +151,7 @@ public class SignUpFragment extends Fragment {
 
 
             }
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
         });
     }
 

@@ -63,7 +63,7 @@ public class ShowResultsFragment extends Fragment {
         if (percent >= 50) {
             binding.btnMainPage.setText(getResources().getString(R.string.great));
             Constants.createSound(requireActivity(), R.raw.results);
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
         } else {
             binding.btnMainPage.setText(getResources().getString(R.string.go_back_main_page));
 
@@ -76,7 +76,7 @@ public class ShowResultsFragment extends Fragment {
 
         binding.btnMainPage.setOnClickListener(view1 -> {
             Constants.createSound(requireActivity(), R.raw.btn_click);
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
             if (Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true) && !ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {

@@ -66,6 +66,7 @@ public class SettingsFragment extends Fragment {
         setLanguages();
         Constants.createSharedPreferences(requireActivity());
         binding.internetSwitch.setChecked(sharedPreferences.getBoolean(Constants.USE_INTERNET,true));
+        binding.soundsSwitch.setChecked(sharedPreferences.getBoolean(Constants.SOUND_EFFECTS,true));
     }
 
     private void setLanguages() {

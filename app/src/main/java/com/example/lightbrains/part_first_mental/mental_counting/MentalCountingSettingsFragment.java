@@ -21,10 +21,12 @@ import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentMentalCountingSettingsBinding;
 
+import java.util.Objects;
+
 public class MentalCountingSettingsFragment extends Fragment implements View.OnClickListener {
 
 
-    FragmentMentalCountingSettingsBinding binding;
+    private FragmentMentalCountingSettingsBinding binding;
 
     private ArrayAdapter arrayAdapter;
 
@@ -99,7 +101,7 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             topicLevel = topicPosition;
             digit = Integer.parseInt(digitsArrayStrings[digitPosition]);
             binding.autoTvCount.setText(Integer.toString(sharedPreferences.getInt(Constants.COUNT_OF_ROWS_MENTAL, 2)));
-            countOfRows = Integer.parseInt(binding.autoTvCount.getText().toString());
+            countOfRows = Integer.parseInt(Objects.requireNonNull(binding.autoTvCount.getText()).toString());
             countOfExamples = sharedPreferences.getInt(Constants.COUNT_OF_EXAMPLES_MENTAL,5);
             Log.d("TAG",countOfExamples+"");
             binding.sliderExampleCount.setValue(countOfExamples);
@@ -120,6 +122,7 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
 
     private void init(View v) {
 
+        Constants.createSound(requireActivity(),R.raw.btn_click);
 
         binding.btnStart.setOnClickListener(this);
         binding.btnMinus.setOnClickListener(this);
@@ -146,11 +149,13 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             }
             speed = (int) (Float.parseFloat(s) * 1000);
             speedPosition = position;
+            Constants.makeSoundEffect();
         });
 
         binding.autoTvDigits.setOnItemClickListener((parent, view, position, id) -> {
             digit = Integer.parseInt(digitsArrayStrings[position]);
             digitPosition = position;
+            Constants.makeSoundEffect();
         });
 
         binding.autoTvTopic.setOnItemClickListener((parent, view, position, id) -> {
@@ -162,15 +167,18 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             }else{
                 binding.tvLaySubTopic.setVisibility(View.VISIBLE);
             }
+            Constants.makeSoundEffect();
         });
 
         binding.autoTvSubTopic.setOnItemClickListener((adapterView, view, i, l) -> {
             subtopicLevel = i;
+            Constants.makeSoundEffect();
         });
 
         binding.sliderExampleCount.addOnChangeListener((slider, value, fromUser) -> {
             countOfExamples = (int) value;
             binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ countOfExamples);
+            Constants.makeSoundEffect();
         });
 
     }
@@ -181,6 +189,7 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
         int temp;
 
         if (binding.btnStart.equals(view)) {
+            Constants.createSound(requireActivity(),R.raw.right);
             if (topicLevel>1){
                 Log.d("taguhi",""+subtopicLevel);
                 Navigation.findNavController(view).navigate(R.id.action_mentalCountingSettingsFragment_to_mentalCountingPartWorkingPageFragment);
@@ -202,6 +211,7 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
                 Constants.myEditShared.commit();
                 Navigation.findNavController(view).navigate(R.id.action_mentalCountingSettingsFragment_to_showMentalCountFragment, bundle);
             }else{
+                Constants.createSound(requireActivity(),R.raw.wrong);
                 Constants.createToast(getContext(), R.string.select_all_necessary_fields);
             }
         } else if (binding.btnPlus.equals(view)) {
@@ -219,6 +229,7 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
                 binding.autoTvCount.setText(Integer.toString(temp));
             }
         }
+        Constants.makeSoundEffect();
     }
 
     @Override

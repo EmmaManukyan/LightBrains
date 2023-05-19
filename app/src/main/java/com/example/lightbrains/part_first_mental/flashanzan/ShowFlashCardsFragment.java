@@ -389,6 +389,6 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                 isFirstTime = false;
             }
         }
-        Constants.mediaPlayer.start();
+        Constants.makeSoundEffect();
     }
 }

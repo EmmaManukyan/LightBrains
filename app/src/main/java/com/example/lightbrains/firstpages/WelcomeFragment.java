@@ -80,7 +80,7 @@ public class WelcomeFragment extends Fragment {
             }
             if (Constants.sharedPreferences.getBoolean(Constants.SOUND_EFFECTS, true)) {
                 Constants.createSound(requireActivity(), R.raw.sound_first_pages);
-                Constants.mediaPlayer.start();
+                Constants.makeSoundEffect();
             }
         });
     }

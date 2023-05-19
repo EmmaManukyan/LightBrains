@@ -119,13 +119,13 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
             }
             speed = (int) (Float.parseFloat(s) * 1000);
             speedPosition = position;
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
         });
 
         binding.autoTvDigits.setOnItemClickListener((parent, view, position, id) -> {
             digit = Integer.parseInt(digitsArrayStrings[position]);
             digitPosition = position;
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
         });
 
     }
@@ -164,7 +164,7 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
             }
         }
 
-        Constants.mediaPlayer.start();
+        Constants.makeSoundEffect();
     }
 
     @Override

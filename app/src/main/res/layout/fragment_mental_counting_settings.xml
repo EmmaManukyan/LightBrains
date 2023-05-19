@@ -17,7 +17,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_lay_topic"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/MyStyleForTextInputLayoutSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/topic"
@@ -36,7 +36,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_lay_subTopic"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/MyStyleForTextInputLayoutSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -66,7 +66,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_lay_speed"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/MyStyleForTextInputLayoutSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -86,7 +86,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_lay_digits"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/MyStyleForTextInputLayoutSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -121,6 +121,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/pink_dark"
+                    android:soundEffectsEnabled="true"
                     android:text="-"
                     android:textSize="24sp" />
 
@@ -151,6 +152,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/pink_dark"
+                    android:soundEffectsEnabled="true"
                     android:text="+"
                     android:textSize="24sp" />
 
@@ -176,6 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:progressTint="@color/green"
+                android:soundEffectsEnabled="true"
                 android:stepSize="5"
                 android:thumbTint="@color/pink_dark"
                 android:valueFrom="5"
@@ -199,6 +202,7 @@
                 android:padding="16dp"
                 android:paddingStart="0dp"
                 android:scaleType="fitStart"
+                android:soundEffectsEnabled="true"
                 android:src="@drawable/lets_start_flash_cards"
                 app:layout_constraintTop_toBottomOf="@id/slider_example_count" />
 

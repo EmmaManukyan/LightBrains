@@ -51,7 +51,7 @@ public class ForgotFragment extends Fragment {
                 Constants.createSound(requireActivity(),R.raw.wrong);
                 Constants.createToast(getContext(), R.string.enter_email);
             }
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
         });
     }
 

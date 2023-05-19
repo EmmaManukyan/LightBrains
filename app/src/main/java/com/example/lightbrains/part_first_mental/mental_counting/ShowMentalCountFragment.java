@@ -276,9 +276,11 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                 isFirstTime = false;
             }
         }
+        Constants.makeSoundEffect();
     }
 
     private void answerIsRight() {
+        Constants.createSound(requireActivity(),R.raw.right);
         scores++;
         binding.imgSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setVisibility(View.VISIBLE);
@@ -293,11 +295,13 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
         YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.tvWithSmile);
     }
 
-    private void answerIsWrong(String wrogAnsw, String result) {
+    private void answerIsWrong(String wrongAnsw, String result) {
+        Constants.createSound(requireActivity(),R.raw.wrong);
+
         binding.tvWithSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
 
-        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n\n" + wrogAnsw + " ≠ " + result + "\n\n");
+        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n\n" + wrongAnsw + " ≠ " + result + "\n\n");
 
         binding.tvWithSmile.setTextSize(32);
         YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvWithSmile);

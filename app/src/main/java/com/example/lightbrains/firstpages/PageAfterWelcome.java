@@ -37,7 +37,7 @@ public class PageAfterWelcome extends Fragment {
 
         binding.btnStart.setOnClickListener(view -> {
             Constants.createSound(requireActivity(),R.raw.sound_first_pages);
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
             Navigation.findNavController(view).navigate(R.id.action_pageAfterWelcome_to_signInFragment);
         });
         return binding.getRoot();
@@ -61,7 +61,7 @@ public class PageAfterWelcome extends Fragment {
         binding.autoTvLanguages.setOnItemClickListener((adapterView, view1, position, l) -> {
 
             Constants.createSound(requireActivity(),R.raw.sound_first_pages);
-            Constants.mediaPlayer.start();
+            Constants.makeSoundEffect();
 
             CHECKED_LANGUAGE = position;
             Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);

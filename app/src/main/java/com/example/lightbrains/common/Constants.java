@@ -66,7 +66,7 @@ public class Constants {
     public static SharedPreferences sharedPreferences = null;
     public static SharedPreferences.Editor myEditShared = null;
 
-    public static MediaPlayer mediaPlayer = null;
+    private static MediaPlayer mediaPlayer = null;
 
     public static void createSound(Activity activity,int resId){
         mediaPlayer = MediaPlayer.create(activity,resId);
@@ -84,6 +84,12 @@ public class Constants {
         if (sharedPreferences == null) {
             sharedPreferences = activity.getSharedPreferences("MySharedPref", MODE_PRIVATE);
             myEditShared = sharedPreferences.edit();
+        }
+    }
+
+    public static void makeSoundEffect(){
+        if (sharedPreferences.getBoolean(SOUND_EFFECTS,true)){
+            mediaPlayer.start();
         }
     }
 
