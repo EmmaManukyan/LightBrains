@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:background="@color/blue"
         android:padding="8dp"
-        android:id="@+id/const_lay_recycler">
+        android:id="@+id/const_lay_recycler"
+        android:soundEffectsEnabled="true">
 
         <ImageView
             android:id="@+id/img_label_recycler_item"

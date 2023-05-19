@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,9 +31,9 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     private int figuresGroupCount = 0;
     private float showTime = 0.3f;
 
-    Bundle bundle;
+    private Bundle bundle;
 
-    FragmentAttentionGameSettingsBinding binding;
+    private FragmentAttentionGameSettingsBinding binding;
 
     private String[] complexityArrayStrings;
     private ArrayAdapter arrayAdapter;
@@ -42,7 +43,6 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAttentionGameSettingsBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -53,27 +53,33 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
 
 
         binding.checkboxInfo.setOnClickListener(view1 -> {
+            Constants.createSound(requireActivity(), R.raw.guest_sound);
             if (!binding.checkboxInfo.isChecked()) {
                 binding.checkboxInfo.setChecked(true);
                 binding.tvInfo.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.BounceInDown).duration(500).playOn(binding.tvInfo);
+                Constants.makeSoundEffect();
+                Constants.createSound(requireActivity(), R.raw.btn_click);
+
             } else {
                 binding.checkboxInfo.setChecked(false);
                 binding.tvInfo.setVisibility(View.GONE);
             }
         });
         binding.btnLetsGo.setOnClickListener(view12 -> {
+            Constants.createSound(requireActivity(), R.raw.right);
             if (binding.checkBoxDefineMyslf.isChecked()) {
                 if (figuresType != -1 && figuresLevel != -1) {
                     putBundlesWithoutComplexity();
                     AttentionGameValues.setStartTime(System.currentTimeMillis());
                     Navigation.findNavController(view12).navigate(R.id.action_attentionGameSettingsFragment_to_attentionGameShowFiguresFragment, bundle);
+                    Constants.makeSoundEffect();
 
                 } else {
-
                     Constants.createToast(getContext(), R.string.select_all_necessary_fields);
                 }
             } else {
+                Constants.makeSoundEffect();
                 putBundlesWithComplexity();
                 // bundle.putLong(Constants.FIGURES_SHOW_START_TIME, System.currentTimeMillis());
                 AttentionGameValues.setStartTime(System.currentTimeMillis());
@@ -92,12 +98,14 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
                 binding.includedLayoutContainer.setVisibility(View.GONE);
                 binding.tvLayComplexity.setEnabled(true);
             }
+            Constants.makeSoundEffect();
         });
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
+        Constants.createSound(requireActivity(), R.raw.btn_click);
         int temp;
 
         if (binding.btnPlus.equals(view)) {
@@ -113,6 +121,7 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
                 binding.autoTvCountOfFigureGroups.setText(Integer.toString(temp));
             }
         }
+        Constants.makeSoundEffect();
     }
 
     private void init() {
@@ -126,25 +135,35 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
 
         binding.autoTvComplexity.setOnItemClickListener((adapterView, view, i, l) -> {
             complexityLevel = i;
+            Constants.makeSoundEffect();
         });
 
 
         binding.includedLayout.autoTvFigures.setOnItemClickListener((adapterView, view, i, l) -> {
             figuresType = i;
+            Constants.makeSoundEffect();
         });
 
-        binding.includedLayout.autoTvFiguresLevel.setOnItemClickListener((adapterView, view, i, l) -> figuresLevel = i);
+        binding.includedLayout.autoTvFiguresLevel.setOnItemClickListener((adapterView, view, i, l) -> {
+                    figuresLevel = i;
+                    Constants.makeSoundEffect();
+                }
+        );
 
         binding.includedLayout.sliderTime.addOnChangeListener((slider, value, fromUser) -> {
             float time = (float) value / 10;
             showTime = time;
             binding.includedLayout.tvTime.setText(getResources().getString(R.string.time) + ": " + time);
+            Constants.makeSoundEffect();
+
         });
 
 
         binding.includedLayout.sliderFigureCount.addOnChangeListener((slider, value, fromUser) -> {
             figuresCount = (int) value;
             binding.includedLayout.tvFigureCount.setText(getResources().getString(R.string.number_of_following_figures) + " " + figuresCount);
+            Constants.makeSoundEffect();
+
         });
     }
 

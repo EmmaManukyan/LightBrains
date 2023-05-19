@@ -48,6 +48,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Constants.createSound(requireActivity(),R.raw.right);
         Bundle bundle = getArguments();
         assert bundle != null;
         //figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
@@ -147,7 +148,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     private void showRightAnimation() {
         new Thread(() -> {
             requireActivity().runOnUiThread(() -> {
-
+                Constants.makeSoundEffect();
                 AttentionGameActivity.binding.tvExcellent.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.BounceInUp).duration(800).playOn(AttentionGameActivity.binding.tvExcellent);
               //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();

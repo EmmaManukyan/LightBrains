@@ -63,7 +63,6 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             threadToShowFigures.start();
         }
         binding.btnStart.setOnClickListener(view1 -> {
-
             if (!binding.btnStart.getText().equals(getResources().getString(R.string.finish))) {
                 if (!runningThread) {
                     runningThread = true;
@@ -72,6 +71,8 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
                     runningThread = false;
                     binding.btnStart.setText(getResources().getString(R.string.restart));
                 }
+                Constants.makeSoundEffect();
+
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constants.HASHMAP_BUNDLE, showedMap);
@@ -91,6 +92,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
     private void init() {
         getArgs();
+        Constants.createSound(requireActivity(),R.raw.btn_click);
         threadToShowFigures = new ThreadToShowFigures(FigureListCreator.createMapOfFigures(figuresType, figuresLevel, figuresCount));
 
     }

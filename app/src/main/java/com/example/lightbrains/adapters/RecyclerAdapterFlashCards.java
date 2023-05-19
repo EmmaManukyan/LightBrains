@@ -1,6 +1,7 @@
 package com.example.lightbrains.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lightbrains.R;
+import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.part_first_mental.flashanzan.RecyclerViewItem;
 
 import java.util.List;
@@ -22,22 +24,24 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
 
     private final List<RecyclerViewItem> recyclerItemsList;
     private Context context;
+    private Activity activity;
 
 
     private final OnItemClickListener listener;
 
-    public RecyclerAdapterFlashCards(List<RecyclerViewItem> recyclerItem, Context context,OnItemClickListener listener) {
+    public RecyclerAdapterFlashCards(List<RecyclerViewItem> recyclerItem, Context context, OnItemClickListener listener, Activity activity) {
         this.recyclerItemsList = recyclerItem;
         this.context = context;
         this.listener = listener;
+        this.activity = activity;
     }
 
     @NonNull
     @Override
     public RecyclerAdapterFlashCards.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        LayoutInflater inflater =LayoutInflater.from(context);
-        View recItemView =inflater.inflate(R.layout.recycler_item_layout,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View recItemView = inflater.inflate(R.layout.recycler_item_layout, parent, false);
         return new MyViewHolder(recItemView);
     }
 
@@ -47,11 +51,10 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
         holder.getTvTitleName().setText(recyclerItemsList.get(position).getTitleName());
         holder.getImgLabel().setImageDrawable(res.getDrawable(recyclerItemsList.get(position).getImageResource()));
         holder.getConstLayInRecycler().setBackgroundColor(res.getColor(recyclerItemsList.get(position).getColorResource()));
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(recyclerItemsList.get(position), position);
-            }
+        holder.view.setOnClickListener(view -> {
+            listener.onItemClick(recyclerItemsList.get(position), position);
+            Constants.createSound(activity,R.raw.btn_click);
+            Constants.makeSoundEffect();
         });
     }
 

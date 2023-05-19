@@ -46,13 +46,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private boolean useInternetPermission;
 
+    private boolean checkFuncIsOn = false;
+
 
     @Override
     protected void onStart() {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         int CHECKED_LANGUAGE = sh.getInt(Constants.CHECKED_LANGUAGE, 0);
         setLocal(HomeActivity.this, languageLogs[CHECKED_LANGUAGE]);
-
         super.onStart();
     }
 
@@ -138,6 +139,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Constants.createSharedPreferences(HomeActivity.this);
+        ConstantsForFireBase.createFireBaseInstances();
         useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
 
         if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
@@ -213,6 +215,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void checkIfUserIsNotSignedIn() {
+        checkFuncIsOn = true;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         FirebaseUser curUser = mAuth.getCurrentUser();
 
@@ -220,7 +223,7 @@ public class HomeActivity extends AppCompatActivity {
         ref.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(HomeActivity.this, "Data changed ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this, "Data changed ", Toast.LENGTH_SHORT).show();
 
                 String curToken = snapshot.getValue(String.class);
                 assert curToken != null;

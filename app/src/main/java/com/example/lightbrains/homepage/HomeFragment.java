@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.adapters.RecyclerAdapterFlashCards;
+import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.part_first_mental.flashanzan.FLashActivity;
 import com.example.lightbrains.part_first_mental.flashanzan.RecyclerViewItem;
 import com.example.lightbrains.part_first_mental.mental_counting.MentalCountingActivity;
@@ -48,10 +49,16 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
         init(view);
-        viewMental.setOnClickListener(view12 -> openBottomSheet(0));
+        viewMental.setOnClickListener(view12 -> {
+            openBottomSheet(0);
+            Constants.makeSoundEffect();
+        });
 
 
-        viewMemoryGames.setOnClickListener(view1 -> openBottomSheet(1));
+        viewMemoryGames.setOnClickListener(view1 -> {
+            openBottomSheet(1);
+            Constants.makeSoundEffect();
+        });
     }
 
 
@@ -60,11 +67,10 @@ public class HomeFragment extends Fragment {
         viewMemoryGames = view.findViewById(R.id.view_memory_games);
 
         titles = new String[]{getResources().getString(R.string.let_s_count_together), getResources().getString(R.string.how_is_your_memory)};
-
+        Constants.createSound(requireActivity(),R.raw.btn_click);
     }
 
     private void openBottomSheet(int viewOrder) {
-
 
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.MyStyleForBottomSheetDialog1);
@@ -105,7 +111,7 @@ public class HomeFragment extends Fragment {
             bottomSheetDialog.dismiss();
             Toast.makeText(getContext(), "" + item.getTitleName(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
-        });
+        },requireActivity());
 
         recyclerView.setAdapter(adapter);
     }

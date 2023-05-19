@@ -40,6 +40,7 @@ public class SettingsFragment extends Fragment {
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
         init();
         binding.autoTvLanguages.setOnItemClickListener((adapterView, view1, position, l) -> {
+            Constants.makeSoundEffect();
             if (CHECKED_LANGUAGE != position) {
                 CHECKED_LANGUAGE = position;
                 Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
@@ -50,11 +51,14 @@ public class SettingsFragment extends Fragment {
         });
 
         binding.internetSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Constants.makeSoundEffect();
             Constants.myEditShared.putBoolean(Constants.USE_INTERNET, isChecked);
             Constants.myEditShared.commit();
+
         });
 
         binding.soundsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Constants.makeSoundEffect();
             Constants.myEditShared.putBoolean(Constants.SOUND_EFFECTS, isChecked);
             Constants.myEditShared.commit();
         });
@@ -67,6 +71,7 @@ public class SettingsFragment extends Fragment {
         Constants.createSharedPreferences(requireActivity());
         binding.internetSwitch.setChecked(sharedPreferences.getBoolean(Constants.USE_INTERNET,true));
         binding.soundsSwitch.setChecked(sharedPreferences.getBoolean(Constants.SOUND_EFFECTS,true));
+        Constants.createSound(requireActivity(),R.raw.sound_first_pages);
     }
 
     private void setLanguages() {

@@ -8,7 +8,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tv_lay_figures"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/MyStyleForTextInputLayoutSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/figures"
@@ -26,7 +26,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tv_lay_figures_count"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/MyStyleForTextInputLayoutSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -68,7 +68,8 @@
         app:labelBehavior="gone"
         app:thumbColor="@color/green_dark"
         app:tickColor="@color/green_dark"
-        app:trackColor="@color/green" />
+        app:trackColor="@color/green"
+        android:soundEffectsEnabled="true"/>
 
 
     <TextView
@@ -95,7 +96,8 @@
         app:labelBehavior="gone"
         app:thumbColor="@color/green_dark"
         app:tickColor="@color/green_dark"
-        app:trackColor="@color/green" />
+        app:trackColor="@color/green"
+        android:soundEffectsEnabled="true"/>
 
 
 </LinearLayout>

@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:soundEffectsEnabled="true"
         android:textAlignment="center"
         android:thumbTint="@color/switch_thumb_selector"
         android:trackTint="@color/switch_track_selector"
@@ -54,7 +55,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tv_lay_languages"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/MyStyleForTextInputLayoutSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -83,29 +84,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:checked="true"
+        android:soundEffectsEnabled="true"
         android:textAlignment="center"
         android:thumbTint="@color/switch_thumb_selector"
         android:trackTint="@color/switch_track_selector"
         app:layout_constraintStart_toStartOf="@id/tv_settings"
         app:layout_constraintTop_toBottomOf="@id/sounds_switch"
-        tools:ignore="UseSwitchCompatOrMaterialXml"
-        android:checked="true"
-        />
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <TextView
         android:id="@+id/tv_switch_internet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/use_internet_to_be_always_online"
         android:textColor="@color/color_secondary_variant"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/internet_switch"
-        app:layout_constraintStart_toEndOf="@id/internet_switch"
-        app:layout_constraintTop_toTopOf="@id/internet_switch"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
-        />
+        app:layout_constraintStart_toEndOf="@id/internet_switch"
+        app:layout_constraintTop_toTopOf="@id/internet_switch" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

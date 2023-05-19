@@ -50,12 +50,12 @@ public class ShowResultsFragment extends Fragment {
         int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
         time = (double) requireArguments().getLong(Constants.FIGURES_SHOW_TIME) / 60000;
         scores = requireArguments().getInt(Constants.SCORES, -1);
-        Log.d("taguhi", time + "");
+        Log.d("taguhi", rightAnswers + "");
 
         time = (float) (Math.round(time * 100.0) / 100.0);
         String tempTime = String.valueOf(time);
         timeToShow = tempTime.substring(0, 4);
-        Log.d("taguhi", timeToShow + "");
+        Log.d("taguhi", count + "");
 
 
         float percent = (rightAnswers * 100) / (float) count;
