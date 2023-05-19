@@ -25,7 +25,7 @@ import java.util.List;
 public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAdapterLeaderBoard.MyViewHolder> {
     private final Context context;
     private final List<User> users;
-    private int colors[] = new int[]{R.color.blue, R.color.green, R.color.yellow, R.color.orange, R.color.red_light, R.color.pink};
+    private int colors[] = new int[]{R.color.blue_leader_board, R.color.green, R.color.yellow, R.color.orange, R.color.red_light, R.color.pink};
     public RecyclerAdapterLeaderBoard(Context context, List<User> users) {
         this.context = context;
         this.users = users;
