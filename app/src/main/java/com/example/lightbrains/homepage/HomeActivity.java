@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
     }
 
+
     public void setLocal(Activity activity, String langCode) {
         Locale locale = new Locale(langCode);
         locale.setDefault(locale);
@@ -83,22 +84,6 @@ public class HomeActivity extends AppCompatActivity {
             transaction.setCustomAnimations(R.anim.enter_anim_slide_in, R.anim.enter_anim_from_right).replace(R.id.fr_container, fragment).addToBackStack(null).commit();
             binding.myBottomNav.setSelectedItemId(R.id.menu_profile);
         });
-
-
-        Constants.createSharedPreferences(HomeActivity.this);
-        useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
-
-        if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
-//         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
-            getDataFromDB();
-        } else {
-//            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
-            if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
-                checkIfUserIsNotSignedIn();
-            }
-            binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
-            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
-        }
 
 
         binding.myBottomNav.setOnItemSelectedListener(item -> {
@@ -152,6 +137,20 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Constants.createSharedPreferences(HomeActivity.this);
+        useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
+
+        if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
+//         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
+            getDataFromDB();
+        } else {
+//            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
+            if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
+                checkIfUserIsNotSignedIn();
+            }
+            binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
+            Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
+        }
         //getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
         //binding.myBottomNav.setSelectedItemId(R.id.menu_home);
     }
@@ -173,7 +172,7 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             binding.imgProfile.setVisibility(View.GONE);
             binding.tvProfileName.setVisibility(View.INVISIBLE);
-            binding.tvScores.setText(String.valueOf(Constants.sharedPreferences.getInt(Constants.SCORES,-1000)));
+            binding.tvScores.setText(String.valueOf(Constants.sharedPreferences.getInt(Constants.SCORES, -1000)));
             binding.tvScores.setVisibility(View.VISIBLE);
             binding.tvBeforeScores.setVisibility(View.VISIBLE);
         }
@@ -221,6 +220,8 @@ public class HomeActivity extends AppCompatActivity {
         ref.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(HomeActivity.this, "Data changed ", Toast.LENGTH_SHORT).show();
+
                 String curToken = snapshot.getValue(String.class);
                 assert curToken != null;
                 useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
@@ -228,7 +229,7 @@ public class HomeActivity extends AppCompatActivity {
                     if (curToken.equals(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN)) || mAuth.getCurrentUser().getEmail().equals(ConstantsForFireBase.GUEST_EMAIL)) {
                         Toast.makeText(HomeActivity.this, "It's me", Toast.LENGTH_SHORT).show();
                     } else {
-                        Constants.createToast(HomeActivity.this,R.string.sign_in_from_other_device);
+                        Constants.createToast(HomeActivity.this, R.string.sign_in_from_other_device);
 //                    ProfileFragment.saveUser(false);
                         Constants.myEditShared.clear();
                         Log.d("dilijan", "cleared");

@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
@@ -56,6 +57,7 @@ public class Constants {
     public static final String RIGHT = "right";
     public static final String WRONG = "wrong";
     public static final String USE_INTERNET = "useInternet";
+    public static final String SOUND_EFFECTS = "soundEffects";
 
     public static final String[] languageLogs = {"ru","hy","en"};
 
@@ -63,6 +65,12 @@ public class Constants {
 
     public static SharedPreferences sharedPreferences = null;
     public static SharedPreferences.Editor myEditShared = null;
+
+    public static MediaPlayer mediaPlayer = null;
+
+    public static void createSound(Activity activity,int resId){
+        mediaPlayer = MediaPlayer.create(activity,resId);
+    }
 
 
     public static int[] rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_heart_eyes_smile};

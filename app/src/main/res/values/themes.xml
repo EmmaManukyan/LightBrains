@@ -116,6 +116,28 @@
         <item name="android:colorAccent">@color/color_secondary_variant</item>
     </style>
 
+    <style name="MyStyleForFirstPageButtons" parent="ShapeAppearanceOverlay.Material3.Button">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/color_secondary_variant</item>
+        <item name="android:fontFamily">@font/my_font</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:soundEffectsEnabled">true</item>
+    </style>
+
+
+    <style name="MyStyleForSettingsButtons" parent="ShapeAppearanceOverlay.Material3.Button">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/color_secondary_variant</item>
+        <item name="android:fontFamily">@font/my_font</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+    </style>
+
 
 
 

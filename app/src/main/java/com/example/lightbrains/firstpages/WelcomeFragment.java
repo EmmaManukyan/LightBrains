@@ -33,7 +33,7 @@ public class WelcomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_welcome,container,false);
+        return inflater.inflate(R.layout.fragment_welcome, container, false);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class WelcomeFragment extends Fragment {
         ConstantsForFireBase.createFireBaseInstances();
 
 
-        if (sh.getBoolean(Constants.IS_LOGIN,false)){
-            new Thread(){
+        if (sh.getBoolean(Constants.IS_LOGIN, false)) {
+            new Thread() {
                 @Override
                 public void run() {
                     try {
@@ -59,28 +59,28 @@ public class WelcomeFragment extends Fragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Log.d("hhh",currentThread().getName());
+                    Log.d("hhh", currentThread().getName());
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);
-                    getActivity().finish();
+                    requireActivity().finish();
 
                 }
             }.start();
-        }else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
-                if (sh.getBoolean(Constants.IS_LOGIN,false)){
-                    Intent intent = new Intent(getActivity(), HomeActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    Navigation.findNavController(view).navigate(R.id.action_welcomeFragment_to_firstPageFragments);
+        btnNext.setOnClickListener(view1 -> {
 
-                }
+            Constants.createSharedPreferences(requireActivity());
+            if (Constants.sharedPreferences.getBoolean(Constants.IS_LOGIN, false)) {
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                startActivity(intent);
+            } else {
+                Navigation.findNavController(view1).navigate(R.id.action_welcomeFragment_to_firstPageFragments);
+            }
+            if (Constants.sharedPreferences.getBoolean(Constants.SOUND_EFFECTS, true)) {
+                Constants.createSound(requireActivity(), R.raw.sound_first_pages);
+                Constants.mediaPlayer.start();
             }
         });
     }

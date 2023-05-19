@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".firstpages.SignInFragment"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    tools:context=".firstpages.SignInFragment">
 
     <TextView
         android:id="@+id/tv_welcome"
@@ -20,11 +20,11 @@
         layout="@layout/sign_up_edittexts_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@id/my_guide_line_for_title_image_home"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <ImageView
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_marginTop="16dp"
+        android:soundEffectsEnabled="true"
         android:src="@mipmap/btn_signup" />
 
 

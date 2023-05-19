@@ -92,6 +92,9 @@ public class SignUpFragment extends Fragment {
 
 
         binding.imgBtnSignup.setOnClickListener(view1 -> {
+            Constants.createSound(requireActivity(),R.raw.wrong);
+
+
             binding.includedLayout.tvLayName.setErrorEnabled(false);
             binding.includedLayout.tvLayMail.setErrorEnabled(false);
             binding.includedLayout.tvLayPassword.setErrorEnabled(false);
@@ -113,6 +116,8 @@ public class SignUpFragment extends Fragment {
             } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
+                Constants.createSound(requireActivity(),R.raw.sound_first_pages);
+
                 String email = binding.includedLayout.edtMail.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
                 ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.registration), requireContext());
@@ -146,6 +151,7 @@ public class SignUpFragment extends Fragment {
 
 
             }
+            Constants.mediaPlayer.start();
         });
     }
 

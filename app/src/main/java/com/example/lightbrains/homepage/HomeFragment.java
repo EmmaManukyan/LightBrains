@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     private void init(View view) {
         viewMental = view.findViewById(R.id.view_mental);
         viewMemoryGames = view.findViewById(R.id.view_memory_games);
@@ -65,6 +64,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void openBottomSheet(int viewOrder) {
+
+
+
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.MyStyleForBottomSheetDialog1);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
         bottomSheetDialog.show();

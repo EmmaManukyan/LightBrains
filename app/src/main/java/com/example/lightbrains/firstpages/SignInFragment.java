@@ -47,9 +47,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
         init();
         binding.imgGuest.setOnClickListener(v -> {
+            Constants.createSound(requireActivity(), R.raw.guest_sound);
+
             binding.tvGuestInfo.setVisibility(!guestOpened ? View.VISIBLE : View.GONE);
             YoYo.with(!guestOpened ? Techniques.SlideInRight : Techniques.SlideOutRight).duration(500).playOn(binding.tvGuestInfo);
             guestOpened = !guestOpened;
+            if (guestOpened) Constants.mediaPlayer.start();
         });
         return binding.getRoot();
     }
@@ -59,8 +62,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         btnIsClicked = true;
         if (binding.btnNewUser.equals(view)) {
+            Constants.createSound(requireActivity(), R.raw.sound_first_pages);
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_signUpFragment);
         } else if (binding.btnSignIn.equals(view)) {
+
+            Constants.createSound(requireActivity(), R.raw.wrong);
+
+
             binding.tvLayMail.setErrorEnabled(false);
             binding.tvLayPassword.setErrorEnabled(false);
             if (Objects.requireNonNull(binding.edtMail.getText()).toString().equals("")) {
@@ -71,6 +79,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
+                Constants.createSound(requireActivity(), R.raw.sound_first_pages);
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
                 progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
@@ -145,8 +154,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
             }
         } else if (binding.tvForgotPassword.equals(view)) {
+            Constants.createSound(requireActivity(), R.raw.spinner_sound);
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_forgotFragment);
         }
+        Constants.mediaPlayer.start();
     }
 
     @SuppressLint("SetTextI18n")

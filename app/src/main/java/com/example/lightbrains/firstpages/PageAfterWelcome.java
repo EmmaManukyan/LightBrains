@@ -14,11 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
@@ -39,11 +35,10 @@ public class PageAfterWelcome extends Fragment {
         binding = FragmentPageAfterWelcomeBinding.inflate(inflater, container, false);
         init();
 
-        binding.btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_pageAfterWelcome_to_signInFragment);
-            }
+        binding.btnStart.setOnClickListener(view -> {
+            Constants.createSound(requireActivity(),R.raw.sound_first_pages);
+            Constants.mediaPlayer.start();
+            Navigation.findNavController(view).navigate(R.id.action_pageAfterWelcome_to_signInFragment);
         });
         return binding.getRoot();
     }
@@ -64,6 +59,10 @@ public class PageAfterWelcome extends Fragment {
 
 
         binding.autoTvLanguages.setOnItemClickListener((adapterView, view1, position, l) -> {
+
+            Constants.createSound(requireActivity(),R.raw.spinner_sound);
+            Constants.mediaPlayer.start();
+
             CHECKED_LANGUAGE = position;
             Constants.myEditShared.putInt(Constants.CHECKED_LANGUAGE, CHECKED_LANGUAGE);
             getActivity().finish();

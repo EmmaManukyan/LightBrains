@@ -53,6 +53,11 @@ public class SettingsFragment extends Fragment {
             Constants.myEditShared.putBoolean(Constants.USE_INTERNET, isChecked);
             Constants.myEditShared.commit();
         });
+
+        binding.soundsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Constants.myEditShared.putBoolean(Constants.SOUND_EFFECTS, isChecked);
+            Constants.myEditShared.commit();
+        });
     }
 
     private void init() {
