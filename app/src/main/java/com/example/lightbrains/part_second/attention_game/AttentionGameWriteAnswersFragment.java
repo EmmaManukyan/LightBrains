@@ -81,6 +81,11 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                         AttentionGameValues.setRightAnswers(Boolean.TRUE.equals(adapter.getAnswersMap().get(key)) ? AttentionGameValues.getRightAnswers() + 1 : AttentionGameValues.getRightAnswers());
                     }
                 }
+
+                if (!adapter.getAnswersMap().containsValue(true)){
+                    Constants.createSound(requireActivity(),R.raw.wrong);
+                    Constants.makeSoundEffect();
+                }
                 Log.d("attgame", "" + showedMap.size() + "");
                 AttentionGameValues.setCount(AttentionGameValues.getCount() + showedMap.size());
                 if (figuresGroupCount != 0) {
@@ -141,7 +146,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     }
 
     private int getHighScore() {
-        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 4 + AttentionGameValues.getFiguresCount() - 3);
+        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3);
         Log.d("attgame", "scores  " + scores);
         return scores;
     }

@@ -125,6 +125,8 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
     }
 
     private void init() {
+        AttentionGameValues.setCount(0);
+        Constants.createSound(requireActivity(),R.raw.btn_click);
         bundle = new Bundle();
 
         binding.btnPlus.setOnClickListener(this);

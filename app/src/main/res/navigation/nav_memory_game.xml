@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_memory_game"
+    app:startDestination="@id/memoryGameSettingsFragment">
+
+    <fragment
+        android:id="@+id/memoryGameSettingsFragment"
+        android:name="com.example.lightbrains.part_second.memory_game.MemoryGameSettingsFragment"
+        android:label="fragment_memory_game_settings"
+        tools:layout="@layout/fragment_memory_game_settings" >
+        <action
+            android:id="@+id/action_memoryGameSettingsFragment_to_memoryGameShowCardsFragment"
+            app:destination="@id/memoryGameShowCardsFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/memoryGameShowCardsFragment"
+        android:name="com.example.lightbrains.part_second.memory_game.MemoryGameShowCardsFragment"
+        android:label="fragment_memory_game_show_cards"
+        tools:layout="@layout/fragment_memory_game_show_cards" />
+</navigation>

@@ -177,6 +177,7 @@ public class HomeActivity extends AppCompatActivity {
             binding.tvScores.setText(String.valueOf(Constants.sharedPreferences.getInt(Constants.SCORES, -1000)));
             binding.tvScores.setVisibility(View.VISIBLE);
             binding.tvBeforeScores.setVisibility(View.VISIBLE);
+            binding.tvBeforeScores.setText(getResources().getString(R.string.scores2));
         }
     }
 

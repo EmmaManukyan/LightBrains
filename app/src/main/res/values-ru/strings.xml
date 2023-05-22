@@ -117,7 +117,7 @@
     <string name="enter_password_to_make_changes">Введите пароль для внесения изменений</string>
     <string name="cancel">Отмена</string>
     <string name="delete_account">Удалить аккаунт</string>
-    <string name="we_are_still_working_on_this_part">Мы еще работаем над этой часть...!</string>
+    <string name="we_are_still_working_on_this_part">Мы еще работаем над этой частью...!</string>
     <string name="wait_a_little">Подождите немного...</string>
     <string name="results">Результаты</string>
     <string name="go_back_main_page">Вернуться на главную страницу</string>
@@ -127,7 +127,7 @@
     <string name="guest">Гость</string>
     <string name="tv_guest_info">Используйте следующие данные для входа в приложение \n\n</string>
     <string name="top_10_leaders">Топ 10 лидеров</string>
-    <string name="use_internet_to_be_always_online">Использовать интернет, чтобы всегда быть онлайн</string>
+    <string name="use_internet_to_be_always_online">Использовать интернет</string>
     <string name="sign_in_from_other_device">Вход с другого устройства</string>
 
 

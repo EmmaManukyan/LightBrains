@@ -18,6 +18,7 @@
         android:text="@string/top_10_leaders"
         android:textColor="@color/color_primary_variant"
         android:textSize="32sp"
+        android:background="@drawable/background_leader_board"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@id/rec_leader_board"
         app:layout_constraintEnd_toEndOf="@id/rec_leader_board"

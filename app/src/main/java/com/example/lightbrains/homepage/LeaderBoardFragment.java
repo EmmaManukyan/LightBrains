@@ -80,7 +80,7 @@ public class LeaderBoardFragment extends Fragment {
         @Override
         protected List<User> doInBackground(Void... voids) {
             saveUserScores();
-            binding.tvLeaderBoard.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_leader_board));
+//            binding.tvLeaderBoard.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_leader_board));
             return getDataFromDB();
         }
 

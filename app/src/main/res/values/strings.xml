@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">LightBrains</string>
-<!--    firstPages-->
+    <!--    firstPages-->
     <string name="start">Start</string>
     <string name="sign_in">Sign in</string>
     <string name="continue_in_armenian">Continue in Armenian</string>
@@ -41,7 +41,6 @@
     <string name="tv_guest_info">Use the following details to login to the app \n\n</string>
     <string name="user_is_already_signed_in">The user is already signed in</string>
     <string name="sign_in_from_other_device">Sign in from other device</string>
-
 
 
     <string name="let_s_count_together">Let\'s count together!</string>
@@ -125,7 +124,7 @@
     <string name="sounds_on_off">Sound effects</string>
     <string name="guest">Guest</string>
     <string name="top_10_leaders">Top 10 leaders</string>
-    <string name="use_internet_to_be_always_online">Use internet to be always online</string>
+    <string name="use_internet_to_be_always_online">Use internet</string>
 
 
     <string-array name="string_languages_array">
