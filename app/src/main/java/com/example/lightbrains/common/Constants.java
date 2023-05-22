@@ -59,7 +59,14 @@ public class Constants {
     public static final String USE_INTERNET = "useInternet";
     public static final String SOUND_EFFECTS = "soundEffects";
 
+
+    public static final String DEFAULT_CONTENT_DESCRIPTION = "default";
+    public static final String CONTENT_DESCRIPTION_CLICKED = "clicked";
+    public static final int FLIP_CARD_ANIM_DURATION = 300;
+    public static final int YOYO_ANIM_DURATION = 1000;
+
     public static final String[] languageLogs = {"ru","hy","en"};
+
 
 
 

@@ -24,6 +24,7 @@ import com.example.lightbrains.part_first_mental.flashanzan.FLashActivity;
 import com.example.lightbrains.part_first_mental.flashanzan.RecyclerViewItem;
 import com.example.lightbrains.part_first_mental.mental_counting.MentalCountingActivity;
 import com.example.lightbrains.part_second.attention_game.AttentionGameActivity;
+import com.example.lightbrains.part_second.memory_game.MemoryGameActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class HomeFragment extends Fragment {
                         intent = new Intent(getActivity(), AttentionGameActivity.class);
                         break;
                     case 1:
-                        intent = new Intent(getActivity(), FLashActivity.class);
+                        intent = new Intent(getActivity(), MemoryGameActivity.class);
                         break;
                 }
             }

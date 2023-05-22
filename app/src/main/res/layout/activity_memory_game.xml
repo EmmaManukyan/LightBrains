@@ -12,5 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_memory_game" />
+        app:navGraph="@navigation/nav_memory_game"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

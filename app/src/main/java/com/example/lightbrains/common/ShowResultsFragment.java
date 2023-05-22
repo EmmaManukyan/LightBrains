@@ -122,8 +122,8 @@ public class ShowResultsFragment extends Fragment {
                         + ">" + scores + "</font><font color="
                         + getResources().getColor(R.color.color_primary_variant) + "> " + getResources().getString(R.string.scores).toLowerCase() + "</font>";
                 binding.edtScores.setText(Html.fromHtml(html));
-                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayTime);
-                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvLayScores);
+                YoYo.with(Techniques.ZoomIn).duration(Constants.YOYO_ANIM_DURATION).playOn(binding.tvLayTime);
+                YoYo.with(Techniques.ZoomIn).duration(Constants.YOYO_ANIM_DURATION).playOn(binding.tvLayScores);
             });
 
         }).start();

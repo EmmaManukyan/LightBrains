@@ -13,6 +13,8 @@
         <action
             android:id="@+id/action_memoryGameSettingsFragment_to_memoryGameShowCardsFragment"
             app:destination="@id/memoryGameShowCardsFragment"
+            app:popUpTo="@id/memoryGameSettingsFragment"
+            app:popUpToInclusive="true"
             />
     </fragment>
     <fragment
