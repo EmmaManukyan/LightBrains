@@ -125,6 +125,13 @@
     <string name="guest">Guest</string>
     <string name="top_10_leaders">Top 10 leaders</string>
     <string name="use_internet_to_be_always_online">Use internet</string>
+    <string name="memory_game">Matching game</string>
+    <string name="count_of_columns">Count of columns and rows</string>
+    <string name="count_of_rows">Count of rows</string>
+    <string name="bonus">Bonus +1</string>
+
+
+    <string name="random">Random</string>
 
 
     <string-array name="string_languages_array">

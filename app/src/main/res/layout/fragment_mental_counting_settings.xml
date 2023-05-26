@@ -164,10 +164,8 @@
                 android:id="@+id/tv_number_example_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/my_font"
                 android:text="@string/quantity"
-                android:textSize="16sp"
+                style="@style/MyStyleForSliderTextViews"
                 app:layout_constraintStart_toStartOf="@id/tv_lay_digits"
                 app:layout_constraintTop_toBottomOf="@id/tv_lay_count"
 

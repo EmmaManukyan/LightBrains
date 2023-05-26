@@ -1,23 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".part_second.memory_game.MemoryGameSettingsFragment">
 
-    <Button
-        android:id="@+id/btn_start"
-        style="@style/MyStyleForSettingsButtons"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="@string/start"
-        android:textColor="@color/white"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_lay_figures"
+            style="@style/MyStyleForTextInputLayoutSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/figures"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/yellow_dark"
+            app:hintTextColor="@color/yellow_dark"
+            app:layout_constraintTop_toTopOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <AutoCompleteTextView
+                android:id="@+id/auto_tv_figures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_columns_and_rows"
+            style="@style/MyStyleForSliderTextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/count_of_columns"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_lay_figures" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_columns_and_rows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/green"
+            android:scaleY="1"
+            android:soundEffectsEnabled="true"
+            android:stepSize="1"
+            android:thumbTint="@color/yellow_dark"
+            android:valueFrom="2"
+            android:valueTo="6"
+            app:haloColor="@color/yellow"
+            app:labelBehavior="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_columns_and_rows"
+            app:thumbColor="@color/yellow_dark"
+            app:tickColor="@color/yellow_dark"
+            app:trackColor="@color/yellow" />
+
+
+        <Button
+            android:id="@+id/btn_lets_go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/yellow_dark"
+            android:padding="16dp"
+            android:text="@string/lets_go"
+            android:textAllCaps="false"
+            android:soundEffectsEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/slider_columns_and_rows"
+            app:layout_goneMarginTop="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -129,7 +129,11 @@
     <string name="top_10_leaders">Топ 10 лидеров</string>
     <string name="use_internet_to_be_always_online">Использовать интернет</string>
     <string name="sign_in_from_other_device">Вход с другого устройства</string>
-
+    <string name="memory_game">Игра на запоминание</string>
+    <string name="count_of_columns">Количество столбцов</string>
+    <string name="count_of_rows">Количество строк</string>
+    <string name="random">Случайный</string>
+    <string name="bonus">Бонус +1</string>
 
 
 

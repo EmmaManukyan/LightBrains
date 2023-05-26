@@ -10,11 +10,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentMemoryGameSettingsBinding;
 import com.example.lightbrains.databinding.FragmentMemoryGameShowCardsBinding;
+import com.example.lightbrains.part_second.attention_game.AttentionGameActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,15 +40,22 @@ public class MemoryGameShowCardsFragment extends Fragment {
     private ArrayList<ImageView> openedImages;
     private boolean isFront = false;
     private ArrayList<Integer> resources;
+    private int isInFlipAnimFunc = 0;
 
-    private int num = 4;
+    private int rows;
+    private int columns;
+    private int figureType;
+
+    private int countOfPairs;
+    private View mainView;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMemoryGameShowCardsBinding.inflate(inflater, container, false);
-        Toast.makeText(getContext(), "Eka", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Eka", Toast.LENGTH_SHORT).show();
         return binding.getRoot();
     }
 
@@ -51,50 +63,72 @@ public class MemoryGameShowCardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        createTableOfImages(num);
+//        createTableOfImages(2,3);
+        Toast.makeText(getContext(), rows + " " + columns, Toast.LENGTH_SHORT).show();
+        createTableOfImages(rows, columns);
+
+        binding.btnStartAgain.setOnClickListener(v -> {
+            resources.clear();
+            openedImages.clear();
+            isFront = false;
+            isInFlipAnimFunc = 0;
+            binding.myGridlayout.removeAllViews();
+            createTableOfImages(rows, columns);
+        });
+        this.mainView = view;
     }
 
 
-
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void createTableOfImages(int numOfRowsAndColumns) {
-        int[] imageResources = figureTypes[Constants.getRandomInRange(0,1)];
+    private void createTableOfImages(int numOfRows, int numOfColumns) {
+        countOfPairs = (int) (numOfColumns * numOfRows / 2);
+
+        int[] imageResources;
+        if (figureType == -1) {
+            imageResources = figureTypes[Constants.getRandomInRange(0, 2)];
+        } else {
+            imageResources = figureTypes[figureType];
+        }
         int margin = 8;
         int start = Constants.getRandomInRange(0, imageResources.length - 1);
 
 
-        for (int i = start; i < start + (numOfRowsAndColumns * numOfRowsAndColumns) / 2; i++) {
+        for (int i = start; i < start + (numOfRows * numOfColumns) / 2; i++) {
             resources.add(imageResources[i % imageResources.length]);
             resources.add(imageResources[i % imageResources.length]);
+            Log.d("taguhi", "" + i);
+        }
+        if (numOfRows * numOfColumns % 2 == 1) {
+            resources.add(R.drawable.baseline_scores_24);
+            countOfPairs++;
+            Toast.makeText(getContext(), ""+countOfPairs, Toast.LENGTH_SHORT).show();
         }
         Collections.shuffle(resources);
 
-        binding.myGridlayout.setRowCount(numOfRowsAndColumns);
-        binding.myGridlayout.setColumnCount(numOfRowsAndColumns);
-        for (int row = 0; row < numOfRowsAndColumns; row++) {
-            for (int col = 0; col < numOfRowsAndColumns; col++) {
+        binding.myGridlayout.setRowCount(numOfRows);
+        binding.myGridlayout.setColumnCount(numOfColumns);
+
+        for (int row = 0; row < numOfRows; row++) {
+            for (int col = 0; col < numOfColumns; col++) {
                 ImageView imageView = new ImageView(getContext());
-                int imageIndex = row * numOfRowsAndColumns + col;
+                int imageIndex = row * numOfColumns + col;
                 imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.img_profile_default));
                 imageView.setContentDescription(Constants.DEFAULT_CONTENT_DESCRIPTION);
-
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-
                 params.width = 0;
                 params.height = 0;
-                params.setMargins(margin, 0, margin, 0);
+                params.setMargins(margin, margin / 2, margin, margin / 2);
                 params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
                 params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
 
                 imageView.setLayoutParams(params);
                 imageView.setOnClickListener(v -> {
-                    if (imageView.getContentDescription().equals(Constants.DEFAULT_CONTENT_DESCRIPTION)){
+                    if (imageView.getContentDescription().equals(Constants.DEFAULT_CONTENT_DESCRIPTION) && isInFlipAnimFunc != 2) {
                         imageView.setContentDescription(Constants.CONTENT_DESCRIPTION_CLICKED);
+                        isInFlipAnimFunc = ++isInFlipAnimFunc % 3;
                         flipCardToInitialState(imageView, imageIndex, true);
                     }
-
-
 //                    Toast.makeText(MatchingGameActivity.this, "" + imageIndex, Toast.LENGTH_SHORT).show();
                 });
                 binding.myGridlayout.addView(imageView);
@@ -118,13 +152,12 @@ public class MemoryGameShowCardsFragment extends Fragment {
             public void onAnimationEnd(Animator animation) {
                 card.setRotationY(-90f);
                 if (isBack) {
-
-                    openedImages.add(card);
-                    card.setImageResource(resources.get(index % resources.size()));
                     card.setContentDescription(Integer.toString(resources.get(index % resources.size())));
+                    openedImages.add(card);
+                    card.setImageResource(resources.get(index));
 
-                    Log.d("taguhi","size: "+openedImages.size());
-                }else{
+                    Log.d("taguhi", "size: " + openedImages.size());
+                } else {
                     card.setImageResource(R.drawable.img_profile_default);
                     card.setContentDescription(Constants.DEFAULT_CONTENT_DESCRIPTION);
                     openedImages.clear();
@@ -135,25 +168,43 @@ public class MemoryGameShowCardsFragment extends Fragment {
                 flipIn.start();
 
                 isFront = !isFront;
-                if (openedImages.size()>1){
-                    Log.d("taguhi",openedImages.get(0)+" "+openedImages.get(1).getDrawable().getConstantState());
-                    if (openedImages.get(0).getContentDescription().equals(openedImages.get(1).getContentDescription())){
-                        Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
-                        flipCardToInitialState(openedImages.get(0),-1,false);
-                        flipCardToInitialState(openedImages.get(1),-1,false);
+                if (openedImages.size() > 1) {
+                    Log.d("taguhi", openedImages.get(0) + " " + openedImages.get(1).getDrawable().getConstantState());
+                    if (openedImages.get(0).getContentDescription().equals(openedImages.get(1).getContentDescription())) {
+//                        Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
+                        showRightAnimation(getResources().getString(R.string.your_answer_is_right));
+                        countOfPairs--;
+                        Toast.makeText(getContext(), ""+countOfPairs, Toast.LENGTH_SHORT).show();
+                        flipCardToInitialState(openedImages.get(0), -1, false);
+                        flipCardToInitialState(openedImages.get(1), -1, false);
 //                        Toast.makeText(MatchingGameActivity.this, "Eka", Toast.LENGTH_SHORT).show();
                         requireActivity().runOnUiThread(() -> {
                             YoYo.with(Techniques.ZoomOut).duration(Constants.YOYO_ANIM_DURATION).playOn(openedImages.get(0));
                             YoYo.with(Techniques.ZoomOut).duration(Constants.YOYO_ANIM_DURATION).playOn(openedImages.get(1));
                         });
-                      /*  openedImages.get(0).setVisibility(View.GONE);
-                        openedImages.get(1).setVisibility(View.GONE);*/
 
+                    } else {
+                        flipCardToInitialState(openedImages.get(0), -1, false);
+                        flipCardToInitialState(openedImages.get(1), -1, false);
                     }
-                    else{
-                        flipCardToInitialState(openedImages.get(0),-1,false);
-                        flipCardToInitialState(openedImages.get(1),-1,false);
-                    }
+                    isInFlipAnimFunc = 0;
+
+                } else if (openedImages.size() == 1 && card.getContentDescription().equals(Integer.toString(R.drawable.baseline_scores_24))) {
+                    showRightAnimation(getResources().getString(R.string.bonus));
+                    countOfPairs--;
+                    requireActivity().runOnUiThread(() -> {
+                        flipCardToInitialState(openedImages.get(0), -1, false);
+                        YoYo.with(Techniques.ZoomOut).duration(Constants.YOYO_ANIM_DURATION).playOn(openedImages.get(0));
+                        openedImages.clear();
+                        isFront = false;
+                        isInFlipAnimFunc = 0;
+                    });
+                }
+
+                if (countOfPairs == 0) {
+                    Toast.makeText(getContext(), "End", Toast.LENGTH_SHORT).show();
+//                    Navigation.findNavController(mainView).navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameResultsFragment);
+
                 }
             }
 
@@ -170,10 +221,36 @@ public class MemoryGameShowCardsFragment extends Fragment {
     }
 
 
-
-    private void init(){
+    private void init() {
         resources = new ArrayList<>();
         openedImages = new ArrayList<>();
+        Bundle bundle = getArguments();
+        rows = bundle.getInt(Constants.COUNT_OF_ROWS);
+        columns = bundle.getInt(Constants.COUNT_OF_COLUMNS);
+        figureType = bundle.getInt(Constants.FIGURES_TYPE) - 1;
 // Convert the shuffled list back to an arr
+    }
+
+
+    private void showRightAnimation(String message) {
+        new Thread(() -> {
+            requireActivity().runOnUiThread(() -> {
+                Constants.makeSoundEffect();
+                binding.tvRight.setVisibility(View.VISIBLE);
+                binding.tvRight.setText(message);
+                YoYo.with(Techniques.BounceInUp).duration(800).playOn(binding.tvRight);
+                //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
+
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            requireActivity().runOnUiThread(() -> {
+                YoYo.with(Techniques.ZoomOut).duration(500).playOn(binding.tvRight);
+            });
+
+        }).start();
     }
 }

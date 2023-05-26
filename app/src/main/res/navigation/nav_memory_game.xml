@@ -21,5 +21,16 @@
         android:id="@+id/memoryGameShowCardsFragment"
         android:name="com.example.lightbrains.part_second.memory_game.MemoryGameShowCardsFragment"
         android:label="fragment_memory_game_show_cards"
-        tools:layout="@layout/fragment_memory_game_show_cards" />
+        tools:layout="@layout/fragment_memory_game_show_cards" >
+        <action
+            android:id="@+id/action_memoryGameShowCardsFragment_to_memoryGameResultsFragment"
+            app:destination="@id/memoryGameResultsFragment"
+            app:popUpTo="@id/memoryGameShowCardsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/memoryGameResultsFragment"
+        android:name="com.example.lightbrains.part_second.memory_game.MemoryGameResultsFragment"
+        android:label="fragment_memory_game_results"
+        tools:layout="@layout/fragment_memory_game_results" />
 </navigation>

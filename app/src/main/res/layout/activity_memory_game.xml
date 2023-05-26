@@ -6,13 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".part_second.memory_game.MemoryGameActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/my_guide_line_for_title_image_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <include
+        layout="@layout/title_light_brains_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/my_guide_line_for_title_image_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_memory_game"
+        style="@style/MyStyleForTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="end"
+        android:text="@string/memory_game"
+        android:textColor="@color/yellow_dark"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_guide_line_for_title_image_home" />
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
+        android:id="@+id/fr_container_memory_game"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_memory_game"
+        app:layout_constraintTop_toBottomOf="@id/tv_memory_game"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 

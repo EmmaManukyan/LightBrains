@@ -43,16 +43,16 @@ public class Constants {
     public static final String DIALOG_TAG = "customDialog";
     public static final String HASHMAP_BUNDLE = "HashMap";
 
+    public static final String FIGURES_TYPE_MEMORY_GAME = "FigureTypeMemoryGame";
     public static final String FIGURES_TYPE = "FigureType";
-    public static final String FIGURES_LEVEL = "FiguresLevel";
     public static final String FIGURES_SHOW_TIME = "FiguresShowTime";
-    public static final String FIGURES_COUNT = "FiguresCount";
     public static final String FIGURES_GROUP_COUNT = "FiguresGroupCount";
+    public static final String COUNT_OF_ROWS = "CountOfRows";
+    public static final String COUNT_OF_COLUMNS = "CountOfColumns";
     public static final String FIGURES_COMPLEXITY_LEVEL = "ComplexityLevel";
     public static final String DIALOG_TAG_EXIT = "exit dialog";
 
-    public static final String FIGURES_SHOW_START_TIME = "FiguresShowStartTime";
-    public static final String FIGURES_SHOW_FINISH_TIME = "FiguresShowFinishTime";
+
     public static final String RIGHT_ANSWERS = "RightAnswers";
     public static final String RIGHT = "right";
     public static final String WRONG = "wrong";

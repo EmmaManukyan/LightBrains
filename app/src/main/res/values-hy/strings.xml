@@ -129,7 +129,11 @@
     <string name="sounds_on_off">Ձայնային էֆեկտներ</string>
     <string name="top_10_leaders">Թոփ 10 առաջատարներ</string>
     <string name="use_internet_to_be_always_online">Օգտագործել ինտերնետը</string>
-
+    <string name="memory_game">Խաղ-համընկնում</string>
+    <string name="count_of_columns">Սյուների և տողերի քանակ</string>
+    <string name="count_of_rows">Տողերի քանակ</string>
+    <string name="random">Պատահական</string>
+    <string name="bonus">Բոնուս +1</string>
 
 
 
