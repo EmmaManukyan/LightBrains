@@ -9,24 +9,30 @@
         android:id="@+id/memoryGameSettingsFragment"
         android:name="com.example.lightbrains.part_second.memory_game.MemoryGameSettingsFragment"
         android:label="fragment_memory_game_settings"
-        tools:layout="@layout/fragment_memory_game_settings" >
+        tools:layout="@layout/fragment_memory_game_settings">
         <action
             android:id="@+id/action_memoryGameSettingsFragment_to_memoryGameShowCardsFragment"
             app:destination="@id/memoryGameShowCardsFragment"
             app:popUpTo="@id/memoryGameSettingsFragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/memoryGameShowCardsFragment"
         android:name="com.example.lightbrains.part_second.memory_game.MemoryGameShowCardsFragment"
         android:label="fragment_memory_game_show_cards"
-        tools:layout="@layout/fragment_memory_game_show_cards" >
+        tools:layout="@layout/fragment_memory_game_show_cards">
         <action
             android:id="@+id/action_memoryGameShowCardsFragment_to_memoryGameResultsFragment"
             app:destination="@id/memoryGameResultsFragment"
             app:popUpTo="@id/memoryGameShowCardsFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/bottom_animation"
+            />
+        <action
+            android:id="@+id/action_memoryGameShowCardsFragment_to_memoryGameSettingsFragment"
+            app:destination="@id/memoryGameSettingsFragment"
+            app:popUpTo="@id/memoryGameShowCardsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/memoryGameResultsFragment"

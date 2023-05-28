@@ -145,8 +145,8 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
         public void run() {
 
             for (final int[] i = {0}; i[0] < countOfExamples; i[0]++) {
-                numbersArrayToShow = levelClass.createArrayToCount(digit, countOfRows, subtopicLevel);
                 if (runningThread) {
+                    numbersArrayToShow = levelClass.createArrayToCount(digit, countOfRows, subtopicLevel);
                     Log.d("TAG", Arrays.toString(numbersArrayToShow));
                     try {
                         Thread.sleep(500);

@@ -138,6 +138,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Constants.createSound(this,R.raw.btn_click);
         Constants.createSharedPreferences(HomeActivity.this);
         ConstantsForFireBase.createFireBaseInstances();
         useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);

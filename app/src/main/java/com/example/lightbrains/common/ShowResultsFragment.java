@@ -72,7 +72,6 @@ public class ShowResultsFragment extends Fragment {
         progressBarAnimation((int) percent);
         binding.tvLayTime.setError(" ");
         binding.tvLayScores.setError(" ");
-        binding.tvLayTime.setError(" ");
 
         binding.btnMainPage.setOnClickListener(view1 -> {
             Constants.createSound(requireActivity(), R.raw.btn_click);

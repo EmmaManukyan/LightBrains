@@ -1,5 +1,7 @@
 package com.example.lightbrains.part_first_mental.mental_counting;
 
+import android.util.Log;
+
 public class Mladshi implements Level {
     private static int[] levels = {4, -4, 3, -3, 2, -2, 1, -1};
 
@@ -209,7 +211,10 @@ public class Mladshi implements Level {
     public int[] joinArrays(int[] arr1, int level) {
         int[] myArr = new int[arr1.length];
         int[] arr2;
+        Log.d("TAG","eka");
         if (level == 8) {
+            Log.d("TAG","eka2");
+
             arr2 = getAllMladshiForDigits(arr1);
         } else {
             arr2 = getSpecificTopicForSecondDigits(arr1, level);

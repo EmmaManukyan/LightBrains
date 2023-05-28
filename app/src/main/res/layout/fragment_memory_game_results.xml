@@ -1,14 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".part_second.memory_game.MemoryGameResultsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:paddingStart="32dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="32dp">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/img_result_bg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/memory_game_result_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_result" />
+
+        <TextView
+            android:id="@+id/tv_result"
+            style="@style/MyStyleForTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/results"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_scores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/my_font"
+            android:text="+32"
+            android:textColor="@color/color_secondary_variant"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="@id/img_result_bg"
+            app:layout_constraintEnd_toEndOf="@id/img_result_bg"
+            app:layout_constraintStart_toStartOf="@id/img_result_bg"
+            app:layout_constraintTop_toTopOf="@id/img_result_bg" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_lay_time"
+            style="@style/MyStyleForTextInputLayoutToShowResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/time"
+            android:visibility="invisible"
+            app:boxStrokeErrorColor="@color/purple_500"
+            app:errorIconDrawable="@drawable/baseline_access_time_filled_24"
+            app:errorIconTint="@color/purple_500"
+            app:errorTextColor="@color/purple_500"
+            app:hintTextColor="@color/color_secondary_variant"
+            app:layout_constraintTop_toBottomOf="@id/img_result_bg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:enabled="true"
+                android:inputType="none"
+                android:padding="12dp"
+                android:text="1"
+                android:textColor="@color/purple_500"
+                android:textSize="24sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_lay_count_of_steps"
+            style="@style/MyStyleForTextInputLayoutToShowResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/count_of_steps"
+            android:visibility="invisible"
+            app:boxStrokeErrorColor="@color/color_secondary_variant"
+            app:errorIconDrawable="@drawable/baseline_scores_24"
+            app:errorIconTint="@color/purple_500"
+            app:errorTextColor="@color/color_secondary_variant"
+            app:hintTextColor="@color/color_secondary_variant"
+            app:layout_constraintTop_toBottomOf="@id/tv_lay_time">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_count_of_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:editable="false"
+                android:enabled="true"
+                android:inputType="none"
+                android:padding="12dp"
+                android:text="1"
+                android:textColor="@color/purple_500"
+                android:textSize="24sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_main_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/background_btn1_start"
+            android:padding="16dp"
+            android:text="@string/great"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_lay_count_of_steps" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

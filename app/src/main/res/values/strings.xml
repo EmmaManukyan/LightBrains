@@ -132,6 +132,7 @@
 
 
     <string name="random">Random</string>
+    <string name="count_of_steps">Count of steps</string>
 
 
     <string-array name="string_languages_array">

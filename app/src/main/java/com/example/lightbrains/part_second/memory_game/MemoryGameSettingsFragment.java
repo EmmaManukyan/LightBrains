@@ -48,6 +48,8 @@ public class MemoryGameSettingsFragment extends Fragment {
             Constants.myEditShared.putInt(Constants.FIGURES_TYPE_MEMORY_GAME,figureType);
             Constants.myEditShared.putInt(Constants.COUNT_OF_COLUMNS,columns);
             Constants.myEditShared.commit();
+            Constants.createSound(requireActivity(),R.raw.right);
+            Constants.makeSoundEffect();
             Navigation.findNavController(v).navigate(R.id.action_memoryGameSettingsFragment_to_memoryGameShowCardsFragment,bundle);
         });
 
@@ -77,7 +79,7 @@ public class MemoryGameSettingsFragment extends Fragment {
             setSliderMaxValue(figureType);
         }
         binding.sliderColumnsAndRows.setValue(columns);
-        binding.tvColumnsAndRows.setText(getResources().getString(R.string.count_of_rows)+" " + columns+" x "+columns);
+        binding.tvColumnsAndRows.setText(getResources().getString(R.string.count_of_columns)+" " + columns+" x "+columns);
         binding.autoTvFigures.setText(figures[figureType]);
         binding.autoTvFigures.setAdapter(arrayAdapter);
 
@@ -100,11 +102,13 @@ public class MemoryGameSettingsFragment extends Fragment {
         });*/
 
         binding.autoTvFigures.setOnItemClickListener((parent, view, position, id) -> {
-            figureType = position;
-            if (figureType!=0){
-                setSliderMaxValue(figureType);
+            if (figureType!=position){
+                figureType = position;
+                if (figureType!=0){
+                    setSliderMaxValue(figureType);
+                }
+                Constants.makeSoundEffect();
             }
-            Constants.makeSoundEffect();
 
         });
     }

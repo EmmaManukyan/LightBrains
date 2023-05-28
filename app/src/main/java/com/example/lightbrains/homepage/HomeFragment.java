@@ -124,8 +124,8 @@ public class HomeFragment extends Fragment {
             list.add(new RecyclerViewItem(R.drawable.img_for_mental, getActivity().getResources().getString(flash_anzan), R.color.pink));
             list.add(new RecyclerViewItem(R.drawable.flash_cards_img, getActivity().getResources().getString(R.string.flash_cards), R.color.blue));
         } else if (viewOrder == 1) {
-            list.add(new RecyclerViewItem(R.drawable.att_game_icon, getActivity().getResources().getString(R.string.attention_game), R.color.green));
-            list.add(new RecyclerViewItem(R.drawable.flash_cards_img, getActivity().getResources().getString(R.string.game_2), R.color.yellow));
+            list.add(new RecyclerViewItem(R.drawable.att_game_icon, getActivity().getResources().getString(R.string.game_1), R.color.green));
+            list.add(new RecyclerViewItem(R.drawable.memory_game_icon, getActivity().getResources().getString(R.string.game_2), R.color.yellow));
         }
         return list;
     }

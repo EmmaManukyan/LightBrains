@@ -33,6 +33,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
     //3->att_game
     //4->att_game_write_answers
     //5->delete accaunt
+    //6->memory_game
     private final int DIALOG_POSITION_CODE;
 
     public CustomDialogFragmentForExit(int DIALOG_POSITION_CODE) {
@@ -117,6 +118,13 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             Intent intent1 = new Intent(getActivity(), MainActivity.class);
                             startActivity(intent1);
                             requireActivity().finish();
+                            break;
+                        case 6:
+                            navHostFragment =
+                                    (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.fr_container_memory_game);
+                            assert navHostFragment != null;
+                            navController = navHostFragment.getNavController();
+                            navController.navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameSettingsFragment);
                             break;
                     }
 
