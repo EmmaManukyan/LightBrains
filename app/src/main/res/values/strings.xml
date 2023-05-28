@@ -75,6 +75,8 @@
     //firebase
     <string name="do_you_really_want_to_exit">Do you really want to exit?</string>
     <string name="do_you_really_want_to_delete_your_account">Do you really want to delete your account?</string>
+    <string name="deleted">Deleted</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="first_topic_name">Direct count</string>
@@ -149,7 +151,7 @@
 
     <string-array name="string_figures_array">
         <item>Geometric figures</item>
-        <item>Fruits</item>
+        <item>Fruits and vegetables</item>
         <item>Animals</item>
     </string-array>
 

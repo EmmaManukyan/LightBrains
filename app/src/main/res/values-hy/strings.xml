@@ -80,6 +80,7 @@
     //firebase
     <string name="do_you_really_want_to_exit">Դուք իսկապե՞ս ուզում եք դուրս գալ</string>
     <string name="do_you_really_want_to_delete_your_account">Դուք իսկապե՞ս ուզում եք ջնջել Ձեր հաշիվը</string>
+    <string name="deleted">Ջնջված է</string>
 
 
     <string name="time">Ժամանակ</string>

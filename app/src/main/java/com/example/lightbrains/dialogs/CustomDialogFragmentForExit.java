@@ -101,7 +101,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             assert user != null;
                             myDataBase.child(user.getUid()).removeValue();
 //                            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(user.getEmail().replace(".","")).removeValue();
-                            Toast.makeText(getContext(), "Removed?", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getResources().getString(R.string.deleted), Toast.LENGTH_SHORT).show();
                             Constants.myEditShared.clear();
                             Constants.myEditShared.commit();
                             user.delete()

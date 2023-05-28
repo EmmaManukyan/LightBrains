@@ -26,8 +26,8 @@ public class ConstantsForFireBase {
     public static String IS_SIGNED_IN = "signedIn";
     public static String USER_TOKEN = "userToken";
     public static String IS_EMAIL_VERIFIED = "emailIsVerified";
-    public static String GUEST_EMAIL = "example@gmail.com";
-    public static String GUEST_PASSWORD = "12345678";
+    public static String GUEST_EMAIL = "test@samsung.uwcdilijan.am";
+    public static String GUEST_PASSWORD = "Dilijan23!";
     public static ProgressDialog progressDialog;
 
     public static DatabaseReference myDataBase;

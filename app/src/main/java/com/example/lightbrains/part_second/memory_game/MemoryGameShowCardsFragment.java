@@ -45,7 +45,9 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     private int countOfPairs;
 
     private long startTime;
-
+    private int countOfSteps = 0;
+    private boolean animationRunning = false;
+    private final Object lock = new Object();
 
 
     @Override
@@ -67,7 +69,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
         startTime = System.currentTimeMillis();
 
         binding.btnStartAgain.setOnClickListener(v -> {
-            if (countOfPairs!=0){
+            if (countOfPairs != 0) {
                 resources.clear();
                 openedImages.clear();
                 isFront = false;
@@ -75,12 +77,15 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                 binding.myGridlayout.removeAllViews();
                 createTableOfImages(rows, columns);
                 startTime = System.currentTimeMillis();
-            }else{
-                if (binding.btnStartAgain.getText().equals(getResources().getString(R.string.finish))){
+            } else {
+                if (binding.btnStartAgain.getText().equals(getResources().getString(R.string.finish)) && isInFlipAnimFunc != 2) {
                     long endTime = System.currentTimeMillis();
                     Bundle bundle = new Bundle();
-                    bundle.putLong(Constants.FIGURES_SHOW_TIME,endTime-startTime);
-                    Navigation.findNavController(v).navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameResultsFragment,bundle);
+                    bundle.putLong(Constants.FIGURES_SHOW_TIME, endTime - startTime);
+                    bundle.putInt(Constants.COUNT_OF_STEPS, countOfSteps);
+                    bundle.putInt(Constants.SCORES,giveScores(rows,columns,countOfSteps));
+//                    Toast.makeText(getContext(), ""+countOfSteps, Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(v).navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameResultsFragment, bundle);
                 }
             }
         });
@@ -108,7 +113,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
         if (numOfRows * numOfColumns % 2 == 1) {
             resources.add(R.drawable.baseline_scores_24);
             countOfPairs++;
-            Toast.makeText(getContext(), ""+countOfPairs, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "" + countOfPairs, Toast.LENGTH_SHORT).show();
         }
         Collections.shuffle(resources);
 
@@ -158,11 +163,11 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
             @Override
             public void onAnimationEnd(Animator animation) {
                 card.setRotationY(-90f);
-                if (figureType==0 && isBack){
+                if (figureType == 0 && isBack) {
 //                    Toast.makeText(getContext(), "mta", Toast.LENGTH_SHORT).show();
-                    card.setPadding(32,32,32,32);
-                }else{
-                    card.setPadding(0,0,0,0);
+                    card.setPadding(32, 32, 32, 32);
+                } else {
+                    card.setPadding(0, 0, 0, 0);
 
                 }
                 if (isBack) {
@@ -204,11 +209,11 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                         flipCardToInitialState(openedImages.get(0), -1, false);
                         flipCardToInitialState(openedImages.get(1), -1, false);
                     }
+                    countOfSteps++;
                     isInFlipAnimFunc = 0;
 
-                } else if (openedImages.size() == 1 && card.getContentDescription().equals(Integer.toString(R.drawable.baseline_scores_24))&&isInFlipAnimFunc != 2) {
+                } else if (openedImages.size() == 1 && card.getContentDescription().equals(Integer.toString(R.drawable.baseline_scores_24)) && isInFlipAnimFunc != 2) {
                     showRightAnimation(getResources().getString(R.string.bonus));
-                    countOfPairs--;
                     requireActivity().runOnUiThread(() -> {
                         flipCardToInitialState(openedImages.get(0), -1, false);
                         YoYo.with(Techniques.ZoomOut).duration(Constants.YOYO_ANIM_DURATION).playOn(openedImages.get(0));
@@ -216,8 +221,9 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                         isFront = false;
                         isInFlipAnimFunc = 0;
                     });
-                }
+                    countOfPairs--;
 
+                }
 
 
             }
@@ -240,6 +246,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
         resources = new ArrayList<>();
         openedImages = new ArrayList<>();
         Bundle bundle = getArguments();
+        assert bundle != null;
         rows = bundle.getInt(Constants.COUNT_OF_ROWS);
         columns = bundle.getInt(Constants.COUNT_OF_COLUMNS);
         figureType = bundle.getInt(Constants.FIGURES_TYPE) - 1;
@@ -250,37 +257,44 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     private void showRightAnimation(String message) {
 
         new Thread(() -> {
-            requireActivity().runOnUiThread(() -> {
-                binding.btnStartAgain.setEnabled(false);
-                binding.btnStartAgain.setClickable(false);
-                if (countOfPairs == 0) {
-//                    Toast.makeText(getContext(), "End", Toast.LENGTH_SHORT).show();
-                    binding.btnStartAgain.setText(getResources().getString(R.string.finish));
-//                    Navigation.findNavController(mainView).navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameResultsFragment);
-                }
-                Constants.makeSoundEffect();
-                binding.tvRight.setVisibility(View.VISIBLE);
-                binding.tvRight.setText(message);
-                YoYo.with(Techniques.BounceInUp).duration(800).playOn(binding.tvRight);
-                //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
+            synchronized (lock) {
+                animationRunning = true;
 
-            });
-            try {
-                Thread.sleep(1000);
                 requireActivity().runOnUiThread(() -> {
-                    YoYo.with(Techniques.ZoomOut).duration(200).playOn(binding.tvRight);
-                    binding.btnStartAgain.setEnabled(true);
-                    binding.btnStartAgain.setClickable(true);
+                    binding.btnStartAgain.setEnabled(false);
+                    binding.btnStartAgain.setClickable(false);
+                    if (countOfPairs == 0) {
+//                    Toast.makeText(getContext(), "End", Toast.LENGTH_SHORT).show();
+                        binding.btnStartAgain.setText(getResources().getString(R.string.finish));
+//                    Navigation.findNavController(mainView).navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameResultsFragment);
+                    }
+                    Constants.makeSoundEffect();
+                    binding.tvRight.setVisibility(View.VISIBLE);
+                    binding.tvRight.setText(message);
+                    YoYo.with(Techniques.BounceInUp).duration(800).playOn(binding.tvRight);
+                    //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
 
                 });
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                try {
+                    Thread.sleep(1000);
+                    requireActivity().runOnUiThread(() -> {
+                        animationRunning = false;
+                        if (countOfPairs != 0) {
+                            YoYo.with(Techniques.ZoomOut).duration(300).playOn(binding.tvRight);
+                        } else {
+                            binding.tvRight.setVisibility(View.GONE);
+                        }
+                        binding.btnStartAgain.setEnabled(true);
+                        binding.btnStartAgain.setClickable(true);
+
+                    });
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
-
-
         }).start();
     }
-
 
 
     public static BackPressedListener backpressedlistener;
@@ -305,5 +319,12 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     private void showDialog() {
         CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(6);
         customDialogFragmentForExit.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
+    }
+
+    private int giveScores(int countOfRows,int countOfColumns,int countOfSteps){
+        int maxScores = (int) (countOfColumns*countOfRows*1.5);
+        int scores = Math.max(maxScores - countOfSteps, (countOfRows + countOfColumns)/2);
+        Toast.makeText(getContext(), "Scores "+scores, Toast.LENGTH_SHORT).show();
+        return scores;
     }
 }
