@@ -232,7 +232,7 @@ public class HomeActivity extends AppCompatActivity {
                 useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
                 if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
                     if (curToken.equals(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN)) || mAuth.getCurrentUser().getEmail().equals(ConstantsForFireBase.GUEST_EMAIL)) {
-                        Toast.makeText(HomeActivity.this, "It's me", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(HomeActivity.this, "It's me", Toast.LENGTH_SHORT).show();
                     } else {
                         Constants.createToast(HomeActivity.this, R.string.sign_in_from_other_device);
 //                    ProfileFragment.saveUser(false);
