@@ -324,7 +324,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     private int giveScores(int countOfRows,int countOfColumns,int countOfSteps){
         int maxScores = (int) (countOfColumns*countOfRows*1.5);
         int scores = Math.max(maxScores - countOfSteps, (countOfRows + countOfColumns)/2);
-        Toast.makeText(getContext(), "Scores "+scores, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Scores "+scores, Toast.LENGTH_SHORT).show();
         return scores;
     }
 }

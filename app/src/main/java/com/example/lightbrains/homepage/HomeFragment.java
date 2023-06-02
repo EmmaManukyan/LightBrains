@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment {
                 }
             }
             bottomSheetDialog.dismiss();
-            Toast.makeText(getContext(), "" + item.getTitleName(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "" + item.getTitleName(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
         },requireActivity());
 
