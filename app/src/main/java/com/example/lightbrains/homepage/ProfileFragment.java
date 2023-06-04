@@ -314,9 +314,7 @@ public class ProfileFragment extends Fragment {
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
-            if (!ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
-                saveUser(true);
-            }
+                saveUser();
         });
     }
 
@@ -327,7 +325,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    public static void saveUser(boolean isSignedIn) {
+    public static void saveUser() {
         String id = myDataBase.getKey();
         String name = Objects.requireNonNull(binding.edtName.getText()).toString();
         if (!TextUtils.isEmpty(name)) {

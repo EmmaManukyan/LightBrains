@@ -3,6 +3,7 @@ package com.example.lightbrains.part_second.memory_game;
 import static com.example.lightbrains.common.ConstantsForFireBase.mAuth;
 import static com.example.lightbrains.common.ConstantsForFireBase.myDataBase;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -75,13 +76,14 @@ public class MemoryGameResultsFragment extends Fragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void setViews(){
         binding.tvLayTime.setVisibility(View.VISIBLE);
         binding.tvLayCountOfSteps.setVisibility(View.VISIBLE);
         binding.tvLayTime.setError(" ");
         binding.tvLayCountOfSteps.setError(" ");
         binding.edtCountOfSteps.setText(""+countOfSteps);
-        binding.edtTime.setText(timeToShow);
+        binding.edtTime.setText(timeToShow+" "+getResources().getString(R.string.minutes));
         binding.tvScores.setText("+"+scores);
         Constants.createSharedPreferences(requireActivity());
         int tempScores = Constants.sharedPreferences.getInt(Constants.SCORES, -1000);

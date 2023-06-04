@@ -73,7 +73,7 @@ public class CustomDialogFragmentForExit extends DialogFragment {
                             break;
                         case 2:
                             Log.d("dilijan","mta");
-                            ProfileFragment.saveUser(false);
+                            ProfileFragment.saveUser();
                             Constants.myEditShared.clear();
                             Log.d("dilijan","cleared");
                             Constants.myEditShared.commit();
