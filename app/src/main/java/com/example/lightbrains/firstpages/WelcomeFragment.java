@@ -50,6 +50,7 @@ public class WelcomeFragment extends Fragment {
         ConstantsForFireBase.createFireBaseInstances();
 
 
+        //if user has already signed in one time, he doesn't need to sign in twice so we open the home page at once
         if (sh.getBoolean(Constants.IS_LOGIN, false)) {
             new Thread() {
                 @Override

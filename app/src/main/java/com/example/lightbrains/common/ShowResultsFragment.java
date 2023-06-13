@@ -46,18 +46,18 @@ public class ShowResultsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //here we get data given from previous activity
         rightAnswers = requireArguments().getInt(Constants.RIGHT_ANSWERS);
         int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
         time = (double) requireArguments().getLong(Constants.FIGURES_SHOW_TIME) / 60000;
         scores = requireArguments().getInt(Constants.SCORES, -1);
-        Log.d("taguhi", "ransw  "+rightAnswers + "");
 
         time = (float) (Math.round(time * 100.0) / 100.0);
         String tempTime = String.valueOf(time);
         timeToShow = tempTime.substring(0, 4);
-        Log.d("taguhi", "count "+count + "");
 
-
+        //counting the progress percent...
         float percent = (rightAnswers * 100) / (float) count;
 
         if (percent >= 50) {
@@ -90,6 +90,7 @@ public class ShowResultsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void progressBarAnimation(int progress) {
+        //this animation is working in thread to keep UI always clickable
         new Thread(() -> {
             for (int i = 0; i <= progress; i += 1) {
                 int finalI = i;

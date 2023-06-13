@@ -81,7 +81,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
                 AttentionGameValues.setComplexityLevel(complexityLevel);
                 AttentionGameValues.setFiguresType(figuresType);
                 AttentionGameValues.setFiguresLevel(figuresLevel);
-                AttentionGameValues.setShowTime((float) showTime/1000);
+                AttentionGameValues.setShowTime((float) showTime / 1000);
                 AttentionGameValues.setFiguresCount(figuresCount);
                 //AttentionGameValues.setStartTime(startTime);
                 AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
@@ -92,7 +92,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
     private void init() {
         getArgs();
-        Constants.createSound(requireActivity(),R.raw.btn_click);
+        Constants.createSound(requireActivity(), R.raw.btn_click);
         threadToShowFigures = new ThreadToShowFigures(FigureListCreator.createMapOfFigures(figuresType, figuresLevel, figuresCount));
 
     }
@@ -105,10 +105,8 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
         figuresLevel = AttentionGameValues.getFiguresLevel();
         figuresCount = AttentionGameValues.getFiguresCount();
         figuresGroupCount = AttentionGameValues.getFiguresGroupCount();
-        showTime = (int) (AttentionGameValues.getShowTime()*1000);
+        showTime = (int) (AttentionGameValues.getShowTime() * 1000);
         //startTime = AttentionGameValues.getStartTime();
-
-
 
 
         if (complexityLevel == 0) {
@@ -137,7 +135,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
     }
 
-
+    //here I use thread too, to show my figures and keep UI clickable
     class ThreadToShowFigures extends Thread {
         HashMap<Integer, Integer> showThisMap;
 
@@ -160,6 +158,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             return key;
         }
 
+        //showing figures is here, I have the map of figures which contains their indexes and how many times they appear
         private boolean funcOnUi(HashMap<Integer, Integer> showThisMap) {
             for (int j = 0; j < figuresCount; j++) {
                 if (runningThread) {

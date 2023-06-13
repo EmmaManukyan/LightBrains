@@ -36,8 +36,9 @@ import java.util.Objects;
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FragmentSignInBinding binding;
-    private boolean guestOpened = false;
 
+    //this is a simple flag to make sure that the user has clicked on signInButton
+    // and this is not onDataChange function called from other cladd when something has changed in Firebase
     private boolean btnIsClicked = false;
 
 
@@ -59,7 +60,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         return binding.getRoot();
     }
 
-
+    //SignInFragment implements View.OnClickListener, so I have method onClick here I need to check which view has been clicked
     @Override
     public void onClick(View view) {
         btnIsClicked = true;
@@ -67,12 +68,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             Constants.createSound(requireActivity(), R.raw.sound_first_pages);
             Navigation.findNavController(view).navigate(R.id.action_signInFragment_to_signUpFragment);
         } else if (binding.btnSignIn.equals(view)) {
-
+            //creating sound effect...
             Constants.createSound(requireActivity(), R.raw.wrong);
 
 
             binding.tvLayMail.setErrorEnabled(false);
             binding.tvLayPassword.setErrorEnabled(false);
+
+            //checking if everything is normal user to sign in
             if (Objects.requireNonNull(binding.edtMail.getText()).toString().equals("")) {
                 binding.tvLayMail.setError(getResources().getString(R.string.enter_email));
             } else if (Objects.requireNonNull(binding.edtPassword.getText()).toString().equals("")) {
@@ -81,6 +84,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
+                //user sign in
                 Constants.createSound(requireActivity(), R.raw.sound_first_pages);
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
@@ -99,10 +103,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (btnIsClicked) {
                                     isSignedIn[0] = Boolean.TRUE.equals(snapshot.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).getValue(Boolean.class));
-                                    Log.d("fire", "baa  " + isSignedIn[0]);
-                                    if (curUser.isEmailVerified() || Objects.equals(curUser.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
-                                        Log.d("fire", "baa ic heto " + isSignedIn[0]);
-
+                                    //checking if user's email is verified
+                                    if (curUser.isEmailVerified()) {
                                         /*if (!isSignedIn[0]) {*/
                                         Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
                                         String newToken = User.generateToken();
@@ -126,26 +128,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                Log.d("fire", "pahoo  " + error.getMessage());
+
                             }
                         });
-                        /*if (curUser.isEmailVerified() || Objects.equals(curUser.getEmail(), ConstantsForFireBase.GUEST_EMAIL)) {
-                            Log.d("fire", "baa ic heto "+isSignedIn[0]);
-
-                            if (!isSignedIn[0]) {
-                                Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
-                                Constants.myEditShared.commit();
-                                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                                intent.putExtra(ConstantsForFireBase.USER_KEY, curUser.getUid());
-//                          Log.d("taguhi","curUser id   "+curUser.getUid());
-                                startActivity(intent);
-                                requireActivity().finish();
-                            }else{
-                                Toast.makeText(getContext(), "Signina", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Constants.createToast(getContext(), R.string.email_not_veified);
-                        }*/
 
                     } else {
                         Constants.createToast(getContext(), R.string.email_or_password_is_incprrect);
@@ -162,6 +147,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         Constants.makeSoundEffect();
     }
 
+    //I usually create method init and call it when the fragment or activity view is created. Here I set my view layout params,
+    //create instances of classes
     @SuppressLint("SetTextI18n")
     private void init() {
         binding.btnSignIn.setOnClickListener(this);

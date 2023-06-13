@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
+    //this method is called when user chooses a profile image from his device and returns to my app
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -80,6 +81,8 @@ public class ProfileFragment extends Fragment {
         setViewParams();
         init();
 
+
+        //if the user makes doubleClick on the view which contains user's data, appears dialog which requires password to make changes
         binding.layDataContainer.setOnClickListener(new DoubleClickListener() {
 
             @Override
@@ -88,7 +91,6 @@ public class ProfileFragment extends Fragment {
                 dialog.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG);
             }
         });
-
 
 
         binding.imgEditProfile.setOnClickListener(view1 -> {
@@ -169,10 +171,10 @@ public class ProfileFragment extends Fragment {
         FirebaseUser curUser = mAuth.getCurrentUser();
         assert curUser != null;
         Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
-        User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN,ConstantsForFireBase.USER_TOKEN));
+        User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES, -1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null), Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN));
         if (id != null) {
             myDataBase.child(curUser.getUid()).setValue(newUser);
-            String idMail = curUser.getEmail().replace(".","");
+            String idMail = curUser.getEmail().replace(".", "");
 //            Log.d("fir",""+myDataBaseForMails.getDatabase());
 //            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(idMail).setValue(true);
             binding.tvProfileName.setText(newUser.getUserName());
@@ -262,27 +264,27 @@ public class ProfileFragment extends Fragment {
 
     public void reAuthenticateUser(String password) {
 
-       if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())){
-           Constants.createToast(requireActivity(),R.string.you_are_offline);
-       }else{
-           Constants.closeKeyboard(requireActivity());
-           progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
-           ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little), getContext());
-           FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-           assert user != null;
-           AuthCredential credential = EmailAuthProvider
-                   .getCredential(Objects.requireNonNull(user.getEmail()), password);
+        if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
+            Constants.createToast(requireActivity(), R.string.you_are_offline);
+        } else {
+            Constants.closeKeyboard(requireActivity());
+            progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
+            ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.wait_a_little), getContext());
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            assert user != null;
+            AuthCredential credential = EmailAuthProvider
+                    .getCredential(Objects.requireNonNull(user.getEmail()), password);
 
-           user.reauthenticate(credential)
-                   .addOnCompleteListener(task -> {
-                       if (task.isSuccessful()) {
-                           enableViews();
-                       } else {
-                           Constants.createToast(getContext(), R.string.password_is_wrong);
-                       }
-                       progressDialog.dismiss();
-                   });
-       }
+            user.reauthenticate(credential)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            enableViews();
+                        } else {
+                            Constants.createToast(getContext(), R.string.password_is_wrong);
+                        }
+                        progressDialog.dismiss();
+                    });
+        }
     }
 
     private static Uri uploadUri;
@@ -295,13 +297,15 @@ public class ProfileFragment extends Fragment {
         startActivityForResult(intentChooser, REQUEST_CODE);
     }
 
+    //this method is for saving usr in FireBase storage
     private void uploadImage() {
+        //here we make our image byteArray to save it in storage
         binding.btnLogOut.setEnabled(false);
         Bitmap bitmap = ((BitmapDrawable) binding.imgProfile.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] byteArr = baos.toByteArray();
-        StorageReference myRef = myStorageReference.child(ConstantsForFireBase.USER_KEY).child(ConstantsForFireBase.IMAGE_DB_CHILD+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+        StorageReference myRef = myStorageReference.child(ConstantsForFireBase.USER_KEY).child(ConstantsForFireBase.IMAGE_DB_CHILD + Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         UploadTask up = myRef.putBytes(byteArr);
         Constants.createSharedPreferences(requireActivity());
         binding.imgProfile.setVisibility(View.INVISIBLE);
@@ -314,7 +318,7 @@ public class ProfileFragment extends Fragment {
             binding.progressBarWithImage.setVisibility(View.GONE);
             binding.imgProfile.setVisibility(View.VISIBLE);
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(HomeActivity.binding.imgProfile);
-                saveUser();
+            saveUser();
         });
     }
 
@@ -333,7 +337,7 @@ public class ProfileFragment extends Fragment {
             assert curUser != null;
 //            Toast.makeText(progressDialog.getContext(), "Mta "+isSignedIn, Toast.LENGTH_SHORT).show();
             Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
-            User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES,-1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null),Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN,ConstantsForFireBase.USER_TOKEN));
+            User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES, -1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null), Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN));
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
 //                myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(isSignedIn);
@@ -348,11 +352,12 @@ public class ProfileFragment extends Fragment {
         public void onClick(View v) {
             long clickTime = System.currentTimeMillis();
             long DOUBLE_CLICK_TIME_DELTA = 300L;
-            if (clickTime-lastClickTime< DOUBLE_CLICK_TIME_DELTA){
+            if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
                 onDoubleClick(v);
             }
             lastClickTime = clickTime;
         }
+
         abstract void onDoubleClick(View v);
 
     }

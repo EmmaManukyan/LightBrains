@@ -21,6 +21,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Constants {
+
+    //here are some constant fields and functions which are used from different parts of the app.
+    // Using constants helps me to change their names one time(from here) if there is necessary
     public static final String SPEED_FLASH_CARDS = "SpeedFlashCards";
     public static final String SPEED_MENTAL = "SpeedMental";
 
@@ -82,17 +85,20 @@ public class Constants {
 
     public static int[] rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_heart_eyes_smile};
 
+    //list of animations to show on the images when the answer is right
     public static ArrayList<Techniques> animations = new ArrayList<>(Arrays.asList(Techniques.RollIn, Techniques.Wave, Techniques.ZoomIn,
             Techniques.SlideInUp, Techniques.Pulse, Techniques.FlipInX
     ));
 
 
+    //creating sharedPreferences here for one activity to use from different fragments
     public static void createSharedPreferences(Activity activity) {
         if (sharedPreferences == null) {
             sharedPreferences = activity.getSharedPreferences("MySharedPref", MODE_PRIVATE);
             myEditShared = sharedPreferences.edit();
         }
     }
+
 
     public static void makeSoundEffect(){
         if (sharedPreferences.getBoolean(SOUND_EFFECTS,true)){
@@ -146,6 +152,8 @@ public class Constants {
         }
     }
 
+
+    //static method to create Toast
     public static void createToast(Context context,int stringId){
         Toast.makeText(context, context.getResources().getString(stringId), Toast.LENGTH_SHORT).show();
     }

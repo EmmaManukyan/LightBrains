@@ -38,7 +38,7 @@ import java.util.Random;
 
 
 public class ShowMentalCountFragment extends Fragment implements BackPressedListener {
-
+    //most part of this code is like logic in part flashAnzan but a little different
     private FragmentShowMentalCountBinding binding;
 
     private int speed = -1;
@@ -146,6 +146,9 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
 
             for (final int[] i = {0}; i[0] < countOfExamples; i[0]++) {
                 if (runningThread) {
+                    //here i get the array of numbers to given topic to show
+                    //I have created interface Level which has method createArrayToCount
+                    //every childClass implements this method and creates array of numbers appropriate to the topic
                     numbersArrayToShow = levelClass.createArrayToCount(digit, countOfRows, subtopicLevel);
                     Log.d("TAG", Arrays.toString(numbersArrayToShow));
                     try {

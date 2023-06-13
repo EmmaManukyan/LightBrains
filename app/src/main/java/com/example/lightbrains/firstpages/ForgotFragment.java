@@ -29,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotFragment extends Fragment {
+    //I used binding instead of using findViewById. It's more convenient and helps not to confuse views' ids
     private FragmentForgotBinding binding;
 
     @Override
@@ -55,17 +56,17 @@ public class ForgotFragment extends Fragment {
         });
     }
 
+    //method to send the user message for reseting password
     private void beginRecovery(String email, View view) {
         ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sending_email),getContext());
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             progressDialog.dismiss();
             if (task.isSuccessful()) {
-
                 Constants.createToast(getContext(), R.string.check_email_forgot);
+                //returning to SignInFragment
                 Navigation.findNavController(view).navigate(R.id.action_forgotFragment_to_signInFragment);
             } else {
 //                Toast.makeText(getContext(), "Error Occurred " + task.getException(), Toast.LENGTH_LONG).show();
-//                Log.d("taguhi", "error  " + task.getException());
             }
         }).addOnFailureListener(e -> {
             progressDialog.dismiss();

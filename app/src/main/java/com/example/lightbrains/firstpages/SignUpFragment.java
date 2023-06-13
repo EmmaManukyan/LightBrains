@@ -34,6 +34,8 @@ import java.util.Objects;
 
 public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding binding;
+
+    //this variable is used to change editTexts' errorText if user wrote something wrong
     private String passwordError = "";
 
 
@@ -65,7 +67,7 @@ public class SignUpFragment extends Fragment {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
+            //check if the password written by user doesn't contain mistakes
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String password = charSequence.toString();
@@ -100,6 +102,8 @@ public class SignUpFragment extends Fragment {
             binding.includedLayout.tvLayPassword.setErrorEnabled(false);
             binding.includedLayout.tvLayRepeatPassword.setErrorEnabled(false);
             String password = Objects.requireNonNull(binding.includedLayout.edtPassword.getText()).toString();
+
+            //checking if everything is normal to create user in Firebase and send a verification email
             if (Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString().equals("")) {
                 binding.includedLayout.tvLayName.setError(getResources().getString(R.string.enter_name));
             } else if (Objects.requireNonNull(binding.includedLayout.edtMail.getText()).toString().equals("")) {
@@ -173,6 +177,7 @@ public class SignUpFragment extends Fragment {
         binding.includedLayout.tvLayRepeatPassword.setCounterMaxLength(ConstantsForFireBase.PASSWORD_MAX_LENGTH);
     }
 
+    //save user in realtime DB with fields userName, email and ID
     private void saveUser(String Uid) {
         String id = myDataBase.getKey();
         String userName = Objects.requireNonNull(binding.includedLayout.edtName.getText()).toString();

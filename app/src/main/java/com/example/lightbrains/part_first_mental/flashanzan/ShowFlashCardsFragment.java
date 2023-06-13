@@ -90,7 +90,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
             if (binding.btnStartFlashCards.getText().toString().equals(getResources().getString(R.string.start))) {
                 startTime = System.currentTimeMillis();
             } else if (binding.btnStartFlashCards.getText().toString().equals(getResources().getString(R.string.finish))) {
-                endTime =System.currentTimeMillis();
+                endTime = System.currentTimeMillis();
             }
             if (!running) {
                 if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
@@ -104,7 +104,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                     } else {
                         bundle.putInt(Constants.RIGHT_ANSWERS, scores);
                         bundle.putInt(Constants.COUNT_FLASH_CARDS, count);
-                        bundle.putLong(Constants.FIGURES_SHOW_TIME,endTime-startTime);
+                        bundle.putLong(Constants.FIGURES_SHOW_TIME, endTime - startTime);
                         Navigation.findNavController(view).navigate(R.id.action_showFlashCardsFragment_to_showResultsFragment, bundle);
                     }
 
@@ -215,7 +215,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
             }
 
         }
-        if (running && result.length()>0){
+        if (running && result.length() > 0) {
             while (result.charAt(0) == '0') {
                 result = result.substring(0, 0) + "" + result.substring(1);
             }
@@ -224,7 +224,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
     }
 
-
+    //showing flashcards is a separate thread to keep UI always active
     class ShowFleshCardsThread extends Thread {
         int count;
         int time;
@@ -282,9 +282,9 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
         }
     }
 
-
+    //if answer is wrong calls this method which shows the right answer
     private void answerIsWrong(String wrogAnsw, String result) {
-        Constants.createSound(requireActivity(),R.raw.wrong);
+        Constants.createSound(requireActivity(), R.raw.wrong);
         binding.tvWithSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
         binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n" + wrogAnsw + " ≠ " + result);
@@ -293,6 +293,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
 
 
         int d = result.length();
+        //make cards visibility gone
         if (d == 2) {
             myImages.get(1).setVisibility(View.VISIBLE);
             myImages.get(2).setVisibility(View.VISIBLE);
@@ -322,7 +323,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     }
 
     private void answerIsRight() {
-        Constants.createSound(requireActivity(),R.raw.right);
+        Constants.createSound(requireActivity(), R.raw.right);
         scores++;
         binding.imgSmile.setVisibility(View.VISIBLE);
         binding.tvWithSmile.setVisibility(View.VISIBLE);
@@ -333,6 +334,8 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
         binding.tvWithSmile.setTextSize(40);
         binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_right));
         r = random.nextInt(animations.size());
+
+        //animation of smiles
         YoYo.with(animations.get(r)).duration(1000).playOn(binding.imgSmile);
         YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.tvWithSmile);
     }
@@ -351,6 +354,9 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
         customDialogFragmentForExit.show(getActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
 
+
+    //This part is used for appearing a dialog when the user clicks on back button.
+    // In th dialog he/she confirms, the really wants to stop and exit
     public static BackPressedListener backpressedlistener;
 
     @Override
@@ -370,7 +376,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
         showDialog();
     }
 
-    private void checkAnswer(){
+    private void checkAnswer() {
         if (!TextUtils.isEmpty(Objects.requireNonNull(binding.edtAnswer.getText()).toString())) {
             if (binding.edtAnswer.getText().toString().equals(result)) {
                 answerIsRight();

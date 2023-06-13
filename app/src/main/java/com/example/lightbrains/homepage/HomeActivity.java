@@ -39,14 +39,18 @@ import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
     public static ActivityHomeBinding binding;
+    //this is also a simple flag which checks if user is in ProfileFragment,
+    // if it's true or false, some views will be visible or invisible
     private boolean IS_IN_PROFILE_PAGE = false;
+
+    //as I use bottomNavigation, this variable shows on which page is the user is
     private int PAGE_COUNTER = 0;
 
+    //this is a flag to make sure that onDataChanged function is called from this activity
     private boolean isInGetFromDB = false;
 
     private boolean useInternetPermission;
 
-    private boolean checkFuncIsOn = false;
 
 
     @Override
@@ -89,6 +93,7 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.myBottomNav.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
+            //check on which button the user clicked
             switch (item.getItemId()) {
                 case R.id.menu_home:
                     checkIfUserIsNotSignedIn();
@@ -144,24 +149,18 @@ public class HomeActivity extends AppCompatActivity {
         useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
 
         if (Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null) == null) {
-//         Toast.makeText(this, "CHKa", Toast.LENGTH_SHORT).show();
             getDataFromDB();
         } else {
-//            Toast.makeText(this, "Ka", Toast.LENGTH_SHORT).show();
             if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
                 checkIfUserIsNotSignedIn();
             }
             binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
             Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
         }
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, new HomeFragment()).commit();
-        //binding.myBottomNav.setSelectedItemId(R.id.menu_home);
+
     }
 
     private void loadFragment(Fragment fragment) {
-        //to attach fragment
-//        checkIfUserIsNotSignedIn();
-//        checkIfUserIsNotSignedIn();
         getSupportFragmentManager().beginTransaction().replace(R.id.fr_container, fragment).commit();
     }
 
@@ -202,7 +201,6 @@ public class HomeActivity extends AppCompatActivity {
                     Constants.myEditShared.putInt(Constants.SCORES, user.getScores());
                     Constants.myEditShared.commit();
                     Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
-                    Log.d("taguhi", "" + user.getImageUri());
                     isInGetFromDB = false;
                 }
             }
@@ -217,7 +215,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void checkIfUserIsNotSignedIn() {
-        checkFuncIsOn = true;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         FirebaseUser curUser = mAuth.getCurrentUser();
 

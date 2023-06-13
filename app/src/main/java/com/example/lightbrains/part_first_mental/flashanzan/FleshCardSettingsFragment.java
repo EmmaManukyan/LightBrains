@@ -74,7 +74,7 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
 
         }
 
-
+        //set params of spinners if the user has already chosen them one time
         if (sharedPreferences.getInt(Constants.SPEED_FLASH_CARDS, -1) != -1) {
             speedPosition = spinPositions[0];
             digitPosition = spinPositions[1];
@@ -91,8 +91,9 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
 
     }
 
+    //here I set my views' params, gt stringArrays from resources, set adapters of my spinners nd also onClickListeners
     private void init(View v) {
-        Constants.createSound(requireActivity(),R.raw.btn_click);
+        Constants.createSound(requireActivity(), R.raw.btn_click);
 
 
         binding.btnStart.setOnClickListener(this);
@@ -130,13 +131,15 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
 
     }
 
+    //as I have implemented View.OnClickListener, I need to check which view the user clicked
+    //I save clicked parameters in sharedPreferences to show them next time when the user opens this Fragment
     @Override
     public void onClick(View view) {
         int temp;
 
         if (binding.btnStart.equals(view)) {
             if (speed != -1 && digit != -1 && count != -1) {
-                Constants.createSound(requireActivity(),R.raw.right);
+                Constants.createSound(requireActivity(), R.raw.right);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.SPEED_FLASH_CARDS, speed);
                 bundle.putInt(Constants.DIGIT_FLASH_CARDS, digit);
@@ -147,7 +150,7 @@ public class FleshCardSettingsFragment extends Fragment implements View.OnClickL
                 Constants.myEditShared.commit();
                 Navigation.findNavController(view).navigate(R.id.action_fleshAnzanSettingsFragment_to_showFlashCardsFragment, bundle);
             } else {
-                Constants.createSound(requireActivity(),R.raw.wrong);
+                Constants.createSound(requireActivity(), R.raw.wrong);
                 Constants.createToast(getContext(), R.string.select_all_necessary_fields);
             }
         } else if (binding.btnPlus.equals(view)) {
