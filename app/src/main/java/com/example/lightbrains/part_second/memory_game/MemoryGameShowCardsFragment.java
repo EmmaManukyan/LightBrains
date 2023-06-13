@@ -149,6 +149,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     }
 
 
+    //this method is for flipcard animation
     public void flipCardToInitialState(final View view, int index, boolean isBack) {
         final ImageView card = (ImageView) view;
 

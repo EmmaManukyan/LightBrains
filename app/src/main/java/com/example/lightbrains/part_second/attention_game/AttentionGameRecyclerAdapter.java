@@ -36,13 +36,13 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
 
     private final Integer[] keys;
 
-
+    //this is flag used in onBindViewHolder to show answers if the user pressed button checkAnswers
     boolean isChecking = false;
 
 
     public AttentionGameRecyclerAdapter(HashMap<Integer, Integer> showedMap, Context context, int figureType) {
         this.showedMap = showedMap;
-        Log.d("TAG", "getted " + this.showedMap.toString());
+        Log.d("TAG", "got " + this.showedMap.toString());
         Set<Integer> defaultKeys = this.showedMap.keySet();
         Integer[] keys = defaultKeys.toArray(new Integer[defaultKeys.size()]);
         Arrays.sort(keys);

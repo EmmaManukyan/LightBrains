@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class FigureListCreator {
     private static int[] figuresGeometry = {R.drawable.att_game_geom_fig_6angle, R.drawable.att_game_geom_fig_5angle, R.drawable.att_game_geom_fig_rectangle, R.drawable.att_game_geom_fig_square, R.drawable.att_game_geom_fig_triangle, R.drawable.att_game_geom_fig_circle, R.drawable.att_game_geom_fig_rhombus, R.drawable.att_game_geom_fig_heart};
-    private static int[] figuresFruits = {R.drawable.att_game_abricot, R.drawable.att_game_ananas, R.drawable.att_game_apple, R.drawable.att_game_banana, R.drawable.att_game_broccoly, R.drawable.att_game_carrot, R.drawable.att_game_cherry, R.drawable.att_game_cucumber
+        private static int[] figuresFruits = {R.drawable.att_game_abricot, R.drawable.att_game_ananas, R.drawable.att_game_apple, R.drawable.att_game_banana, R.drawable.att_game_broccoly, R.drawable.att_game_carrot, R.drawable.att_game_cherry, R.drawable.att_game_cucumber
             , R.drawable.att_game_pumpkin, R.drawable.att_game_cucuruze, R.drawable.att_game_grapes
             ,R.drawable.att_game_lemon, R.drawable.att_game_strawberry, R.drawable.att_game_pear
             , R.drawable.att_game_pepper, R.drawable.att_game_pomodor, R.drawable.att_game_watermelon

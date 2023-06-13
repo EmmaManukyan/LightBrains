@@ -69,6 +69,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 Constants.closeKeyboard(requireActivity());
                 adapter.isChecking = true;
                 answersAreChecked = true;
+                //this method calls onBindViewHolder which shows the written answer is right o not
                 adapter.notifyDataSetChanged();
 
                 if (!adapter.getAnswersMap().containsValue(false) && adapter.getAnswersMap().containsValue(true)) {
