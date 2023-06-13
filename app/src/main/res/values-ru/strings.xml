@@ -6,6 +6,7 @@
     <string name="welcome">Добро пожаловать!</string>
     <string name="mental_helps_welcome_page">Давай тренируем твой мозг</string>
     <string name="email">Эл. почта</string>
+    <string name="email_is_already_signed_up">Эл. почта уже зарегистрирована</string>
     <string name="password">Пароль</string>
     <string name="forget_your_password_retry">Забыли пароль?</string>
     <string name="i_am_a_new_user">Я новый пользователь</string>

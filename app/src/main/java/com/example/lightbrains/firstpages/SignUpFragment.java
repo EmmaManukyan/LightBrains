@@ -139,7 +139,7 @@ public class SignUpFragment extends Fragment {
                                     Constants.createToast(getContext(), R.string.email_is_invalid);
 //                                    mTxtEmail.setError(getString(R.string.error_invalid_email));
                                 } catch (FirebaseAuthUserCollisionException e) {
-                                    Constants.createToast(getContext(), R.string.email);
+                                    Constants.createToast(getContext(), R.string.email_is_already_signed_up);
                                 } catch (Exception e) {
                                     //Log.e(TAG, e.getMessage());
                                     Constants.createToast(getContext(), R.string.something_went_wrong);

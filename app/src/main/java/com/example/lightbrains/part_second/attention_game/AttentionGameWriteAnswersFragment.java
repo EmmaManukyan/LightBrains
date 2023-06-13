@@ -146,7 +146,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     }
 
     private int getHighScore() {
-        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3);
+        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3)/2;
         Log.d("attgame", "scores  " + scores);
         return scores;
     }

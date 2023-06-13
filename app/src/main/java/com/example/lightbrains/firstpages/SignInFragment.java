@@ -46,14 +46,16 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
         init();
-        binding.imgGuest.setOnClickListener(v -> {
+
+        //helper view for jury
+        /*binding.imgGuest.setOnClickListener(v -> {
             Constants.createSound(requireActivity(), R.raw.guest_sound);
 
             binding.tvGuestInfo.setVisibility(!guestOpened ? View.VISIBLE : View.GONE);
             YoYo.with(!guestOpened ? Techniques.SlideInRight : Techniques.SlideOutRight).duration(500).playOn(binding.tvGuestInfo);
             guestOpened = !guestOpened;
             if (guestOpened) Constants.makeSoundEffect();
-        });
+        });*/
         return binding.getRoot();
     }
 

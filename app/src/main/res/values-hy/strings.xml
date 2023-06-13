@@ -6,6 +6,7 @@
     <string name="welcome">Բարի գալուստ!</string>
     <string name="mental_helps_welcome_page">Արի մարզենք ուղեղդ</string>
     <string name="email">Էլ․ փոստ</string>
+    <string name="email_is_already_signed_up">Էլ․ փոստն արդեն գրանցված է</string>
     <string name="password">Գաղտաբառ</string>
     <string name="forget_your_password_retry">Մոռացե՞լ եք գաղտնաբառը</string>
     <string name="i_am_a_new_user">Ես նոր օգտատեր եմ</string>
@@ -128,7 +129,7 @@
     <string name="excellent">Գերազանց է!</string>
     <string name="settings">Կարգավորումներ</string>
     <string name="sounds_on_off">Ձայնային էֆեկտներ</string>
-    <string name="top_10_leaders">Թոփ 10 առաջատարներ</string>
+    <string name="top_10_leaders">Թոփ 10</string>
     <string name="use_internet_to_be_always_online">Օգտագործել ինտերնետը</string>
     <string name="memory_game">Խաղ-համընկնում</string>
     <string name="count_of_columns">Սյուների և տողերի քանակ</string>
@@ -147,7 +148,7 @@
 
     <string-array name="string_figures_array">
         <item>Երկրաչափական պատկերներ</item>
-        <item>Մրգեր և բանջարեղեններ</item>
+        <item>Մրգեր և բանջարեղեն</item>
         <item>Կենդանիներ</item>
     </string-array>
 

@@ -113,7 +113,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
         if (numOfRows * numOfColumns % 2 == 1) {
             resources.add(R.drawable.baseline_scores_24);
             countOfPairs++;
-            Toast.makeText(getContext(), "" + countOfPairs, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "" + countOfPairs, Toast.LENGTH_SHORT).show();
         }
         Collections.shuffle(resources);
 
@@ -323,7 +323,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
 
     private int giveScores(int countOfRows,int countOfColumns,int countOfSteps){
         int maxScores = (int) (countOfColumns*countOfRows*1.5);
-        int scores = Math.max(maxScores - countOfSteps, (countOfRows + countOfColumns)/2);
+        int scores = Math.max(maxScores - countOfSteps, (countOfRows + countOfColumns)/4);
 //        Toast.makeText(getContext(), "Scores "+scores, Toast.LENGTH_SHORT).show();
         return scores;
     }

@@ -7,6 +7,7 @@
     <string name="welcome">Welcome!</string>
     <string name="mental_helps_welcome_page">Let\'s train your brain!</string>
     <string name="email">Email</string>
+    <string name="email_is_already_signed_up">Email is already signed up</string>
     <string name="password">Password</string>
     <string name="forget_your_password_retry">Forgot password?</string>
     <string name="i_am_a_new_user">I am a new user</string>

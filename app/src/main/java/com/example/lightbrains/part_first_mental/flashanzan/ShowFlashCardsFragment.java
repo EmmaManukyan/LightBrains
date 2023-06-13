@@ -220,7 +220,7 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                 result = result.substring(0, 0) + "" + result.substring(1);
             }
         }
-        Toast.makeText(getContext(), "" + result, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "" + result, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -30,7 +30,9 @@
             android:layout_weight="10"
             android:text="@string/sign_in" />
 
-        <com.google.android.material.imageview.ShapeableImageView
+
+<!--        helper view for jury-->
+        <!--<com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_guest"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -42,10 +44,10 @@
             android:src="@drawable/img_profile_default"
             app:shapeAppearanceOverlay="@style/CircleCornerRoundedImage"
             app:strokeColor="@color/purple_500"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp" />-->
     </LinearLayout>
 
-    <TextView
+   <!-- <TextView
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -57,7 +59,7 @@
         android:paddingEnd="8dp"
         android:text="@string/guest"
         android:textColor="@color/purple_500"
-        android:textSize="14sp" />
+        android:textSize="14sp" />-->
 
     <TextView
         android:id="@+id/tv_guest_info"
