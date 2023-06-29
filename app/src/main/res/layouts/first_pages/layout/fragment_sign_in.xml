@@ -86,7 +86,7 @@
             android:inputType="textWebPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.gms.common.SignInButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_in_with_google"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +94,13 @@
         android:layout_gravity="center"
         style="@style/MyStyleForFirstPageButtons"
         android:padding="0dp"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:background="@drawable/background_btn4_transparent"
+        android:text="@string/continue_with_google"
+        android:drawableStart="@drawable/img_google_icon"
+        android:paddingStart="16dp"
+        />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_in"
         style="@style/MyStyleForFirstPageButtons"

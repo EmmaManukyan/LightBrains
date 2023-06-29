@@ -39,7 +39,7 @@ public class RecyclerAdapterLeaderBoard extends RecyclerView.Adapter<RecyclerAda
         return new MyViewHolder(view);
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterLeaderBoard.MyViewHolder holder, int position) {
         int realPosition = users.size()-1-position;

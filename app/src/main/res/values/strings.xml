@@ -17,6 +17,8 @@
     <string name="check_email_forgot">Check your email</string>
     <string name="reset_my_password">Reset my password</string>
     <string name="email_address_forgot">Email address</string>
+    <string name="continue_with_google">Continue with Google</string>
+
 
     <string name="enter_password">Enter password</string>
     <string name="enter_strong_password">Enter strong password</string>

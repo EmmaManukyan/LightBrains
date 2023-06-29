@@ -74,7 +74,6 @@ public class LeaderBoardFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             binding.progressBrLeaderBoard.setVisibility(View.VISIBLE);
-            Log.d("fir", "mtanq");
         }
 
         @Override
@@ -107,7 +106,7 @@ public class LeaderBoardFragment extends Fragment {
         List<User> topUsers = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(ConstantsForFireBase.USER_KEY);
         //here I create a query which gets top 10 users with high scores and orders them by this parameter
-        Query myTopUsers = ref.orderByChild(Constants.SCORES).limitToFirst(10);
+        Query myTopUsers = ref.orderByChild(Constants.SCORES).limitToLast(11);
         myTopUsers.addValueEventListener(new ValueEventListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override

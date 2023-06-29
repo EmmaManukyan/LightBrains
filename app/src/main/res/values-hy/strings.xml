@@ -16,6 +16,8 @@
     <string name="check_email_forgot">Ստուգեք ձեր էլ․ փոստը</string>
     <string name="reset_my_password">Վերականգնել գաղտնաբառը</string>
     <string name="email_address_forgot">Էլ․ փոստ</string>
+    <string name="continue_with_google">Շարունակել Google-ով</string>
+
 
     <string name="enter_password">Մուտքագրեք գաղտնաբառ</string>
     <string name="enter_strong_password">Մուտքագրեք ամուր գաղտնաբառ</string>

@@ -112,7 +112,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                                             if (task.isSuccessful()) {
                                                 // Sign-in success, update UI with the signed-in user's information
                                                 FirebaseUser user = mAuth.getCurrentUser();
-                                                Toast.makeText(requireContext(), "Ba exav " + user.getEmail(), Toast.LENGTH_SHORT).show();
                                                 if (!isEmailExists) {
 
                                                     saveUser(user);
