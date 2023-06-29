@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <RadioButton android:id="@+id/radio_pirates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:buttonTint="@color/yellow_dark"
+            />
+        <!--<com.google.android.material.slider.Slider
+            android:id="@+id/slider_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/yellow"
+            android:scaleY="1"
+            android:stepSize="1"
+            android:thumbTint="@color/yellow_dark"
+            android:valueFrom="3"
+            android:valueTo="15"
+            app:haloColor="@color/yellow"
+            app:labelBehavior="gone"
+            app:thumbColor="@color/yellow_dark"
+            app:tickColor="@color/yellow_dark"
+            app:trackColor="@color/yellow"
+            android:soundEffectsEnabled="true"/>-->
+        <RadioButton android:id="@+id/radio_ninjas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/count_of_steps"
+            android:buttonTint="@color/yellow_dark"
+            android:layout_marginStart="8dp"/>
+    </RadioGroup>
+
+
+
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_figure_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/yellow"
+        android:scaleY="1"
+        android:stepSize="1"
+        android:thumbTint="@color/yellow_dark"
+        android:valueFrom="3"
+        android:valueTo="20"
+        app:haloColor="@color/yellow"
+        app:labelBehavior="gone"
+        app:thumbColor="@color/yellow_dark"
+        app:tickColor="@color/yellow_dark"
+        app:trackColor="@color/yellow"
+        android:soundEffectsEnabled="true"/>
+
+
+</LinearLayout>

@@ -54,7 +54,7 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
     private Level level;
 
     private boolean runningThread = false;
-    //0-> has runned
+    //0-> has run
 
     private boolean uiThreadIsRunning = false;
 

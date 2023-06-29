@@ -191,7 +191,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
+                Log.d("TAG",user.getEmail());
+
                 if (user != null && isInGetFromDB) {
+                    Log.d("TAG",user.getEmail());
                     assert curUser != null;
                     myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(!user.getEmail().equals(ConstantsForFireBase.GUEST_EMAIL));
                     myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(true);

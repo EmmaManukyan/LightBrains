@@ -195,7 +195,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                         showRightAnimation(getResources().getString(R.string.your_answer_is_right));
                         countOfPairs--;
 
-//                        Toast.makeText(getContext(), ""+countOfPairs, Toast.LENGTH_SHORT).show();
                         flipCardToInitialState(openedImages.get(0), -1, false);
                         flipCardToInitialState(openedImages.get(1), -1, false);
 //                        Toast.makeText(MatchingGameActivity.this, "Eka", Toast.LENGTH_SHORT).show();

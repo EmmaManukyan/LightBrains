@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,12 +27,24 @@ import com.example.lightbrains.common.ConstantsForFireBase;
 import com.example.lightbrains.databinding.FragmentSignInBinding;
 import com.example.lightbrains.firebase_classes.User;
 import com.example.lightbrains.homepage.HomeActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
@@ -40,6 +53,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     //this is a simple flag to make sure that the user has clicked on signInButton
     // and this is not onDataChange function called from other cladd when something has changed in Firebase
     private boolean btnIsClicked = false;
+    private static final int RC_SIGN_IN = 1;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient googleSignInClient;
 
 
     @Override
@@ -47,17 +63,85 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = FragmentSignInBinding.inflate(inflater, container, false);
         init();
+        binding.btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Установка обработчика нажатия на кнопку входа
+                signInWithGoogle();
+            }
+        });
 
-        //helper view for jury
-        /*binding.imgGuest.setOnClickListener(v -> {
-            Constants.createSound(requireActivity(), R.raw.guest_sound);
-
-            binding.tvGuestInfo.setVisibility(!guestOpened ? View.VISIBLE : View.GONE);
-            YoYo.with(!guestOpened ? Techniques.SlideInRight : Techniques.SlideOutRight).duration(500).playOn(binding.tvGuestInfo);
-            guestOpened = !guestOpened;
-            if (guestOpened) Constants.makeSoundEffect();
-        });*/
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign-In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sign_in), getContext());
+        mAuth.fetchSignInMethodsForEmail(account.getEmail())
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<SignInMethodQueryResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                        if (task.isSuccessful()) {
+                            SignInMethodQueryResult result = task.getResult();
+                            boolean isEmailExists = result.getSignInMethods() != null
+                                    && result.getSignInMethods().size() > 0;
+
+
+                            // Email exists in Firebase Authentication
+                            // Proceed with sign-in
+                            mAuth.signInWithCredential(credential)
+                                    .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                // Sign-in success, update UI with the signed-in user's information
+                                                FirebaseUser user = mAuth.getCurrentUser();
+                                                Toast.makeText(requireContext(), "Ba exav " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                                                if (!isEmailExists) {
+
+                                                    saveUser(user);
+                                                }
+                                                progressDialog.dismiss();
+                                                signIn(user);
+
+                                                // You can access the user's information using 'user' object
+                                            } else {
+                                                // Sign-in failed, display a message to the user
+                                                Log.w("TAG", "signInWithCredential:failure", task.getException());
+                                                // ...
+                                            }
+                                        }
+                                    });
+
+                        } else {
+                            // Error occurred while checking email existence
+                            // Handle the error gracefully
+                            // ...
+                        }
+                    }
+                });
+    }
+
+
+    private void signInWithGoogle() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     //SignInFragment implements View.OnClickListener, so I have method onClick here I need to check which view has been clicked
@@ -88,7 +172,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 Constants.createSound(requireActivity(), R.raw.sound_first_pages);
                 String email = binding.edtMail.getText().toString();
                 String password = binding.edtPassword.getText().toString();
-                progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
                 btnIsClicked = true;
 
                 ConstantsForFireBase.showProgressDialog(progressDialog, getResources().getString(R.string.sign_in), getContext());
@@ -105,20 +188,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                                     isSignedIn[0] = Boolean.TRUE.equals(snapshot.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).getValue(Boolean.class));
                                     //checking if user's email is verified
                                     if (curUser.isEmailVerified()) {
-                                        /*if (!isSignedIn[0]) {*/
-                                        Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
-                                        String newToken = User.generateToken();
-                                        Constants.myEditShared.putString(ConstantsForFireBase.USER_TOKEN, newToken);
-                                        myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).setValue(newToken);
-                                        Constants.myEditShared.commit();
-                                        Intent intent = new Intent(getActivity(), HomeActivity.class);
-                                        intent.putExtra(ConstantsForFireBase.USER_KEY, curUser.getUid());
-                                        startActivity(intent);
-                                        requireActivity().finish();
-                                       /*} else {
-                                           FirebaseAuth.getInstance().signOut();
-                                           Constants.createToast(getContext(),R.string.user_is_already_signed_in);
-                                       }*/
+                                        signIn(curUser);
+
                                     } else {
                                         Constants.createToast(getContext(), R.string.email_not_veified);
                                     }
@@ -157,6 +228,42 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         binding.tvLayPassword.setCounterMaxLength(PASSWORD_MAX_LENGTH);
         binding.tvGuestInfo.setText(getResources().getString(R.string.tv_guest_info) + getResources().getString(R.string.email) + ": " +
                 ConstantsForFireBase.GUEST_EMAIL + "\n" + getResources().getString(R.string.password) + ": " + ConstantsForFireBase.GUEST_PASSWORD);
+
+        progressDialog = new ProgressDialog(getContext(), R.style.MyStyleForProgressDialog);
+
+        // Конфигурация параметров Google Sign-In
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Инициализация клиента Google Sign-In
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+
+    }
+
+    //function to save data to sharedPreferences and mov to next activity
+    private void signIn(FirebaseUser curUser) {
+        Constants.myEditShared.putBoolean(Constants.IS_LOGIN, true);
+        String newToken = User.generateToken();
+        Constants.myEditShared.putString(ConstantsForFireBase.USER_TOKEN, newToken);
+        myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).setValue(newToken);
+        Constants.myEditShared.commit();
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        intent.putExtra(ConstantsForFireBase.USER_KEY, curUser.getUid());
+        Log.d("TAG", curUser.getUid());
+        startActivity(intent);
+        requireActivity().finish();
+    }
+
+
+    private void saveUser(FirebaseUser user) {
+        Toast.makeText(requireContext(), "Saving user...", Toast.LENGTH_SHORT).show();
+        String id = myDataBase.getKey();
+        User newUser = new User(id, "Username", user.getEmail(), 0, "hello",ConstantsForFireBase.USER_TOKEN);
+        myDataBase.child(user.getUid()).setValue(newUser);
+        myDataBase.child(user.getUid()).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(true);
+
     }
 
 }
