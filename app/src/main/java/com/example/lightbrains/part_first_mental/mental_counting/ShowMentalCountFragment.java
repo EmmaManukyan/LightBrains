@@ -150,7 +150,6 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                     //I have created interface Level which has method createArrayToCount
                     //every childClass implements this method and creates array of numbers appropriate to the topic
                     numbersArrayToShow = levelClass.createArrayToCount(digit, countOfRows, subtopicLevel);
-                    Log.d("TAG", Arrays.toString(numbersArrayToShow));
                     try {
                         Thread.sleep(500);
                         uiThreadIsRunning = true;
@@ -179,7 +178,6 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                             }
                         }
                         result = String.valueOf(Arrays.stream(numbersArrayToShow).sum());
-                        Log.d("TAG", result + "");
 
 
                     } catch (InterruptedException e) {
@@ -320,13 +318,6 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
         subtopicLevel = bundle.getInt(Constants.SUBTOPIC_LEVEL_MENTAL);
         topicLevel = bundle.getInt(Constants.TOPIC_LEVEL_MENTAL);
         countOfRows = bundle.getInt(Constants.COUNT_OF_ROWS_MENTAL);
-
-        Log.d("TAG", "speed: " + speed);
-        Log.d("TAG", "count: " + countOfExamples);
-        Log.d("TAG", "rowcount: " + countOfRows);
-        Log.d("TAG", "digit: " + digit);
-        Log.d("TAG", "level: " + topicLevel);
-        Log.d("TAG", "sublevel: " + subtopicLevel);
 
 
     }

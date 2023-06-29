@@ -116,7 +116,6 @@ public class SignUpFragment extends Fragment {
                 binding.includedLayout.tvLayPassword.setError(passwordError);
             } else if (!Objects.requireNonNull(binding.includedLayout.edtRepeatPassword.getText()).toString().equals(binding.includedLayout.edtPassword.getText().toString())) {
                 binding.includedLayout.tvLayRepeatPassword.setError(getResources().getString(R.string.this_password_is_different));
-                Log.d("taguhi", binding.includedLayout.edtPassword.getText().toString() + "  " + binding.includedLayout.edtRepeatPassword.getText().toString());
             } else if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
                 Constants.createToast(getContext(), R.string.you_are_offline);
             } else {
@@ -138,14 +137,11 @@ public class SignUpFragment extends Fragment {
                                 try {
                                     throw Objects.requireNonNull(task.getException());
                                 } catch (FirebaseAuthWeakPasswordException e) {
-//                                    mTxtPassword.setError(getString(R.string.error_weak_password));
                                 } catch (FirebaseAuthInvalidCredentialsException e) {
                                     Constants.createToast(getContext(), R.string.email_is_invalid);
-//                                    mTxtEmail.setError(getString(R.string.error_invalid_email));
                                 } catch (FirebaseAuthUserCollisionException e) {
                                     Constants.createToast(getContext(), R.string.email_is_already_signed_up);
                                 } catch (Exception e) {
-                                    //Log.e(TAG, e.getMessage());
                                     Constants.createToast(getContext(), R.string.something_went_wrong);
 
                                 }
@@ -185,7 +181,6 @@ public class SignUpFragment extends Fragment {
         User newUser = new User(id, userName, email, 0, "hello",ConstantsForFireBase.USER_TOKEN);
         myDataBase.child(Uid).setValue(newUser);
         myDataBase.child(Uid).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(false);
-//        myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(email.replace(".", "")).setValue(false);
 
     }
 

@@ -44,13 +44,11 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
 
     private HashMap<Integer, Integer> showedMap;
 
-    //private long startTime;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentAttentionGameShowFiguresBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -83,7 +81,6 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
                 AttentionGameValues.setFiguresLevel(figuresLevel);
                 AttentionGameValues.setShowTime((float) showTime / 1000);
                 AttentionGameValues.setFiguresCount(figuresCount);
-                //AttentionGameValues.setStartTime(startTime);
                 AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
                 Navigation.findNavController(getView()).navigate(R.id.action_attentionGameShowFiguresFragment_to_attentionGameWriteAnswersFragment, bundle);
             }
@@ -98,17 +95,14 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
     }
 
     private void getArgs() {
-
-
         complexityLevel = AttentionGameValues.getComplexityLevel();
         figuresType = AttentionGameValues.getFiguresType();
         figuresLevel = AttentionGameValues.getFiguresLevel();
         figuresCount = AttentionGameValues.getFiguresCount();
         figuresGroupCount = AttentionGameValues.getFiguresGroupCount();
         showTime = (int) (AttentionGameValues.getShowTime() * 1000);
-        //startTime = AttentionGameValues.getStartTime();
 
-
+        // Проверяем уровень сложности и устанавливаем соответствующие значения
         if (complexityLevel == 0) {
             figuresType = Constants.getRandomInRange(0, FigureListCreator.figureTypes.length - 1);
             figuresLevel = 3;
@@ -126,16 +120,9 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             showTime = 700;
             figuresCount = 14;
         }
-        Log.d("TAG", "compLevel: " + complexityLevel);
-        Log.d("TAG", "figType: " + figuresType);
-        Log.d("TAG", "figLevel: " + figuresLevel);
-        Log.d("TAG", "figCount: " + figuresCount);
-        Log.d("TAG", "time: " + showTime);
-
-
     }
 
-    //here I use thread too, to show my figures and keep UI clickable
+    // Здесь также используется поток (thread), чтобы отображать фигуры и сохранять интерактивность пользовательского интерфейса (UI)
     class ThreadToShowFigures extends Thread {
         HashMap<Integer, Integer> showThisMap;
 
@@ -158,7 +145,7 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
             return key;
         }
 
-        //showing figures is here, I have the map of figures which contains their indexes and how many times they appear
+        // Показ фигур осуществляется здесь. У меня есть Map фигур, которая содержит их индексы и количество раз, которое они появляются
         private boolean funcOnUi(HashMap<Integer, Integer> showThisMap) {
             for (int j = 0; j < figuresCount; j++) {
                 if (runningThread) {
@@ -194,7 +181,6 @@ public class AttentionGameShowFiguresFragment extends Fragment implements BackPr
                 if (runningThread) {
                     showThisMap = FigureListCreator.createMapOfFigures(figuresType, figuresLevel, figuresCount);
                     showedMap = (HashMap<Integer, Integer>) showThisMap.clone();
-                    //Log.d("TAG", "showed map============================" + showedMap.toString());
 
                     if (funcOnUi(showThisMap)) {
                         runningThread = false;

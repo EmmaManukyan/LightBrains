@@ -63,8 +63,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-//        createTableOfImages(2,3);
-//        Toast.makeText(getContext(), rows + " " + columns, Toast.LENGTH_SHORT).show();
         createTableOfImages(rows, columns);
         startTime = System.currentTimeMillis();
 
@@ -84,7 +82,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                     bundle.putLong(Constants.FIGURES_SHOW_TIME, endTime - startTime);
                     bundle.putInt(Constants.COUNT_OF_STEPS, countOfSteps);
                     bundle.putInt(Constants.SCORES,giveScores(rows,columns,countOfSteps));
-//                    Toast.makeText(getContext(), ""+countOfSteps, Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(v).navigate(R.id.action_memoryGameShowCardsFragment_to_memoryGameResultsFragment, bundle);
                 }
             }
@@ -108,12 +105,10 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
         for (int i = start; i < start + (numOfRows * numOfColumns) / 2; i++) {
             resources.add(imageResources[i % imageResources.length]);
             resources.add(imageResources[i % imageResources.length]);
-            Log.d("taguhi", "" + i);
         }
         if (numOfRows * numOfColumns % 2 == 1) {
             resources.add(R.drawable.baseline_scores_24);
             countOfPairs++;
-//            Toast.makeText(getContext(), "" + countOfPairs, Toast.LENGTH_SHORT).show();
         }
         Collections.shuffle(resources);
 
@@ -141,7 +136,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                         isInFlipAnimFunc = ++isInFlipAnimFunc % 3;
                         flipCardToInitialState(imageView, imageIndex, true);
                     }
-//                    Toast.makeText(MatchingGameActivity.this, "" + imageIndex, Toast.LENGTH_SHORT).show();
                 });
                 binding.myGridlayout.addView(imageView);
             }
@@ -149,7 +143,7 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     }
 
 
-    //this method is for flipcard animation
+//этот метод используется для анимации переворота карточки
     public void flipCardToInitialState(final View view, int index, boolean isBack) {
         final ImageView card = (ImageView) view;
 
@@ -165,7 +159,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
             public void onAnimationEnd(Animator animation) {
                 card.setRotationY(-90f);
                 if (figureType == 0 && isBack) {
-//                    Toast.makeText(getContext(), "mta", Toast.LENGTH_SHORT).show();
                     card.setPadding(32, 32, 32, 32);
                 } else {
                     card.setPadding(0, 0, 0, 0);
@@ -176,7 +169,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
                     openedImages.add(card);
                     card.setImageResource(resources.get(index));
 
-                    Log.d("taguhi", "size: " + openedImages.size());
                 } else {
                     card.setImageResource(R.drawable.img_profile_default);
                     card.setContentDescription(Constants.DEFAULT_CONTENT_DESCRIPTION);
@@ -189,15 +181,12 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
 
                 isFront = !isFront;
                 if (openedImages.size() > 1) {
-                    Log.d("taguhi", openedImages.get(0) + " " + openedImages.get(1).getDrawable().getConstantState());
                     if (openedImages.get(0).getContentDescription().equals(openedImages.get(1).getContentDescription())) {
-//                        Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
                         showRightAnimation(getResources().getString(R.string.your_answer_is_right));
                         countOfPairs--;
 
                         flipCardToInitialState(openedImages.get(0), -1, false);
                         flipCardToInitialState(openedImages.get(1), -1, false);
-//                        Toast.makeText(MatchingGameActivity.this, "Eka", Toast.LENGTH_SHORT).show();
                         requireActivity().runOnUiThread(() -> {
                             YoYo.with(Techniques.ZoomOut).duration(Constants.YOYO_ANIM_DURATION).playOn(openedImages.get(0));
                             YoYo.with(Techniques.ZoomOut).duration(Constants.YOYO_ANIM_DURATION).playOn(openedImages.get(1));
@@ -250,7 +239,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
         rows = bundle.getInt(Constants.COUNT_OF_ROWS);
         columns = bundle.getInt(Constants.COUNT_OF_COLUMNS);
         figureType = bundle.getInt(Constants.FIGURES_TYPE) - 1;
-// Convert the shuffled list back to an arr
     }
 
 
@@ -324,7 +312,6 @@ public class MemoryGameShowCardsFragment extends Fragment implements BackPressed
     private int giveScores(int countOfRows,int countOfColumns,int countOfSteps){
         int maxScores = (int) (countOfColumns*countOfRows*1.5);
         int scores = Math.max(maxScores - countOfSteps, (countOfRows + countOfColumns)/4);
-//        Toast.makeText(getContext(), "Scores "+scores, Toast.LENGTH_SHORT).show();
         return scores;
     }
 }

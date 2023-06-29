@@ -36,13 +36,12 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
 
     private final Integer[] keys;
 
-    //this is flag used in onBindViewHolder to show answers if the user pressed button checkAnswers
+    // Флаг, используемый в методе onBindViewHolder для отображения ответов, если пользователь нажал кнопку "Проверить ответы"
     boolean isChecking = false;
 
 
     public AttentionGameRecyclerAdapter(HashMap<Integer, Integer> showedMap, Context context, int figureType) {
         this.showedMap = showedMap;
-        Log.d("TAG", "got " + this.showedMap.toString());
         Set<Integer> defaultKeys = this.showedMap.keySet();
         Integer[] keys = defaultKeys.toArray(new Integer[defaultKeys.size()]);
         Arrays.sort(keys);
@@ -66,27 +65,27 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        //Log.d("TAG", "imgIndex =    " + this.showedMap.get(keys[position]));
-
         if (isChecking) {
+            // Если выполняется проверка ответов
             holder.imgIsRight.setVisibility(View.VISIBLE);
             holder.edtAnswer.setEnabled(false);
             String s = holder.edtAnswer.getText().toString();
             if (s.isEmpty()) {
                 if (s.equals("")) s = "?";
-                Log.d("tagavor", answersMap.toString());
                 holder.edtAnswer.setTextColor(context.getResources().getColor(R.color.is_wrong));
                 holder.edtAnswer.setText(s + " ≠ " + holder.imgFigure.getContentDescription().toString().replace(Constants.WRONG, ""));
             } else if (holder.imgIsRight.getContentDescription().toString().contains(Constants.WRONG)) {
                 holder.edtAnswer.setTextColor(context.getResources().getColor(R.color.is_wrong));
                 holder.edtAnswer.setText(s + " ≠ " + showedMap.get(Integer.parseInt(holder.imgIsRight.getContentDescription().toString().replace(Constants.WRONG, ""))));
-
             }
         } else {
+            // Если не выполняется проверка ответов
             holder.imgFigure.setImageResource(FigureListCreator.figureTypes[figureType][keys[position]]);
             holder.imgFigure.setContentDescription(Objects.requireNonNull(showedMap.get(keys[position])).toString());
         }
+
         holder.edtAnswer.addTextChangedListener(new TextWatcher() {
+            // Слушатель изменений текста в поле ввода ответа
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -100,18 +99,19 @@ public class AttentionGameRecyclerAdapter extends RecyclerView.Adapter<Attention
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!holder.edtAnswer.getText().toString().equals("") && !isChecking) {
+                    // Если поле ввода ответа не пусто и не выполняется проверка ответов
                     if (Integer.parseInt(holder.edtAnswer.getText().toString()) == showedMap.get(keys[position])) {
+                        // Если введенный ответ совпадает с правильным ответом
                         answersMap.put(keys[position], true);
                         holder.imgIsRight.setImageResource(R.drawable.right);
                         holder.imgIsRight.setContentDescription(showedMap.get(keys[position]).toString());
                     } else {
+                        // Если введенный ответ не совпадает с правильным ответом
                         answersMap.put(keys[position], false);
                         holder.imgIsRight.setImageResource(R.drawable.wrong);
                         holder.imgIsRight.setContentDescription(Constants.WRONG + keys[position].toString());
-
                     }
                 }
-                Log.d("TAG", holder.edtAnswer.getText() + "  " + "position: " + answersMap.get(keys[position]));
             }
         });
     }

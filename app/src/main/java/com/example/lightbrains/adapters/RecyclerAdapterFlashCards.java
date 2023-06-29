@@ -26,9 +26,9 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
     private Context context;
     private Activity activity;
 
-
     private final OnItemClickListener listener;
 
+    // Конструктор адаптера, принимающий список элементов, контекст, слушателя и активность
     public RecyclerAdapterFlashCards(List<RecyclerViewItem> recyclerItem, Context context, OnItemClickListener listener, Activity activity) {
         this.recyclerItemsList = recyclerItem;
         this.context = context;
@@ -39,8 +39,10 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
     @NonNull
     @Override
     public RecyclerAdapterFlashCards.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Получаем контекст родительского элемента и создаем инфлейтер
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+        // Создаем представление элемента списка
         View recItemView = inflater.inflate(R.layout.recycler_item_layout, parent, false);
         return new MyViewHolder(recItemView);
     }
@@ -48,12 +50,18 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterFlashCards.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Resources res = context.getResources();
+        // Устанавливаем текст заголовка из списка
         holder.getTvTitleName().setText(recyclerItemsList.get(position).getTitleName());
+        // Устанавливаем изображение из списка
         holder.getImgLabel().setImageDrawable(res.getDrawable(recyclerItemsList.get(position).getImageResource()));
+        // Устанавливаем цвет фона из списка
         holder.getConstLayInRecycler().setBackgroundColor(res.getColor(recyclerItemsList.get(position).getColorResource()));
+        // Обработчик нажатия на элемент списка
         holder.view.setOnClickListener(view -> {
+            // Вызываем метод слушателя при нажатии на элемент списка
             listener.onItemClick(recyclerItemsList.get(position), position);
-            Constants.createSound(activity,R.raw.btn_click);
+            // Создаем звуковой эффект щелчка кнопки
+            Constants.createSound(activity, R.raw.btn_click);
             Constants.makeSoundEffect();
         });
     }
@@ -67,23 +75,9 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
         private final ConstraintLayout constLayInRecycler;
         private final ImageView imgLabel;
         private final TextView tvTitleName;
-
-        public ConstraintLayout getConstLayInRecycler() {
-            return constLayInRecycler;
-        }
-
-
-        public ImageView getImgLabel() {
-            return imgLabel;
-        }
-
-
-        public TextView getTvTitleName() {
-            return tvTitleName;
-        }
-
         View view;
 
+        // Конструктор ViewHolder, инициализирующий элементы представления
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             constLayInRecycler = itemView.findViewById(R.id.const_lay_recycler);
@@ -91,11 +85,23 @@ public class RecyclerAdapterFlashCards extends RecyclerView.Adapter<RecyclerAdap
             tvTitleName = itemView.findViewById(R.id.tv_title_name_recycler_item);
             view = itemView;
         }
+
+        // Геттеры для элементов представления
+        public ConstraintLayout getConstLayInRecycler() {
+            return constLayInRecycler;
+        }
+
+        public ImageView getImgLabel() {
+            return imgLabel;
+        }
+
+        public TextView getTvTitleName() {
+            return tvTitleName;
+        }
     }
 
+    // Интерфейс слушателя нажатия на элемент списка
     public interface OnItemClickListener {
         void onItemClick(RecyclerViewItem item, int position);
     }
 }
-
-

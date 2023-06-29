@@ -103,7 +103,6 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
             binding.autoTvCount.setText(Integer.toString(sharedPreferences.getInt(Constants.COUNT_OF_ROWS_MENTAL, 2)));
             countOfRows = Integer.parseInt(Objects.requireNonNull(binding.autoTvCount.getText()).toString());
             countOfExamples = sharedPreferences.getInt(Constants.COUNT_OF_EXAMPLES_MENTAL,5);
-            Log.d("TAG",countOfExamples+"");
             binding.sliderExampleCount.setValue(countOfExamples);
             binding.tvNumberExampleCount.setText(getResources().getString(R.string.quantity)+" "+ countOfExamples);
             if (topicLevel!=0){
@@ -191,7 +190,6 @@ public class MentalCountingSettingsFragment extends Fragment implements View.OnC
         if (binding.btnStart.equals(view)) {
             Constants.createSound(requireActivity(),R.raw.right);
             if (topicLevel>1){
-                Log.d("taguhi",""+subtopicLevel);
                 Navigation.findNavController(view).navigate(R.id.action_mentalCountingSettingsFragment_to_mentalCountingPartWorkingPageFragment);
             }
             else if (speed != -1 && digit != -1 && countOfRows != -1) {

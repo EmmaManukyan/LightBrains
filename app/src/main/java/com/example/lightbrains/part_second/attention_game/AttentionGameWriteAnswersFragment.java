@@ -48,10 +48,9 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Constants.createSound(requireActivity(),R.raw.right);
+        Constants.createSound(requireActivity(), R.raw.right);
         Bundle bundle = getArguments();
         assert bundle != null;
-        //figuresGroupCount = bundle.getInt(Constants.FIGURES_GROUP_COUNT);
         figuresGroupCount = AttentionGameValues.getFiguresGroupCount();
         showedMap = new HashMap<>();
         HashMap<Integer, Integer> tempShowedMap = (HashMap<Integer, Integer>) bundle.getSerializable(Constants.HASHMAP_BUNDLE);
@@ -60,7 +59,6 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 showedMap.put(key, tempShowedMap.get(key));
             }
         }
-        // figureType = bundle.getInt(Constants.FIGURES_TYPE);
         figureType = AttentionGameValues.getFiguresType();
         init();
 
@@ -69,7 +67,7 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 Constants.closeKeyboard(requireActivity());
                 adapter.isChecking = true;
                 answersAreChecked = true;
-                //this method calls onBindViewHolder which shows the written answer is right o not
+// Этот метод вызывает onBindViewHolder, который показывает, правильный ли ответ записан или нет.
                 adapter.notifyDataSetChanged();
 
                 if (!adapter.getAnswersMap().containsValue(false) && adapter.getAnswersMap().containsValue(true)) {
@@ -83,8 +81,8 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                     }
                 }
 
-                if (!adapter.getAnswersMap().containsValue(true)){
-                    Constants.createSound(requireActivity(),R.raw.wrong);
+                if (!adapter.getAnswersMap().containsValue(true)) {
+                    Constants.createSound(requireActivity(), R.raw.wrong);
                     Constants.makeSoundEffect();
                 }
                 Log.d("attgame", "" + showedMap.size() + "");
@@ -147,17 +145,18 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
     }
 
     private int getHighScore() {
-        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3)/2;
+        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3) / 2;
         Log.d("attgame", "scores  " + scores);
         return scores;
     }
+
     private void showRightAnimation() {
         new Thread(() -> {
             requireActivity().runOnUiThread(() -> {
                 Constants.makeSoundEffect();
                 AttentionGameActivity.binding.tvExcellent.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.BounceInUp).duration(800).playOn(AttentionGameActivity.binding.tvExcellent);
-              //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
 
             });
             try {

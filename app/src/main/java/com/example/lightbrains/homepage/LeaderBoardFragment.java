@@ -59,9 +59,13 @@ public class LeaderBoardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
         init();
-        binding.progressBrLeaderBoard.setVisibility(View.VISIBLE);
-        new MyAsyncTask().execute();
-        users = new ArrayList<>();
+        if (ConstantsForFireBase.checkConnectionIsOff(requireActivity())) {
+            binding.tvLeaderBoard.setText(getResources().getString(R.string.top_10_leaders)+"\n\n"+getResources().getString(R.string.you_are_offline));
+        } else {
+            binding.progressBrLeaderBoard.setVisibility(View.VISIBLE);
+            new MyAsyncTask().execute();
+            users = new ArrayList<>();
+        }
     }
 
     private void init() {
@@ -111,13 +115,13 @@ public class LeaderBoardFragment extends Fragment {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isInLeaderBoard){
+                if (isInLeaderBoard) {
                     topUsers.clear();
                     for (DataSnapshot child : snapshot.getChildren()) {
                         User user = child.getValue(User.class);
                         assert user != null;
                         Log.d("fir", "" + user.getUserName());
-                        if (user.isEmailIsVerified()){
+                        if (user.isEmailIsVerified()) {
                             topUsers.add(user);
                         }
                     }

@@ -14,8 +14,6 @@ public class FigureListCreator {
             ,R.drawable.att_game_lemon, R.drawable.att_game_strawberry, R.drawable.att_game_pear
             , R.drawable.att_game_pepper, R.drawable.att_game_pomodor, R.drawable.att_game_watermelon
     };
-
-    //frog-y chka
     private static int[] figuresAnimals = {R.drawable.att_game_animals_bear, R.drawable.att_game_animals_cat, R.drawable.att_game_animals_chicken, R.drawable.att_game_animals_cock, R.drawable.att_game_animals_cow, R.drawable.att_game_animals_crab, R.drawable.att_game_animals_deer, R.drawable.att_game_animals_dog
     ,R.drawable.att_game_animals_fish, R.drawable.att_game_animals_hedgehog, R.drawable.att_game_animals_hen, R.drawable.att_game_animals_jellyfish, R.drawable.att_game_animals_lamb, R.drawable.att_game_animals_monkey,
             R.drawable.att_game_animals_mouse, R.drawable.att_game_animals_parrot, R.drawable.att_game_animals_pig, R.drawable.att_game_animals_pinguin, R.drawable.att_game_animals_turtle, R.drawable.att_game_animals_white_beer, R.drawable.att_game_animals_sea_lion};
@@ -29,7 +27,6 @@ public class FigureListCreator {
             figureLevel = 8;
         }
 
-        Log.d("TAG", "figure level has become: " + figureLevel);
         int tempKey;
         int tempValueCount;
         int figCount = figuresCount;
@@ -42,7 +39,6 @@ public class FigureListCreator {
             for (int i = 0; i < Math.min(figureLevel - 1, figCount - 1); i++) {
                 while (resultMap.containsKey(tempKey)) {
                     tempKey = Constants.getRandomInRange(0, figureTypes[figureType].length - 1);
-                   // Log.d("TAG", "key is " + tempKey);
                 }
                 tempValueCount = figuresCount - i >= 1 ? Constants.getRandomInRange(1, figuresCount - i) : 0;
                 if (i + 1 == Math.min(figureLevel - 1, figCount - 1)) {
@@ -53,7 +49,6 @@ public class FigureListCreator {
             }
         }
 
-        Log.d("TAG", String.valueOf(resultMap));
 
         return resultMap;
     }

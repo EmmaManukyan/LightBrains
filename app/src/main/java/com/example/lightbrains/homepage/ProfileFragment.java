@@ -67,7 +67,6 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && data != null && data.getData() != null) {
             if (resultCode == RESULT_OK) {
-                Log.d("TAG", "Image uri: " + data.getData());
                 binding.imgProfile.setImageURI(data.getData());
                 uploadImage();
             }
@@ -170,18 +169,14 @@ public class ProfileFragment extends Fragment {
         String id = myDataBase.getKey();
         FirebaseUser curUser = mAuth.getCurrentUser();
         assert curUser != null;
-        Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
         User newUser = new User(id, newName, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES, -1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null), Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN));
         if (id != null) {
             myDataBase.child(curUser.getUid()).setValue(newUser);
             String idMail = curUser.getEmail().replace(".", "");
-//            Log.d("fir",""+myDataBaseForMails.getDatabase());
-//            myDataBase.child(ConstantsForFireBase.USERS_MAILS_KEY).child(idMail).setValue(true);
             binding.tvProfileName.setText(newUser.getUserName());
             Constants.myEditShared.putString(ConstantsForFireBase.USER_NAME, newUser.getUserName());
             Constants.myEditShared.commit();
             HomeActivity.binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
-            Log.d("taguhi", "" + curUser.getUid() + "name " + newUser.getImageUri());
         }
     }
 
@@ -193,7 +188,6 @@ public class ProfileFragment extends Fragment {
         binding.edtPassword.setText("");
         binding.edtPassword.setHintTextColor(getResources().getColorStateList(R.color.grey));
         binding.tvProfileName.setText(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_NAME, null));
-        Log.d("taguhi", "ui   " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, ConstantsForFireBase.DEFAULT_IMAGE_URI));
         Picasso.get().load(Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null)).placeholder(R.drawable.img_profile_default).into(binding.imgProfile);
         binding.progressBarWithImage.setVisibility(View.GONE);
         HomeActivity.binding.frContainer.setVisibility(View.VISIBLE);
@@ -249,11 +243,8 @@ public class ProfileFragment extends Fragment {
             user.updatePassword(newPassword)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-//                            Log.d("taguhi", "User password updated.");
                             Constants.createToast(getContext(), R.string.confirmed);
                         } else {
-//                            Log.d("taguhi", "" + task.getException());
-
                             Constants.createToast(getContext(), R.string.something_went_wrong);
                         }
                         progressDialog.dismiss();
@@ -335,12 +326,9 @@ public class ProfileFragment extends Fragment {
         if (!TextUtils.isEmpty(name)) {
             FirebaseUser curUser = mAuth.getCurrentUser();
             assert curUser != null;
-//            Toast.makeText(progressDialog.getContext(), "Mta "+isSignedIn, Toast.LENGTH_SHORT).show();
-            Log.d("taguhi", "saveuser:  " + Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null));
             User newUser = new User(id, name, curUser.getEmail(), Constants.sharedPreferences.getInt(Constants.SCORES, -1000), Constants.sharedPreferences.getString(ConstantsForFireBase.PROFILE_IMAGE_URI, null), Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN));
             if (id != null) {
                 myDataBase.child(curUser.getUid()).setValue(newUser);
-//                myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(isSignedIn);
             }
         }
     }

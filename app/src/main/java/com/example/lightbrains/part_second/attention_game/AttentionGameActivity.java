@@ -23,8 +23,11 @@ public class AttentionGameActivity extends AppCompatActivity {
         AttentionGameValues.setRightAnswers(0);
     }
 
+
     @Override
     public void onBackPressed() {
+        // При нажатии на кнопку "Назад" проверяем, есть ли у текущего фрагмента слушатель для обработки нажатия
+        // Если есть, вызываем метод onBackPressed() у соответствующего фрагмента
         if (AttentionGameShowFiguresFragment.backpressedlistener != null) {
             AttentionGameShowFiguresFragment.backpressedlistener.onBackPressed();
         } else if (AttentionGameWriteAnswersFragment.backpressedlistener != null) {

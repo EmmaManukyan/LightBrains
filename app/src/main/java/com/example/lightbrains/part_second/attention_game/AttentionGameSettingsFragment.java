@@ -81,7 +81,6 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
             } else {
                 Constants.makeSoundEffect();
                 putBundlesWithComplexity();
-                // bundle.putLong(Constants.FIGURES_SHOW_START_TIME, System.currentTimeMillis());
                 AttentionGameValues.setStartTime(System.currentTimeMillis());
                 Constants.myEditShared.putInt(Constants.FIGURES_COMPLEXITY_LEVEL, complexityLevel);
                 Constants.myEditShared.putInt(Constants.FIGURES_GROUP_COUNT, figuresGroupCount);
@@ -210,13 +209,6 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
 
     private void putBundlesWithComplexity() {
         figuresGroupCount = Integer.parseInt(Objects.requireNonNull(binding.autoTvCountOfFigureGroups.getText()).toString());
-//        bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-//        bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,complexityLevel);
-
-//        bundle.putInt(Constants.FIGURES_TYPE,-1);
-//        bundle.putInt(Constants.FIGURES_LEVEL,-1);
-//        bundle.putFloat(Constants.FIGURES_SHOW_TIME,-1);
-//        bundle.putInt(Constants.FIGURES_COUNT,-1);
 
         AttentionGameValues.setFiguresGroupCount(figuresGroupCount);
         AttentionGameValues.setComplexityLevel(complexityLevel);
@@ -238,16 +230,5 @@ public class AttentionGameSettingsFragment extends Fragment implements View.OnCl
         AttentionGameValues.setFiguresLevel(figuresLevel);
         AttentionGameValues.setShowTime(showTime);
         AttentionGameValues.setFiguresCount(figuresCount);
-
-        Log.d("taguhi", "showtime  " + showTime);
-        Log.d("taguhi", "showtimeAttVal  " + AttentionGameValues.getShowTime());
-
-//        bundle.putInt(Constants.FIGURES_TYPE,figuresType);
-//        bundle.putInt(Constants.FIGURES_LEVEL,figuresLevel);
-//        bundle.putFloat(Constants.FIGURES_SHOW_TIME,showTime);
-//        bundle.putInt(Constants.FIGURES_COUNT,figuresCount);
-
-        //bundle.putInt(Constants.FIGURES_GROUP_COUNT,figuresGroupCount);
-        //bundle.putInt(Constants.FIGURES_COMPLEXITY_LEVEL,-1);
     }
 }

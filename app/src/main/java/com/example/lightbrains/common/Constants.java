@@ -22,8 +22,9 @@ import java.util.Random;
 
 public class Constants {
 
-    //here are some constant fields and functions which are used from different parts of the app.
-    // Using constants helps me to change their names one time(from here) if there is necessary
+    // Здесь находятся некоторые константные поля и функции, которые используются из разных частей приложения.
+// Использование констант помогает изменить их имена один раз (здесь), если это необходимо.
+
     public static final String SPEED_FLASH_CARDS = "SpeedFlashCards";
     public static final String SPEED_MENTAL = "SpeedMental";
 
@@ -68,9 +69,7 @@ public class Constants {
     public static final int FLIP_CARD_ANIM_DURATION = 300;
     public static final int YOYO_ANIM_DURATION = 1000;
 
-    public static final String[] languageLogs = {"ru","hy","en"};
-
-
+    public static final String[] languageLogs = {"ru", "hy", "en"};
 
 
     public static SharedPreferences sharedPreferences = null;
@@ -78,20 +77,20 @@ public class Constants {
 
     private static MediaPlayer mediaPlayer = null;
 
-    public static void createSound(Activity activity,int resId){
-        mediaPlayer = MediaPlayer.create(activity,resId);
+    public static void createSound(Activity activity, int resId) {
+        mediaPlayer = MediaPlayer.create(activity, resId);
     }
 
 
     public static int[] rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_heart_eyes_smile};
 
-    //list of animations to show on the images when the answer is right
+    // Список анимаций, которые показываются на изображениях, когда ответ правильный
     public static ArrayList<Techniques> animations = new ArrayList<>(Arrays.asList(Techniques.RollIn, Techniques.Wave, Techniques.ZoomIn,
             Techniques.SlideInUp, Techniques.Pulse, Techniques.FlipInX
     ));
 
 
-    //creating sharedPreferences here for one activity to use from different fragments
+    // Создание объекта SharedPreferences здесь, чтобы одна активность могла использовать его из разных фрагментов
     public static void createSharedPreferences(Activity activity) {
         if (sharedPreferences == null) {
             sharedPreferences = activity.getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -100,13 +99,15 @@ public class Constants {
     }
 
 
-    public static void makeSoundEffect(){
-        if (sharedPreferences.getBoolean(SOUND_EFFECTS,true)){
+    // Воспроизведение звукового эффекта, если включены звуковые эффекты в настройках
+    public static void makeSoundEffect() {
+        if (sharedPreferences.getBoolean(SOUND_EFFECTS, true)) {
             mediaPlayer.start();
         }
     }
 
     public static int getRandomInRange(int min, int max) {
+        // Получение случайного числа в заданном диапазоне
         Random random = new Random();
         return random.nextInt(max + 1 - min) + min;
     }
@@ -115,13 +116,14 @@ public class Constants {
     public static void setEdtAnswerFocused(Context context, TextInputEditText edtAnswer) {
         edtAnswer.requestFocus();
         if (edtAnswer.hasWindowFocus()) {
-            // No need to wait for the window to get focus.
+            // Нет необходимости ждать, пока окно получит фокус.
             showTheKeyboardNow(context, edtAnswer);
         } else {
             edtAnswer.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
                 @Override
                 public void onWindowFocusChanged(boolean hasFocus) {
                     if (hasFocus) {
+                        // Показываем клавиатуру, когда окно получает фокус.
                         showTheKeyboardNow(context, edtAnswer);
                         edtAnswer.getViewTreeObserver().removeOnWindowFocusChangeListener(this);
                     }
@@ -130,6 +132,8 @@ public class Constants {
         }
     }
 
+
+    // Показывает клавиатуру, если поле ввода имеет фокус
     private static void showTheKeyboardNow(Context context, TextInputEditText edtAnswer) {
         if (edtAnswer.isFocused()) {
             edtAnswer.requestFocus();
@@ -138,6 +142,7 @@ public class Constants {
         }
     }
 
+    //Скрывает клавиатуру для указанного представления.
     public static void closeKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
 
@@ -153,8 +158,8 @@ public class Constants {
     }
 
 
-    //static method to create Toast
-    public static void createToast(Context context,int stringId){
+    //Статический метод для создания всплывающего сообщения (Toast)
+    public static void createToast(Context context, int stringId) {
         Toast.makeText(context, context.getResources().getString(stringId), Toast.LENGTH_SHORT).show();
     }
 

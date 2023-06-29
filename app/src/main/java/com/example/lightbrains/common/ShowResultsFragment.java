@@ -47,7 +47,7 @@ public class ShowResultsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //here we get data given from previous activity
+// Здесь мы получаем данные, переданные из предыдущей активности
         rightAnswers = requireArguments().getInt(Constants.RIGHT_ANSWERS);
         int count = requireArguments().getInt(Constants.COUNT_FLASH_CARDS);
         time = (double) requireArguments().getLong(Constants.FIGURES_SHOW_TIME) / 60000;
@@ -57,7 +57,7 @@ public class ShowResultsFragment extends Fragment {
         String tempTime = String.valueOf(time);
         timeToShow = tempTime.substring(0, 4);
 
-        //counting the progress percent...
+// Вычисление процента выполнения...
         float percent = (rightAnswers * 100) / (float) count;
 
         if (percent >= 50) {

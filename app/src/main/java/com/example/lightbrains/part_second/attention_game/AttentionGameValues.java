@@ -1,6 +1,9 @@
 package com.example.lightbrains.part_second.attention_game;
 
 public class AttentionGameValues {
+    // Этот класс создан для хранения и управления значениями игры внимания.
+    // Здесь определены различные статические поля, которые хранят уровень сложности, тип и уровень фигур, количество фигур и другие параметры игры.
+    // Класс также содержит методы для получения и установки значений этих параметров.
     private static int complexityLevel = -1;
     private static int figuresType = -1;
     private static int figuresLevel = -1;

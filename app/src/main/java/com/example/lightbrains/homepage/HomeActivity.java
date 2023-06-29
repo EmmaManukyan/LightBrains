@@ -39,18 +39,17 @@ import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
     public static ActivityHomeBinding binding;
-    //this is also a simple flag which checks if user is in ProfileFragment,
-    // if it's true or false, some views will be visible or invisible
+    //это также простой флаг, который проверяет, находится ли пользователь в ProfileFragment.
+// Если значение истинно или ложно, некоторые представления будут видимыми или невидимыми
     private boolean IS_IN_PROFILE_PAGE = false;
 
-    //as I use bottomNavigation, this variable shows on which page is the user is
+    //поскольку я использую bottomNavigation, эта переменная показывает на какой странице находится пользователь
     private int PAGE_COUNTER = 0;
 
-    //this is a flag to make sure that onDataChanged function is called from this activity
+    //это флаг, чтобы убедиться, что функция onDataChanged вызывается из этой активности
     private boolean isInGetFromDB = false;
 
     private boolean useInternetPermission;
-
 
 
     @Override
@@ -143,7 +142,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Constants.createSound(this,R.raw.btn_click);
+        Constants.createSound(this, R.raw.btn_click);
         Constants.createSharedPreferences(HomeActivity.this);
         ConstantsForFireBase.createFireBaseInstances();
         useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
@@ -191,10 +190,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.child(getIntent().getStringExtra(ConstantsForFireBase.USER_KEY)).getValue(User.class);
-                Log.d("TAG",user.getEmail());
 
                 if (user != null && isInGetFromDB) {
-                    Log.d("TAG",user.getEmail());
                     assert curUser != null;
                     myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_SIGNED_IN).setValue(!user.getEmail().equals(ConstantsForFireBase.GUEST_EMAIL));
                     myDataBase.child(curUser.getUid()).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(true);
@@ -225,19 +222,15 @@ public class HomeActivity extends AppCompatActivity {
         ref.child(curUser.getUid()).child(ConstantsForFireBase.USER_TOKEN).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Toast.makeText(HomeActivity.this, "Data changed ", Toast.LENGTH_SHORT).show();
 
                 String curToken = snapshot.getValue(String.class);
                 assert curToken != null;
                 useInternetPermission = Constants.sharedPreferences.getBoolean(Constants.USE_INTERNET, true);
                 if (useInternetPermission && !ConstantsForFireBase.checkConnectionIsOff(HomeActivity.this)) {
-                    if (curToken.equals(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN)) || mAuth.getCurrentUser().getEmail().equals(ConstantsForFireBase.GUEST_EMAIL)) {
-//                        Toast.makeText(HomeActivity.this, "It's me", Toast.LENGTH_SHORT).show();
+                    if (curToken.equals(Constants.sharedPreferences.getString(ConstantsForFireBase.USER_TOKEN, ConstantsForFireBase.USER_TOKEN))) {
                     } else {
                         Constants.createToast(HomeActivity.this, R.string.sign_in_from_other_device);
-//                    ProfileFragment.saveUser(false);
                         Constants.myEditShared.clear();
-                        Log.d("dilijan", "cleared");
                         Constants.myEditShared.commit();
                         FirebaseAuth.getInstance().signOut();
                         Intent intent = new Intent(HomeActivity.this, MainActivity.class);

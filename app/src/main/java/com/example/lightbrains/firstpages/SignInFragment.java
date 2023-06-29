@@ -50,8 +50,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FragmentSignInBinding binding;
 
-    //this is a simple flag to make sure that the user has clicked on signInButton
-    // and this is not onDataChange function called from other cladd when something has changed in Firebase
+    //это простой флаг, чтобы убедиться, что пользователь нажал на кнопку входа в систему
+// и это не функция onDataChange, вызванная из другого класса, когда что-то изменилось в Firebase
     private boolean btnIsClicked = false;
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInOptions gso;
@@ -121,17 +121,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
                                                 // You can access the user's information using 'user' object
                                             } else {
-                                                // Sign-in failed, display a message to the user
-                                                Log.w("TAG", "signInWithCredential:failure", task.getException());
-                                                // ...
+                                                Constants.createToast(requireContext(), R.string.something_went_wrong);
                                             }
                                         }
                                     });
 
-                        } else {
-                            // Error occurred while checking email existence
-                            // Handle the error gracefully
-                            // ...
                         }
                     }
                 });
@@ -217,8 +211,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         Constants.makeSoundEffect();
     }
 
-    //I usually create method init and call it when the fragment or activity view is created. Here I set my view layout params,
-    //create instances of classes
+    //Обычно я создаю метод init и вызываю его при создании представления фрагмента или активности. Здесь я устанавливаю параметры макета моего представления,
+//создаю экземпляры классов
     @SuppressLint("SetTextI18n")
     private void init() {
         binding.btnSignIn.setOnClickListener(this);
@@ -250,7 +244,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         Constants.myEditShared.commit();
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         intent.putExtra(ConstantsForFireBase.USER_KEY, curUser.getUid());
-        Log.d("TAG", curUser.getUid());
         startActivity(intent);
         requireActivity().finish();
     }
@@ -259,7 +252,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private void saveUser(FirebaseUser user) {
         Toast.makeText(requireContext(), "Saving user...", Toast.LENGTH_SHORT).show();
         String id = myDataBase.getKey();
-        User newUser = new User(id, "Username", user.getEmail(), 0, "hello",ConstantsForFireBase.USER_TOKEN);
+        User newUser = new User(id, "Username", user.getEmail(), 0, "hello", ConstantsForFireBase.USER_TOKEN);
         myDataBase.child(user.getUid()).setValue(newUser);
         myDataBase.child(user.getUid()).child(ConstantsForFireBase.IS_EMAIL_VERIFIED).setValue(true);
 
