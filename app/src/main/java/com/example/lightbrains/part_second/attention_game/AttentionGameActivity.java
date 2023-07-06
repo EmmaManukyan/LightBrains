@@ -8,6 +8,7 @@ import android.view.View;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
+import com.example.lightbrains.common.ShowResultsFragment;
 import com.example.lightbrains.databinding.ActivityAttentionGameBinding;
 import com.example.lightbrains.part_first_mental.flashanzan.ShowFlashCardsFragment;
 
@@ -32,7 +33,8 @@ public class AttentionGameActivity extends AppCompatActivity {
             AttentionGameShowFiguresFragment.backpressedlistener.onBackPressed();
         } else if (AttentionGameWriteAnswersFragment.backpressedlistener != null) {
             AttentionGameWriteAnswersFragment.backpressedlistener.onBackPressed();
-
+        } else if (ShowResultsFragment.backpressedlistener != null) {
+            ShowResultsFragment.backpressedlistener.onBackPressed();
         } else {
             super.onBackPressed();
         }

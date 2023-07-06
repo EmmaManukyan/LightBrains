@@ -140,9 +140,10 @@
     <string name="bonus">Бонус +1</string>
     <string name="count_of_steps">Количество шагов</string>
     <string name="complicate">Усложнить( В процессе...)</string>
-
-
-
+    <string name="seconds">сек.</string>
+    <string name="you_have_finished">Вот и всё!</string>
+    <string name="try_again">Попробовать еще раз</string>
+    <string name="time_is_over">Время вышло</string>
 
 
     <string-array name="string_complexity_array">

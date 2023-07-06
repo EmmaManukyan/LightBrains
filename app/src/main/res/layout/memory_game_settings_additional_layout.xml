@@ -47,7 +47,7 @@
         android:soundEffectsEnabled="true"
         android:stepSize="1"
         android:thumbTint="@color/yellow_dark"
-        android:valueFrom="3"
+        android:valueFrom="1"
         android:valueTo="20"
         app:haloColor="@color/yellow"
         app:labelBehavior="gone"

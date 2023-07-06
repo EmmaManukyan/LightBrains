@@ -135,6 +135,10 @@
     <string name="count_of_rows">Count of rows</string>
     <string name="bonus">Bonus +1</string>
     <string name="complicate">Complicate( Work in progress...)</string>
+    <string name="seconds">sec.</string>
+    <string name="you_have_finished">You have finished</string>
+    <string name="try_again">Try again</string>
+    <string name="time_is_over">Time is over</string>
 
 
     <string name="random">Random</string>

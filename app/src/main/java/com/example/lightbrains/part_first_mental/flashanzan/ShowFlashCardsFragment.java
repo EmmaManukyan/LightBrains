@@ -96,8 +96,8 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
                 if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
                     if (countNumbers > 0) {
                         running = true;
-                        binding.imgSmile.setVisibility(View.GONE);
-                        binding.tvWithSmile.setVisibility(View.GONE);
+                        binding.includedLayout.imgSmile.setVisibility(View.GONE);
+                        binding.includedLayout.tvWithSmile.setVisibility(View.GONE);
                         unVisible();
                         isFirstTime = false;
 
@@ -285,11 +285,11 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     //if answer is wrong calls this method which shows the right answer
     private void answerIsWrong(String wrogAnsw, String result) {
         Constants.createSound(requireActivity(), R.raw.wrong);
-        binding.tvWithSmile.setVisibility(View.VISIBLE);
-        binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
-        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n" + wrogAnsw + " ≠ " + result);
-        binding.tvWithSmile.setTextSize(32);
-        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvWithSmile);
+        binding.includedLayout.tvWithSmile.setVisibility(View.VISIBLE);
+        binding.includedLayout.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
+        binding.includedLayout.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n" + wrogAnsw + " ≠ " + result);
+        binding.includedLayout.tvWithSmile.setTextSize(32);
+        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.includedLayout.tvWithSmile);
 
 
         int d = result.length();
@@ -325,19 +325,19 @@ public class ShowFlashCardsFragment extends Fragment implements BackPressedListe
     private void answerIsRight() {
         Constants.createSound(requireActivity(), R.raw.right);
         scores++;
-        binding.imgSmile.setVisibility(View.VISIBLE);
-        binding.tvWithSmile.setVisibility(View.VISIBLE);
+        binding.includedLayout.imgSmile.setVisibility(View.VISIBLE);
+        binding.includedLayout.tvWithSmile.setVisibility(View.VISIBLE);
         Random random = new Random();
         int r = random.nextInt(rightAnswersRes.length);
-        binding.imgSmile.setImageResource(rightAnswersRes[r]);
-        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_right));
-        binding.tvWithSmile.setTextSize(40);
-        binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_right));
+        binding.includedLayout.imgSmile.setImageResource(rightAnswersRes[r]);
+        binding.includedLayout.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_right));
+        binding.includedLayout.tvWithSmile.setTextSize(40);
+        binding.includedLayout.tvWithSmile.setTextColor(getResources().getColor(R.color.is_right));
         r = random.nextInt(animations.size());
 
         //animation of smiles
-        YoYo.with(animations.get(r)).duration(1000).playOn(binding.imgSmile);
-        YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.tvWithSmile);
+        YoYo.with(animations.get(r)).duration(1000).playOn(binding.includedLayout.imgSmile);
+        YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.includedLayout.tvWithSmile);
     }
 
     @Override

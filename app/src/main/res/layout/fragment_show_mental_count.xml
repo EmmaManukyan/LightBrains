@@ -96,34 +96,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <TextView
-        android:id="@+id/tv_with_smile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/my_font"
-        android:gravity="center"
-        android:text="@string/your_answer_is_right"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/btn_start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
-
-    <ImageView
-        android:id="@+id/img_smile"
+    <include
+        android:id="@+id/included_layout"
+        layout="@layout/smile_and_textview_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="24dp"
-        android:padding="16dp"
-        android:src="@drawable/img_heart_eyes_smile"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/btn_start"
-        app:layout_constraintTop_toBottomOf="@id/tv_with_smile" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_start"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

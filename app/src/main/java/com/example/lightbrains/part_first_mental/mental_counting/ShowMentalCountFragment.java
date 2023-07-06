@@ -101,8 +101,8 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                 if (binding.tvAnswerLayout.getVisibility() == View.GONE || isFirstTime) {
                     if (countNumbers > 0) {
                         // unVisible();
-                        binding.imgSmile.setVisibility(View.GONE);
-                        binding.tvWithSmile.setVisibility(View.GONE);
+                        binding.includedLayout.imgSmile.setVisibility(View.GONE);
+                        binding.includedLayout.tvWithSmile.setVisibility(View.GONE);
                         runningThread = true;
                         isFirstTime = false;
 
@@ -201,7 +201,6 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
                         unVisible();
                         binding.tvAnswerLayout.setVisibility(View.VISIBLE);
                         binding.btnCheck.setVisibility(View.VISIBLE);
-//                        YoYo.with(Techniques.ZoomIn).duration(800).playOn(binding.btnCheck);
                         binding.edtAnswer.setText("");
                         Constants.setEdtAnswerFocused(getActivity(), binding.edtAnswer);
                         binding.btnStart.setVisibility(View.VISIBLE);
@@ -283,30 +282,29 @@ public class ShowMentalCountFragment extends Fragment implements BackPressedList
     private void answerIsRight() {
         Constants.createSound(requireActivity(),R.raw.right);
         scores++;
-        binding.imgSmile.setVisibility(View.VISIBLE);
-        binding.tvWithSmile.setVisibility(View.VISIBLE);
+        binding.includedLayout.imgSmile.setVisibility(View.VISIBLE);
+        binding.includedLayout.tvWithSmile.setVisibility(View.VISIBLE);
         Random random = new Random();
         int r = random.nextInt(rightAnswersRes.length);
-        binding.imgSmile.setImageResource(rightAnswersRes[r]);
-        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_right));
-        binding.tvWithSmile.setTextSize(40);
-        binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_right));
+        binding.includedLayout.imgSmile.setImageResource(rightAnswersRes[r]);
+        binding.includedLayout.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_right));
+        binding.includedLayout.tvWithSmile.setTextSize(40);
+        binding.includedLayout.tvWithSmile.setTextColor(getResources().getColor(R.color.is_right));
         r = random.nextInt(animations.size());
-        YoYo.with(animations.get(r)).duration(1000).playOn(binding.imgSmile);
-        YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.tvWithSmile);
+        YoYo.with(animations.get(r)).duration(1000).playOn(binding.includedLayout.imgSmile);
+        YoYo.with(Techniques.FlipInY).duration(1000).playOn(binding.includedLayout.tvWithSmile);
     }
 
     private void answerIsWrong(String wrongAnsw, String result) {
         Constants.createSound(requireActivity(),R.raw.wrong);
 
-        binding.tvWithSmile.setVisibility(View.VISIBLE);
-        binding.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
+        binding.includedLayout.tvWithSmile.setVisibility(View.VISIBLE);
+        binding.includedLayout.tvWithSmile.setTextColor(getResources().getColor(R.color.is_wrong));
 
-        binding.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n\n" + wrongAnsw + " ≠ " + result + "\n\n");
-
-        binding.tvWithSmile.setTextSize(32);
-        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.tvWithSmile);
-        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.imgSmile);
+        binding.includedLayout.tvWithSmile.setText(getResources().getString(R.string.your_answer_is_wrong) + "\n\n" + wrongAnsw + " ≠ " + result + "\n\n");
+        binding.includedLayout.tvWithSmile.setTextSize(32);
+        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.includedLayout.tvWithSmile);
+        YoYo.with(Techniques.ZoomIn).duration(1000).playOn(binding.includedLayout.imgSmile);
     }
 
 

@@ -85,7 +85,6 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                     Constants.createSound(requireActivity(), R.raw.wrong);
                     Constants.makeSoundEffect();
                 }
-                Log.d("attgame", "" + showedMap.size() + "");
                 AttentionGameValues.setCount(AttentionGameValues.getCount() + showedMap.size());
                 if (figuresGroupCount != 0) {
                     binding.btnCheck.setText(getResources().getString(R.string.next));
@@ -98,15 +97,10 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
                 bundleToNavigate.putInt(Constants.SCORES, AttentionGameValues.getScores());
                 bundleToNavigate.putInt(Constants.COUNT_FLASH_CARDS, AttentionGameValues.getCount());
                 bundleToNavigate.putLong(Constants.FIGURES_SHOW_TIME, System.currentTimeMillis() - AttentionGameValues.getStartTime());
-//                Log.d("attgame", "rightansers: " + AttentionGameValues.getRightAnswers());
-//                Log.d("attgame", "scores: " + AttentionGameValues.getScores());
-//                Log.d("attgame", "count: " + AttentionGameValues.getCount());
 
                 Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_showResultsFragment3, bundleToNavigate);
             } else {
-//                Log.d("attgame", "rightansers: " + AttentionGameValues.getRightAnswers());
-//                Log.d("attgame", "scores: " + AttentionGameValues.getScores());
-//                Log.d("attgame", "count: " + AttentionGameValues.getCount());
+
                 Bundle bundleToNavigate = new Bundle();
                 Navigation.findNavController(view).navigate(R.id.action_attentionGameWriteAnswersFragment_to_attentionGameShowFiguresFragment, bundleToNavigate);
             }
@@ -143,20 +137,15 @@ public class AttentionGameWriteAnswersFragment extends Fragment implements BackP
         CustomDialogFragmentForExit customDialogFragmentForExit = new CustomDialogFragmentForExit(4);
         customDialogFragmentForExit.show(requireActivity().getSupportFragmentManager(), Constants.DIALOG_TAG_EXIT);
     }
-
     private int getHighScore() {
-        int scores = (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3) / 2;
-        Log.d("attgame", "scores  " + scores);
-        return scores;
+        return (int) ((1.5 - AttentionGameValues.getShowTime()) * 8 + AttentionGameValues.getFiguresCount() - 3) / 2;
     }
-
     private void showRightAnimation() {
         new Thread(() -> {
             requireActivity().runOnUiThread(() -> {
                 Constants.makeSoundEffect();
                 AttentionGameActivity.binding.tvExcellent.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.BounceInUp).duration(800).playOn(AttentionGameActivity.binding.tvExcellent);
-                //  Toast.makeText(getContext(), "Excellent", Toast.LENGTH_SHORT).show();
 
             });
             try {

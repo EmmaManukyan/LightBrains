@@ -22,16 +22,19 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.lightbrains.R;
 import com.example.lightbrains.databinding.FragmentShowResultsBinding;
 import com.example.lightbrains.homepage.HomeActivity;
+import com.example.lightbrains.interfaces.BackPressedListener;
 
 import java.util.Objects;
 
 
-public class ShowResultsFragment extends Fragment {
+public class ShowResultsFragment extends Fragment implements BackPressedListener {
     private FragmentShowResultsBinding binding;
     private double time;
     private int rightAnswers;
     private String timeToShow;
     private int scores;
+
+    private boolean animationIsRunning = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -92,25 +95,29 @@ public class ShowResultsFragment extends Fragment {
     private void progressBarAnimation(int progress) {
         //this animation is working in thread to keep UI always clickable
         new Thread(() -> {
-            for (int i = 0; i <= progress; i += 1) {
-                int finalI = i;
-                requireActivity().runOnUiThread(() -> {
-                    binding.myProgressbarResult.setProgress(finalI);
-                    binding.tvResultPercent.setText(finalI + "%");
-                });
-                try {
-                    Thread.sleep(18);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            animationIsRunning = true;
             scores = (scores == -1) ? rightAnswers : scores;
             Constants.createSharedPreferences(requireActivity());
-            Log.d("fir", "scores before ; " + Constants.sharedPreferences.getInt(Constants.SCORES, -1000));
             int tempScores = Constants.sharedPreferences.getInt(Constants.SCORES, -1000);
             Constants.myEditShared.putInt(Constants.SCORES, tempScores + scores);
             Constants.myEditShared.commit();
-            Log.d("fir", "scores; " + Constants.sharedPreferences.getInt(Constants.SCORES, -1000));
+            for (int i = 0; i <= progress; i += 1) {
+                if (animationIsRunning) {
+                    int finalI = i;
+                    requireActivity().runOnUiThread(() -> {
+                        binding.myProgressbarResult.setProgress(finalI);
+                        binding.tvResultPercent.setText(finalI + "%");
+                    });
+                    try {
+                        Thread.sleep(18);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    onDestroy();
+                }
+            }
+
             requireActivity().runOnUiThread(() -> {
                 binding.tvLayTime.setVisibility(View.VISIBLE);
                 binding.tvLayScores.setVisibility(View.VISIBLE);
@@ -126,6 +133,30 @@ public class ShowResultsFragment extends Fragment {
                 YoYo.with(Techniques.ZoomIn).duration(Constants.YOYO_ANIM_DURATION).playOn(binding.tvLayScores);
             });
 
+            animationIsRunning = false;
+
         }).start();
+    }
+
+
+    public static BackPressedListener backpressedlistener;
+
+    @Override
+    public void onPause() {
+        backpressedlistener = null;
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        backpressedlistener = this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (animationIsRunning){
+            return;
+        }
     }
 }

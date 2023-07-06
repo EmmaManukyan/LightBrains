@@ -8,48 +8,86 @@
     tools:context=".part_second.memory_game.MemoryGameShowCardsFragment">
 
 
+    <ImageView
+        android:id="@+id/img_time"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/round_alarm_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/purple_500" />
+
+    <ProgressBar
+        android:id="@+id/progressbar_time"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="32dp"
+        android:max="100"
+        android:progress="100"
+        android:progressTint="@color/purple_500"
+        app:layout_constraintBottom_toBottomOf="@id/img_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_time"
+        app:layout_constraintTop_toTopOf="@id/img_time" />
+
     <GridLayout
         android:id="@+id/my_gridlayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_start_again">
+        app:layout_constraintBottom_toTopOf="@id/btn_start_again"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressbar_time">
 
     </GridLayout>
+
+
+    <include
+        android:id="@+id/included_layout"
+        layout="@layout/smile_and_textview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_start_again"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressbar_time"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/tv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/my_gridlayout"
-        app:layout_constraintBottom_toBottomOf="@id/my_gridlayout"
-        app:layout_constraintStart_toStartOf="@id/my_gridlayout"
-        app:layout_constraintEnd_toEndOf="@id/my_gridlayout"
+        android:background="@color/green"
+        android:fontFamily="@font/my_font"
+        android:padding="8dp"
         android:text="@string/your_answer_is_right"
         android:textColor="@color/is_right"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:fontFamily="@font/my_font"
         android:visibility="gone"
-        android:padding="8dp"
-        android:background="@color/green"/>
+        app:layout_constraintBottom_toBottomOf="@id/my_gridlayout"
+        app:layout_constraintEnd_toEndOf="@id/my_gridlayout"
+        app:layout_constraintStart_toStartOf="@id/my_gridlayout"
+        app:layout_constraintTop_toTopOf="@id/my_gridlayout" />
 
     <Button
         android:id="@+id/btn_start_again"
+        style="@style/MyStyleForSettingsButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/yellow_dark"
         android:padding="16dp"
+        android:soundEffectsEnabled="true"
         android:text="@string/restart"
         android:textAllCaps="false"
-        android:soundEffectsEnabled="true"
-        app:layout_goneMarginTop="16dp"
-        style="@style/MyStyleForSettingsButtons"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_goneMarginTop="16dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

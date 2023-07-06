@@ -53,6 +53,8 @@ public class Constants {
     public static final String FIGURES_GROUP_COUNT = "FiguresGroupCount";
     public static final String COUNT_OF_ROWS = "CountOfRows";
     public static final String COUNT_OF_COLUMNS = "CountOfColumns";
+    public static final String COMPLEXITY_ORDER = "ComplexityOrder";
+    public static final String MAX_PARAMETER = "MaxParameter";
     public static final String FIGURES_COMPLEXITY_LEVEL = "ComplexityLevel";
     public static final String DIALOG_TAG_EXIT = "exit dialog";
 
@@ -82,7 +84,11 @@ public class Constants {
     }
 
 
-    public static int[] rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_heart_eyes_smile};
+    public static int[] rightAnswersRes = new int[]{R.drawable.img_smile_eye_smile, R.drawable.img_laughing_smile, R.drawable.img_smiling_smile, R.drawable.img_heart_eyes_smile,
+    R.drawable.star_smile_1,R.drawable.star_smile_2,R.drawable.star_smile_3,R.drawable.star_smile_4,R.drawable.star_smile_5
+            ,R.drawable.star_smile_6,R.drawable.star_smile_7
+
+    };
 
     // Список анимаций, которые показываются на изображениях, когда ответ правильный
     public static ArrayList<Techniques> animations = new ArrayList<>(Arrays.asList(Techniques.RollIn, Techniques.Wave, Techniques.ZoomIn,

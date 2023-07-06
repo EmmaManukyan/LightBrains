@@ -140,7 +140,10 @@
     <string name="bonus">Բոնուս +1</string>
     <string name="count_of_steps">Քայլերի քանակ</string>
     <string name="complicate">Բարդացնել( Ընթացքի մեջ է․․․)</string>
-
+    <string name="seconds">վրկ.</string>
+    <string name="you_have_finished">Ահա և վերջ</string>
+    <string name="try_again">Կրկին փորձել</string>
+    <string name="time_is_over">Ժամանակն ավարտվեց</string>
 
 
     <string-array name="string_complexity_array">

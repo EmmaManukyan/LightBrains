@@ -56,7 +56,7 @@ public class MemoryGameResultsFragment extends Fragment {
         scores = bundle.getInt(Constants.SCORES);
 
         time = (float) (Math.round(time * 100.0) / 100.0);
-        String tempTime = String.valueOf(time);
+        String tempTime = String.valueOf(time)+"0";
         timeToShow = tempTime.substring(0, 4);
 
 //        Toast.makeText(getContext(), ""+time, Toast.LENGTH_SHORT).show();

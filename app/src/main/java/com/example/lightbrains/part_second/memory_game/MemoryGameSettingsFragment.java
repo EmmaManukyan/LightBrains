@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import com.example.lightbrains.R;
 import com.example.lightbrains.common.Constants;
 import com.example.lightbrains.databinding.FragmentMemoryGameSettingsBinding;
 import com.example.lightbrains.part_second.attention_game.FigureListCreator;
-import com.google.android.material.slider.Slider;
 
 public class MemoryGameSettingsFragment extends Fragment {
 
@@ -33,9 +31,9 @@ public class MemoryGameSettingsFragment extends Fragment {
 
     //this variable is for checking which radiobutton is selected an get its text resouce from array below
     //and it is int not boolean for the future plans to add more variants of complexity
-    private int complexityOrder = 0;
+    private int complexityOrder = -1;
     //this array includes the string resources time and steps
-    private int[] stringRes = new int[]{R.string.time, R.string.count_of_steps};
+    private final int[] stringRes = new int[]{R.string.time, R.string.count_of_steps};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -49,12 +47,14 @@ public class MemoryGameSettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        timeIsChecked();
+
         binding.btnLetsGo.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.FIGURES_TYPE, figureType);
             bundle.putInt(Constants.COUNT_OF_ROWS, rows);
             bundle.putInt(Constants.COUNT_OF_COLUMNS, columns);
+            bundle.putInt(Constants.COMPLEXITY_ORDER, complexityOrder);
+            bundle.putInt(Constants.MAX_PARAMETER, (int) binding.includedLayout.sliderTimeOrStepCount.getValue());
             Constants.myEditShared.putInt(Constants.FIGURES_TYPE_MEMORY_GAME, figureType);
             Constants.myEditShared.putInt(Constants.COUNT_OF_COLUMNS, columns);
             Constants.myEditShared.commit();
@@ -67,15 +67,36 @@ public class MemoryGameSettingsFragment extends Fragment {
     }
 
     private void timeIsChecked() {
-        binding.includedLayout.sliderTimeOrStepCount.setValueTo(rows * columns * 2);
-        binding.includedLayout.sliderTimeOrStepCount.setValueFrom(1);
-        binding.includedLayout.sliderTimeOrStepCount.setStepSize(1);
-        binding.includedLayout.sliderTimeOrStepCount.setValue(1);
+        int maxValue = rows * columns * 2;
+        int minValue = rows * columns / 2;
+        int curValue = (int) binding.includedLayout.sliderTimeOrStepCount.getValue();
+        setSliderParams(minValue, maxValue, curValue);
         int time = (int) binding.includedLayout.sliderTimeOrStepCount.getValue();
-        binding.includedLayout.tvTime.setText(requireActivity().getResources().getString(R.string.time) + ": " + time);
+        binding.includedLayout.tvTime.setText(requireActivity().getResources().getString(R.string.time) + ": " + time + " " + getResources().getString(R.string.seconds));
         complexityOrder = 0;
     }
 
+    @SuppressLint("SetTextI18n")
+    private void stepIsChecked() {
+        int maxValue = rows * columns;
+        int minValue =  (rows*columns)/2+(rows*columns)%2;
+        int curValue = (int) binding.includedLayout.sliderTimeOrStepCount.getValue();
+        setSliderParams(minValue, maxValue, curValue);
+        int step = (int) binding.includedLayout.sliderTimeOrStepCount.getValue();
+        binding.includedLayout.tvTime.setText(requireActivity().getResources().getString(R.string.count_of_columns) + ": " + step);
+        complexityOrder = 1;
+    }
+
+    private void setSliderParams(int minValue, int maxValue, int curValue) {
+        binding.includedLayout.sliderTimeOrStepCount.setValueTo(maxValue);
+        binding.includedLayout.sliderTimeOrStepCount.setValueFrom(minValue);
+        binding.includedLayout.sliderTimeOrStepCount.setStepSize(1);
+        if (curValue >= minValue && curValue <= maxValue) {
+            binding.includedLayout.sliderTimeOrStepCount.setValue(curValue);
+        } else {
+            binding.includedLayout.sliderTimeOrStepCount.setValue(minValue);
+        }
+    }
 
 
     @SuppressLint("SetTextI18n")
@@ -105,12 +126,13 @@ public class MemoryGameSettingsFragment extends Fragment {
         binding.autoTvFigures.setText(figures[figureType]);
         binding.autoTvFigures.setAdapter(arrayAdapter);
 
-
         binding.sliderColumnsAndRows.addOnChangeListener((slider, value, fromUser) -> {
             columns = (int) value;
             rows = (int) value;
-            if (complexityOrder==0){
+            if (complexityOrder == 0) {
                 timeIsChecked();
+            } else if (complexityOrder==1){
+                stepIsChecked();
             }
             binding.tvColumnsAndRows.setText(getResources().getString(R.string.count_of_columns) + ": " + columns + " x " + rows);
             Constants.makeSoundEffect();
@@ -131,9 +153,12 @@ public class MemoryGameSettingsFragment extends Fragment {
 
         binding.checkBoxComplicate.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
+                complexityOrder = 0;
+                timeIsChecked();
                 binding.includedLayout.getRoot().setVisibility(View.VISIBLE);
-                Constants.createToast(requireActivity(),R.string.we_are_still_working_on_this_part);
+                Constants.createToast(requireActivity(), R.string.we_are_still_working_on_this_part);
             } else {
+                complexityOrder = -1;
                 binding.includedLayout.getRoot().setVisibility(View.GONE);
             }
             Constants.makeSoundEffect();
@@ -145,14 +170,15 @@ public class MemoryGameSettingsFragment extends Fragment {
                 if (checkedId == R.id.radio_time) {
                     timeIsChecked();
                 } else {
-                    complexityOrder=1;
+                    stepIsChecked();
                 }
             }
         });
 
         binding.includedLayout.sliderTimeOrStepCount.addOnChangeListener((slider, value, fromUser) -> {
             int count = (int) value;
-            binding.includedLayout.tvTime.setText(requireActivity().getResources().getString(stringRes[complexityOrder])+": "+count );
+            binding.includedLayout.tvTime.setText(requireActivity().getResources().getString(stringRes[complexityOrder]) + ": "
+                    + count+(complexityOrder==0?" "+requireActivity().getResources().getString(R.string.seconds):""));
             Constants.makeSoundEffect();
 
         });
